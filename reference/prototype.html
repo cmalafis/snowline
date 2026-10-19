@@ -1,0 +1,680 @@
+<title>Sun &amp; Snow Planner</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800;900&family=Overpass+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: trail-sign vernacular. A sun/aspect dial leads; hourly plan and ranked runs follow. One column on phones, two on desktop. */
+:root{
+  --bg:#EEF3F6; --surface:#FFFFFF; --ink:#0F1E28; --muted:#566874; --line:#D3DDE3;
+  --accent:#E2570E; --sun:#EAA912; --shade:#3D5E7C; --green:#23955A; --blue:#1B63C0; --sym-black:#0F1E28;
+  --good:#23955A; --warn:#C98A0A; --bad:#B23A2E;
+  --display:"Overpass", "Highway Gothic", "Arial Narrow", system-ui, sans-serif;
+  --body:"Overpass", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"Overpass Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0B161D; --surface:#12212B; --ink:#E4EDF2; --muted:#8FA3AF; --line:#22343F;
+  --accent:#FF7A33; --sun:#FFC64A; --shade:#79A0C4; --green:#48BE7A; --blue:#5C9CF2; --sym-black:#E4EDF2;
+  --good:#48BE7A; --warn:#E8B23C; --bad:#F06B5E; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0B161D; --surface:#12212B; --ink:#E4EDF2; --muted:#8FA3AF; --line:#22343F;
+  --accent:#FF7A33; --sun:#FFC64A; --shade:#79A0C4; --green:#48BE7A; --blue:#5C9CF2; --sym-black:#E4EDF2;
+  --good:#48BE7A; --warn:#E8B23C; --bad:#F06B5E; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:16px 48px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:20px}
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.brand h1{font-family:var(--display);font-weight:900;font-size:clamp(26px,5vw,38px);line-height:1;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.brand p{margin:6px 0 0;color:var(--muted);max-width:52ch}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.seg button{font:inherit;font-weight:700;border:0;background:transparent;color:var(--muted);padding:8px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+.grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media (min-width:920px){.grid{grid-template-columns:minmax(0,400px) minmax(0,1fr)}}
+.col{display:grid;gap:20px;align-content:start;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+.label{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:11.5px;color:var(--muted)}
+h2{font-family:var(--display);font-weight:800;font-size:18px;margin:0}
+
+/* time scrubber */
+.timebar{display:grid;gap:8px}
+.timebar .row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.clock{font-family:var(--mono);font-weight:600;font-size:30px;font-variant-numeric:tabular-nums;line-height:1}
+.sunread{font-family:var(--mono);font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+/* dial */
+.dialwrap{display:grid;justify-items:center;gap:8px}
+.dial{width:100%;max-width:340px;height:auto}
+.dial text{font-family:var(--display);fill:var(--muted)}
+.wedge{cursor:pointer;transition:opacity .2s}
+.wedge:hover{opacity:.85}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;font-size:12.5px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+/* top pick */
+.pick{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:14px;margin-top:6px}
+.pick .name{font-family:var(--display);font-weight:900;font-size:24px;line-height:1.1;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pick .why{color:var(--muted)}
+
+/* conditions */
+details.cond summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.cond summary::-webkit-details-marker{display:none}
+details.cond summary .chev{transition:transform .2s;color:var(--muted)}
+details.cond[open] summary .chev{transform:rotate(180deg)}
+.condsum{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:4px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.field{display:grid;gap:4px;min-width:0}
+.field.full{grid-column:1/-1}
+.field label{font-size:12.5px;color:var(--muted);font-weight:600}
+.field input,.field select{font:inherit;font-family:var(--mono);font-variant-numeric:tabular-nums;width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:13px;font-weight:700;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.note{font-size:12.5px;color:var(--muted);margin:10px 0 0}
+
+/* plan */
+.plan{display:grid;gap:0;margin-top:10px}
+.slot{display:grid;grid-template-columns:62px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line);cursor:pointer}
+.slot:first-child{border-top:0}
+.slot .t{font-family:var(--mono);font-weight:600;font-variant-numeric:tabular-nums}
+.slot .z{font-weight:800;font-family:var(--display);line-height:1.2}
+.slot .r{color:var(--muted);font-size:13px;line-height:1.35}
+.slot.cur{background:linear-gradient(90deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent);margin-inline:-16px;padding-inline:16px}
+.heat{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:2px;width:96px}
+.heat span{height:18px;border-radius:3px}
+
+/* runs */
+.listhead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.filterline{font-size:13px;color:var(--muted)}
+.filterline button{font:inherit;font-weight:700;color:var(--accent);background:none;border:0;cursor:pointer;padding:0}
+.runs{display:grid;margin-top:8px}
+.run{border-top:1px solid var(--line)}
+.run:first-child{border-top:0}
+.runrow{display:grid;grid-template-columns:22px minmax(0,1fr) 92px;gap:12px;align-items:center;padding:11px 0;cursor:pointer;width:100%;background:none;border:0;color:inherit;font:inherit;text-align:left}
+.runrow .nm{font-weight:800;line-height:1.2}
+.runrow .meta{font-size:12.5px;color:var(--muted);font-family:var(--mono);font-variant-numeric:tabular-nums}
+.runrow .why{font-size:13px;color:var(--muted);line-height:1.35;margin-top:2px}
+.score{display:grid;gap:4px;justify-items:end}
+.score b{font-family:var(--mono);font-size:18px;font-variant-numeric:tabular-nums;line-height:1}
+.score .tag{font-family:var(--display);font-weight:800;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:999px}
+.bar{width:92px;height:5px;border-radius:9px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:9px}
+.t-prime{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.t-good{background:color-mix(in srgb,var(--blue) 16%,transparent);color:var(--blue)}
+.t-fair{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.t-skip{background:color-mix(in srgb,var(--bad) 15%,transparent);color:var(--bad)}
+.edit{padding:4px 0 14px 34px;display:grid;gap:10px}
+.edit .fields{margin-top:0}
+.small{font-size:12.5px;color:var(--muted)}
+.linkbtn{font:inherit;font-size:13px;font-weight:700;color:var(--accent);background:none;border:0;cursor:pointer;padding:0;justify-self:start}
+.toggle{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600}
+.toggle input{width:18px;height:18px;accent-color:var(--accent)}
+.dsym{width:18px;height:18px;display:block}
+footer{color:var(--muted);font-size:13px;max-width:72ch}
+footer h3{font-family:var(--display);font-size:14px;color:var(--ink);margin:0 0 4px}
+footer p{margin:0 0 10px}
+a{color:var(--accent)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="label">Where's the good snow</div>
+      <h1 id="resortName">Steamboat</h1>
+      <p id="resortSub">Runs ranked by sun, slope aspect, temperature and grooming, hour by hour.</p>
+    </div>
+    <div class="seg" role="group" aria-label="Resort" id="resortSeg"></div>
+  </header>
+
+  <div class="grid">
+    <div class="col">
+      <section class="panel">
+        <div class="timebar">
+          <div class="row">
+            <div>
+              <div class="label">Time on the hill</div>
+              <div class="clock" id="clock">9:00</div>
+            </div>
+            <div class="sunread" id="sunread"></div>
+          </div>
+          <input type="range" id="time" min="8.5" max="16" step="0.25" value="9" aria-label="Time of day">
+          <div class="ticks"><span>8:30</span><span>10</span><span>12</span><span>2</span><span>4</span></div>
+        </div>
+        <div class="dialwrap" style="margin-top:12px">
+          <svg class="dial" id="dial" viewBox="0 0 340 340" role="img" aria-label="Compass of mountain zones by slope direction, shaded by snow score, with the sun's direction"></svg>
+          <div class="legend">
+            <span><i style="background:var(--accent)"></i>Better snow</span>
+            <span><i style="background:var(--sun)"></i>Faces the sun now</span>
+            <span><i style="background:var(--line)"></i>Weaker</span>
+          </div>
+        </div>
+        <div class="pick" id="pick"></div>
+      </section>
+
+      <section class="panel">
+        <details class="cond" id="condBox">
+          <summary>
+            <div><h2>Today's conditions</h2><div class="condsum" id="condSum"></div></div>
+            <span class="chev" aria-hidden="true">▾</span>
+          </summary>
+          <div class="fields">
+            <div class="field full"><label for="date">Ski day</label><input type="date" id="date"></div>
+            <div class="field"><label for="sky">Sky</label>
+              <select id="sky"><option value="1">Bluebird</option><option value="0.6">Partly cloudy</option><option value="0.25">Overcast / snowing</option></select></div>
+            <div class="field"><label for="wind">Wind up top</label>
+              <select id="wind"><option value="0">Calm</option><option value="1">Breezy</option><option value="2">Strong (holds likely)</option></select></div>
+            <div class="field"><label for="hi">High at base (°F)</label><input type="number" id="hi" inputmode="numeric"></div>
+            <div class="field"><label for="lo">Overnight low at base (°F)</label><input type="number" id="lo" inputmode="numeric"></div>
+            <div class="field"><label for="yhi">Yesterday's high at base (°F)</label><input type="number" id="yhi" inputmode="numeric"></div>
+            <div class="field"><label for="snow">New snow, last 24 hrs (in)</label><input type="number" id="snow" min="0" inputmode="numeric"></div>
+          </div>
+          <p class="note">Pull these from your forecast app. Temperatures are adjusted for each run's elevation automatically.</p>
+        </details>
+      </section>
+
+      <section class="panel">
+        <h2>What you're after</h2>
+        <div style="display:grid;gap:12px;margin-top:12px">
+          <div><div class="label" style="margin-bottom:6px">Terrain</div><div class="chips" id="typeChips"></div></div>
+          <div><div class="label" style="margin-bottom:6px">Hardest you'll ski</div><div class="chips" id="diffChips"></div></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="panel">
+        <div class="listhead"><h2>Your day, hour by hour</h2><span class="small">Best zone for your terrain each hour</span></div>
+        <div class="plan" id="plan"></div>
+      </section>
+
+      <section class="panel">
+        <div class="listhead">
+          <h2 id="listTitle">Ski this now</h2>
+          <div class="filterline" id="filterLine"></div>
+        </div>
+        <div class="runs" id="runs"></div>
+        <p class="note">Tap a run to mark it groomed or not for today, or to correct its direction. Changes stay on this device.</p>
+      </section>
+
+      <footer class="panel">
+        <h3>How the scores work</h3>
+        <p>The page computes the sun's exact position for the resort and time, then works out how much sunshine each slope has absorbed since sunrise based on the direction it faces and its pitch. Combined with air temperature at that run's elevation, that tells it whether the surface is still frozen, softening, or turning to slush.</p>
+        <p>A refreeze is assumed when yesterday got above freezing at the run's elevation and last night dropped well below it. Then firm groomers and bumps improve as they soften, and peak before they go heavy. On a powder day, fresh snow is worth the most early and lasts longer in trees and on shady slopes. Popular groomers lose their corduroy faster. Flat light favors trees; strong wind penalizes exposed upper lifts.</p>
+        <h3>About the trail data</h3>
+        <p>This is a starter set of runs grouped by zone, and the slope directions are zone-level estimates, not surveyed values. If a run faces differently than shown, correct it and the scores update. Always check the resort's grooming report and open terrain. <a href="https://www.steamboat.com" target="_blank" rel="noopener">steamboat.com</a> · <a href="https://www.breckenridge.com" target="_blank" rel="noopener">breckenridge.com</a></p>
+      </footer>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+// ---------- Data ----------
+// t: groom | bump | tree | bowl ; d: g b k kk ; el: [bottom, top] ft ; s: pitch deg ; tr: traffic 1-3 ; gr: usually groomed
+const RESORTS = {
+  steamboat:{
+    name:"Steamboat", lat:40.4572, lon:-106.8045, base:6900, summit:10568, tz:"America/Denver", open:8.5,
+    sub:"Mt. Werner, 6,900 to 10,568 ft. Front side faces town to the west.",
+    zones:[
+      {id:"front", name:"Christie & Thunderhead", short:"Front", aspect:295, exposed:false},
+      {id:"storm", name:"Storm Peak", short:"Storm", aspect:250, exposed:true},
+      {id:"sunshine", name:"Sunshine Peak", short:"Sunshine", aspect:190, exposed:false},
+      {id:"priest", name:"Sundown & Priest Creek", short:"Sundown", aspect:20, exposed:false},
+      {id:"north", name:"North St. Pat's & Pioneer Ridge", short:"Pioneer", aspect:350, exposed:false},
+      {id:"morning", name:"Morningside & East Face", short:"Morningside", aspect:85, exposed:true}
+    ],
+    runs:[
+      {n:"Heavenly Daze", z:"front", d:"b", t:"groom", el:[7000,9080], s:16, tr:3, gr:true},
+      {n:"Why Not", z:"front", d:"g", t:"groom", el:[7000,9080], s:8, tr:3, gr:true},
+      {n:"Vagabond", z:"front", d:"b", t:"groom", el:[7400,9000], s:15, tr:2, gr:true},
+      {n:"See Me", z:"front", d:"k", t:"groom", el:[7600,9000], s:22, tr:2, gr:true},
+      {n:"Valley View", z:"front", d:"k", t:"bump", el:[7200,9000], s:24, tr:2, gr:false},
+      {n:"Buddy's Run", z:"storm", d:"b", t:"groom", el:[9200,10380], s:17, tr:3, gr:true},
+      {n:"Rolex", z:"storm", d:"b", t:"groom", el:[9200,10380], s:16, tr:2, gr:true},
+      {n:"Tornado", z:"storm", d:"b", t:"groom", el:[9200,10380], s:17, tr:2, gr:true},
+      {n:"Hurricane", z:"storm", d:"k", t:"bump", el:[9300,10380], s:24, tr:2, gr:false},
+      {n:"Cyclone", z:"storm", d:"k", t:"bump", el:[9300,10380], s:26, tr:1, gr:false},
+      {n:"High Noon", z:"sunshine", d:"b", t:"groom", el:[8800,10200], s:15, tr:2, gr:true},
+      {n:"Tomahawk", z:"sunshine", d:"b", t:"groom", el:[8800,10200], s:16, tr:2, gr:true},
+      {n:"Quickdraw", z:"sunshine", d:"b", t:"groom", el:[8800,10200], s:17, tr:1, gr:true},
+      {n:"Flintlock", z:"sunshine", d:"k", t:"bump", el:[8800,10200], s:23, tr:1, gr:false},
+      {n:"Sundown", z:"priest", d:"b", t:"groom", el:[8500,10000], s:16, tr:2, gr:true},
+      {n:"Shadows", z:"priest", d:"k", t:"tree", el:[8500,10000], s:25, tr:2, gr:false},
+      {n:"Closet", z:"priest", d:"k", t:"tree", el:[8500,10000], s:25, tr:2, gr:false},
+      {n:"Twilight", z:"priest", d:"k", t:"tree", el:[8500,10000], s:24, tr:1, gr:false},
+      {n:"North St. Pat's", z:"north", d:"k", t:"tree", el:[8600,10000], s:25, tr:1, gr:false},
+      {n:"Pioneer Ridge glades", z:"north", d:"k", t:"tree", el:[8400,9900], s:23, tr:1, gr:false},
+      {n:"Morningside Park", z:"morning", d:"k", t:"tree", el:[9500,10380], s:24, tr:1, gr:false},
+      {n:"East Face", z:"morning", d:"kk", t:"bowl", el:[9800,10568], s:32, tr:1, gr:false},
+      {n:"Chute 1", z:"morning", d:"kk", t:"bowl", el:[9900,10568], s:35, tr:1, gr:false}
+    ]
+  },
+  breck:{
+    name:"Breckenridge", lat:39.4797, lon:-106.0718, base:9600, summit:12998, tz:"America/Denver", open:8.5,
+    sub:"Peaks 6 to 10, 9,600 to 12,998 ft. Most terrain faces east toward town.",
+    zones:[
+      {id:"p9", name:"Peak 9 front", short:"Peak 9", aspect:70, exposed:false},
+      {id:"p9n", name:"Peak 9 North Face", short:"9 N Face", aspect:30, exposed:false},
+      {id:"p10", name:"Peak 10", short:"Peak 10", aspect:50, exposed:false},
+      {id:"p8", name:"Peak 8", short:"Peak 8", aspect:80, exposed:false},
+      {id:"p7", name:"Peak 7", short:"Peak 7", aspect:75, exposed:false},
+      {id:"alpine", name:"Alpine bowls (Peaks 6, 7, 8)", short:"Bowls", aspect:105, exposed:true}
+    ],
+    runs:[
+      {n:"Cashier", z:"p9", d:"g", t:"groom", el:[9600,10600], s:9, tr:3, gr:true},
+      {n:"Silverthorne", z:"p9", d:"g", t:"groom", el:[9600,10600], s:10, tr:3, gr:true},
+      {n:"Lehman", z:"p9", d:"b", t:"groom", el:[9800,10900], s:15, tr:3, gr:true},
+      {n:"Upper American", z:"p9", d:"b", t:"groom", el:[10000,10900], s:16, tr:2, gr:true},
+      {n:"Devil's Crotch", z:"p9n", d:"kk", t:"bump", el:[10100,11400], s:31, tr:1, gr:false},
+      {n:"Mine Shaft", z:"p9n", d:"kk", t:"bump", el:[10100,11400], s:30, tr:1, gr:false},
+      {n:"Centennial", z:"p10", d:"b", t:"groom", el:[9800,11600], s:17, tr:3, gr:true},
+      {n:"Crystal", z:"p10", d:"k", t:"groom", el:[9900,11600], s:21, tr:2, gr:true},
+      {n:"Doublejack", z:"p10", d:"k", t:"bump", el:[9900,11600], s:27, tr:2, gr:false},
+      {n:"The Burn", z:"p10", d:"k", t:"tree", el:[10200,11600], s:24, tr:1, gr:false},
+      {n:"Springmeier", z:"p8", d:"b", t:"groom", el:[9700,11200], s:16, tr:3, gr:true},
+      {n:"Claimjumper", z:"p8", d:"b", t:"groom", el:[9700,11000], s:15, tr:2, gr:true},
+      {n:"Four O'Clock", z:"p8", d:"g", t:"groom", el:[9600,10900], s:8, tr:3, gr:true, a:40},
+      {n:"Wirepatch", z:"p7", d:"b", t:"groom", el:[10000,11600], s:16, tr:2, gr:true},
+      {n:"Angel's Rest", z:"p7", d:"b", t:"groom", el:[10000,11600], s:15, tr:2, gr:true},
+      {n:"Monte Cristo", z:"p7", d:"b", t:"groom", el:[10000,11500], s:17, tr:1, gr:true},
+      {n:"Peak 7 Bowl", z:"alpine", d:"k", t:"bowl", el:[11500,12600], s:27, tr:1, gr:false},
+      {n:"Horseshoe Bowl", z:"alpine", d:"k", t:"bowl", el:[11600,12600], s:28, tr:2, gr:false},
+      {n:"Contest Bowl", z:"alpine", d:"k", t:"bowl", el:[11600,12500], s:28, tr:1, gr:false},
+      {n:"Imperial Bowl", z:"alpine", d:"kk", t:"bowl", el:[12000,12998], s:34, tr:1, gr:false},
+      {n:"Kensho Bowl", z:"alpine", d:"kk", t:"bowl", el:[11600,12573], s:31, tr:1, gr:false}
+    ]
+  }
+};
+const TYPE_LABEL = {groom:"Groomers", bump:"Bumps", tree:"Trees", bowl:"Bowls"};
+const DIFF = ["g","b","k","kk"];
+const DIFF_LABEL = {g:"Green", b:"Blue", k:"Black", kk:"Double black"};
+
+// ---------- Storage (best effort) ----------
+const store = {
+  get(k, f){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : f; }catch(e){ return f; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+
+// ---------- Time helpers ----------
+function tzOffsetMs(t, tz){
+  try{
+    const p = new Intl.DateTimeFormat("en-US",{timeZone:tz,hourCycle:"h23",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"}).formatToParts(new Date(t));
+    const g = k => +p.find(x=>x.type===k).value;
+    return Date.UTC(g("year"),g("month")-1,g("day"),g("hour")%24,g("minute"),g("second")) - t;
+  }catch(e){ return -7*3600e3; }
+}
+function localToUTC(dateStr, hour, tz){
+  const [y,m,d] = dateStr.split("-").map(Number);
+  const guess = Date.UTC(y,m-1,d,Math.floor(hour),Math.round((hour%1)*60));
+  return guess - tzOffsetMs(guess, tz);
+}
+function todayIn(tz){
+  try{
+    const p = new Intl.DateTimeFormat("en-CA",{timeZone:tz,year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+    return p;
+  }catch(e){ return new Date().toISOString().slice(0,10); }
+}
+function nowHourIn(tz){
+  try{
+    const p = new Intl.DateTimeFormat("en-US",{timeZone:tz,hourCycle:"h23",hour:"2-digit",minute:"2-digit"}).formatToParts(new Date());
+    return (+p.find(x=>x.type==="hour").value) + (+p.find(x=>x.type==="minute").value)/60;
+  }catch(e){ return 9; }
+}
+function fmtTime(h){
+  const hh = Math.floor(h), mm = Math.round((h-hh)*60);
+  const h12 = ((hh+11)%12)+1;
+  return h12 + ":" + String(mm).padStart(2,"0") + (hh<12?" am":" pm");
+}
+
+// ---------- Sun ----------
+const rad = Math.PI/180, deg = 180/Math.PI;
+function sunPos(t, lat, lon){
+  const n = t/86400000 + 2440587.5 - 2451545.0;
+  const L = (280.460 + 0.9856474*n) % 360;
+  const g = ((357.528 + 0.9856003*n) % 360) * rad;
+  const lam = (L + 1.915*Math.sin(g) + 0.020*Math.sin(2*g)) * rad;
+  const eps = (23.439 - 0.0000004*n) * rad;
+  const ra = Math.atan2(Math.cos(eps)*Math.sin(lam), Math.cos(lam));
+  const dec = Math.asin(Math.sin(eps)*Math.sin(lam));
+  const gmst = ((18.697374558 + 24.06570982441908*n) % 24 + 24) % 24;
+  const H = ((gmst*15 + lon) * rad) - ra;
+  const phi = lat*rad;
+  const el = Math.asin(Math.sin(phi)*Math.sin(dec) + Math.cos(phi)*Math.cos(dec)*Math.cos(H));
+  const az = Math.atan2(-Math.sin(H), Math.tan(dec)*Math.cos(phi) - Math.sin(phi)*Math.cos(H));
+  return {el: el*deg, az: ((az*deg)%360+360)%360};
+}
+
+// ---------- State ----------
+const defaults = { resort:"steamboat", time:null, cond:{date:null, sky:"1", wind:"0", hi:28, lo:9, yhi:36, snow:0}, prefs:{types:["groom","bump","tree","bowl"], max:"k"}, zoneFilter:null, openRun:null };
+const S = Object.assign({}, defaults, store.get("sun-snow.state", {}));
+S.cond = Object.assign({}, defaults.cond, S.cond||{});
+S.prefs = Object.assign({}, defaults.prefs, S.prefs||{});
+S.zoneFilter = null; S.openRun = null;
+const R = () => RESORTS[S.resort];
+const today = todayIn("America/Denver");
+if(!S.cond.date || S.cond.date < today) S.cond.date = today;
+function initTime(){
+  const h = S.cond.date === today ? nowHourIn(R().tz) : 9;
+  S.time = Math.min(16, Math.max(8.5, Math.round(h*4)/4));
+}
+initTime();
+function save(){ store.set("sun-snow.state", {resort:S.resort, cond:S.cond, prefs:S.prefs}); }
+
+function groomKey(){ return "sun-snow.groom."+S.resort+"."+S.cond.date; }
+function editsKey(){ return "sun-snow.edits."+S.resort; }
+function groomed(run){ const m = store.get(groomKey(), {}); return run.n in m ? m[run.n] : run.gr; }
+function setGroomed(run, v){ const m = store.get(groomKey(), {}); m[run.n] = v; store.set(groomKey(), m); }
+function edits(){ return store.get(editsKey(), {}); }
+function runAspect(run){ const e = edits()[run.n]; if(e && typeof e.aspect==="number") return e.aspect; const z = R().zones.find(z=>z.id===run.z); return run.a ?? z.aspect; }
+function setAspect(run, a){ const e = edits(); e[run.n] = Object.assign({}, e[run.n], {aspect:a}); store.set(editsKey(), e); }
+function clearEdit(run){ const e = edits(); delete e[run.n]; store.set(editsKey(), e); }
+
+// ---------- Model ----------
+let SUN = null; // precomputed steps for resort+date
+function buildSun(){
+  const r = R(); const steps = [];
+  for(let h=5; h<=17.001; h+=0.25){ steps.push(Object.assign({h}, sunPos(localToUTC(S.cond.date, h, r.tz), r.lat, r.lon))); }
+  SUN = {key:S.resort+S.cond.date, steps};
+}
+function sunAt(h){
+  if(!SUN || SUN.key !== S.resort+S.cond.date) buildSun();
+  const i = Math.round((h-5)/0.25);
+  return SUN.steps[Math.max(0, Math.min(SUN.steps.length-1, i))];
+}
+function baseTemp(h){
+  const lo = +S.cond.lo, hi = +S.cond.hi;
+  if(h <= 6.5) return lo;
+  if(h <= 15) return lo + (hi-lo)*(1-Math.cos(Math.PI*(h-6.5)/8.5))/2;
+  return hi - (hi-lo)*Math.min(1,(h-15)/15.5);
+}
+const clamp = (x,a,b)=>Math.max(a,Math.min(b,x));
+function incidence(sun, aspect, slope){
+  if(sun.el <= 0) return 0;
+  const s = slope*rad, e = sun.el*rad;
+  return Math.max(0, Math.cos(s)*Math.sin(e) + Math.sin(s)*Math.cos(e)*Math.cos((sun.az-aspect)*rad));
+}
+
+function scoreRun(run, t){
+  const r = R(), c = S.cond;
+  const zone = r.zones.find(z=>z.id===run.z);
+  const aspect = runAspect(run);
+  const mid = (run.el[0]+run.el[1])/2;
+  const lapse = 3.5*(mid - r.base)/1000;
+  const Tnow = baseTemp(t) - lapse;
+  const clear = +c.sky;
+  let E = 0;
+  for(let h=6; h<=t+1e-6; h+=0.25){
+    const sp = sunAt(h); const Ts = baseTemp(h) - lapse;
+    const sunF = incidence(sp, aspect, run.s) * clear;
+    const g = clamp((Ts-20)/15, 0, 1), w = clamp((Ts-32)/8, 0, 1)*0.5;
+    E += (sunF*g + w)*0.25;
+  }
+  const sunNow = incidence(sunAt(t), aspect, run.s) * clear;
+  const snow = +c.snow;
+  const powder = snow >= 4;
+  const refrozen = (+c.yhi - lapse) >= 34 && (+c.lo - lapse) <= 28 && snow < 3;
+  const hrs = Math.max(0, t - r.open);
+  const isGroomed = run.t === "groom" ? groomed(run) : false;
+  const kind = run.t === "groom" ? (isGroomed ? "groom" : "packed") : run.t;
+  const why = []; const add = (w, txt) => why.push({w, txt});
+  let sc;
+
+  if(kind === "groom"){
+    sc = 86;
+    const wear = Math.min(30, run.tr*3.5*hrs*(powder?0.6:1));
+    sc -= wear;
+    if(hrs < 1.25) add(6, "Fresh corduroy");
+    else if(wear > 14) add(-wear, "Busy groomer, getting skied off");
+    if(refrozen){
+      if(E < 0.6){ sc -= 18; add(-18, "Still firm from last night's refreeze"); }
+      else if(E < 1.0){ sc -= 6; add(-6, "Just starting to soften"); }
+      else if(E <= 2.5){ sc += 6; add(10, "Sun has softened it, edges grip"); }
+      else if(E <= 3.5){ sc -= 10; add(-10, "Getting soft and pushy"); }
+      else { sc -= 28; add(-28, "Slushy now"); }
+    } else if(E > 3 && Tnow > 34){ sc -= 15; add(-15, "Warm and turning heavy"); }
+    else if(Tnow < 22 && !powder) add(2, "Cold, chalky winter groomer");
+    if(powder){ sc += 4; add(5, "New snow groomed in"); }
+  } else if(kind === "packed"){
+    sc = 62 - Math.min(20, run.tr*2*hrs);
+    add(-8, "Not groomed today, likely chopped up");
+    if(refrozen){
+      if(E < 0.6){ sc -= 26; add(-26, "Refrozen chunder, rough"); }
+      else if(E <= 2.5){ sc += 8; add(8, "Softening chop"); }
+      else if(E > 3.5){ sc -= 14; add(-14, "Heavy and slushy"); }
+    }
+    if(powder){ sc += Math.min(snow,12)*1.6; add(10, "New snow on top"); }
+  } else {
+    sc = kind === "bump" ? 62 : kind === "tree" ? 60 : 64;
+    if(powder){
+      const fresh = Math.min(snow,16)/16*34;
+      const decay = Math.min(0.85, run.tr*(kind==="tree"?0.06:0.12)*hrs);
+      const now = fresh*(1-decay);
+      sc += now;
+      if(decay < 0.35) add(now, snow+"\" of new snow, still fresh");
+      else if(decay < 0.65) add(now, "Some fresh left between tracks");
+      else add(-6, "Mostly tracked out");
+      if(clear > 0.5 && Tnow > 28 && E > 1.2){ sc -= 14; add(-14, "Sun is baking the new snow"); }
+      else if(Math.cos(aspect*rad) > 0.5){ sc += 5; add(5, "Shady slope keeps the powder cold"); }
+    } else if(refrozen){
+      if(E < 0.6){ sc -= 38; add(-38, kind==="bump"?"Refrozen, bulletproof bumps":"Refrozen and crusty"); }
+      else if(E < 1.0){ sc -= 15; add(-15, "Starting to soften"); }
+      else if(E <= 2.5){ sc += 18; add(18, kind==="bump"?"Soft, forgiving bumps":"Softened up nicely"); }
+      else if(E <= 3.5){ sc += 4; add(4, "Soft, getting heavy"); }
+      else { sc -= 16; add(-16, "Slushy and sticky"); }
+    } else {
+      if(kind === "tree"){ sc += 3; add(3, "Protected winter snow in the trees"); }
+      else add(0, "Packed winter snow");
+    }
+  }
+  if(clear <= 0.3){
+    if(kind === "bowl"){ sc -= 10; add(-10, "Flat light above treeline"); }
+    else if(kind === "tree"){ sc += 8; add(8, "Trees give definition in flat light"); }
+    else if(kind === "bump"){ sc -= 4; add(-4, "Hard to read bumps in flat light"); }
+  }
+  const wind = +c.wind;
+  if(zone.exposed && wind === 2){ sc -= 25; add(-25, "Exposed to strong wind, lift holds likely"); }
+  else if(zone.exposed && wind === 1){ sc -= 8; add(-8, "Breezy up top"); }
+  if(Tnow < 10){
+    if(sunNow > 0.4){ sc += 6; add(6, "In the sun, takes the edge off the cold"); }
+    else if(sunNow < 0.1){ sc -= 5; add(-5, "Shaded and frigid"); }
+  }
+  sc = clamp(Math.round(sc), 0, 100);
+  why.sort((a,b)=>Math.abs(b.w)-Math.abs(a.w));
+  return {score:sc, why:why.slice(0,2).map(x=>x.txt), sunNow, aspect, Tnow, kind};
+}
+
+function eligible(run){
+  return DIFF.indexOf(run.d) <= DIFF.indexOf(S.prefs.max) && S.prefs.types.includes(run.t);
+}
+function zoneScore(zid, t){
+  const rs = R().runs.filter(r=>r.z===zid && eligible(r)).map(r=>scoreRun(r,t).score).sort((a,b)=>b-a);
+  if(!rs.length) return null;
+  const top = rs.slice(0,2); return Math.round(top.reduce((a,b)=>a+b,0)/top.length);
+}
+function tier(s){ return s>=80?["prime","Prime"]:s>=65?["good","Good"]:s>=50?["fair","Fair"]:["skip","Skip"]; }
+function compass(a){ return ["N","NE","E","SE","S","SW","W","NW"][Math.round(((a%360)+360)%360/45)%8]; }
+
+// ---------- Rendering ----------
+const $ = id => document.getElementById(id);
+function diffSym(d){
+  if(d==="g") return '<svg class="dsym" viewBox="0 0 18 18" aria-label="Green circle"><circle cx="9" cy="9" r="7" fill="var(--green)"/></svg>';
+  if(d==="b") return '<svg class="dsym" viewBox="0 0 18 18" aria-label="Blue square"><rect x="2.5" y="2.5" width="13" height="13" fill="var(--blue)"/></svg>';
+  if(d==="k") return '<svg class="dsym" viewBox="0 0 18 18" aria-label="Black diamond"><path d="M9 1.5 16.5 9 9 16.5 1.5 9Z" fill="var(--sym-black)"/></svg>';
+  return '<svg class="dsym" viewBox="0 0 18 18" aria-label="Double black diamond"><path d="M5 3 9.5 9 5 15 .5 9Z M13 3 17.5 9 13 15 8.5 9Z" fill="var(--sym-black)"/></svg>';
+}
+function esc(s){ return String(s).replace(/[&<>"]/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m])); }
+
+function renderResortSeg(){
+  $("resortSeg").innerHTML = Object.entries(RESORTS).map(([k,r]) => `<button type="button" data-r="${k}" aria-pressed="${k===S.resort}">${esc(r.name)}</button>`).join("");
+  $("resortSeg").querySelectorAll("button").forEach(b => b.onclick = () => { S.resort = b.dataset.r; S.zoneFilter=null; S.openRun=null; save(); renderAll(); });
+}
+function renderChips(){
+  $("typeChips").innerHTML = Object.entries(TYPE_LABEL).map(([k,l]) => `<button type="button" class="chip" data-t="${k}" aria-pressed="${S.prefs.types.includes(k)}">${l}</button>`).join("");
+  $("typeChips").querySelectorAll("button").forEach(b => b.onclick = () => {
+    const t = b.dataset.t, has = S.prefs.types.includes(t);
+    if(has && S.prefs.types.length === 1) return;
+    S.prefs.types = has ? S.prefs.types.filter(x=>x!==t) : S.prefs.types.concat(t);
+    save(); renderAll();
+  });
+  $("diffChips").innerHTML = DIFF.map(d => `<button type="button" class="chip" data-d="${d}" aria-pressed="${S.prefs.max===d}">${DIFF_LABEL[d]}</button>`).join("");
+  $("diffChips").querySelectorAll("button").forEach(b => b.onclick = () => { S.prefs.max = b.dataset.d; save(); renderAll(); });
+}
+function renderCond(){
+  const c = S.cond;
+  ["date","sky","wind","hi","lo","yhi","snow"].forEach(k => { const el = $(k); if(document.activeElement !== el) el.value = c[k]; });
+  $("date").min = today;
+  const sky = {"1":"Bluebird","0.6":"Partly cloudy","0.25":"Overcast"}[c.sky] || "";
+  const wind = ["calm","breezy","strong wind"][+c.wind];
+  const refreeze = (+c.yhi >= 34 && +c.lo <= 28 && +c.snow < 3);
+  $("condSum").textContent = `${sky} · ${c.lo}–${c.hi}°F · ${c.snow}" new · ${wind}${refreeze ? " · overnight refreeze" : ""}`;
+}
+function renderTime(){
+  $("time").value = S.time;
+  $("clock").textContent = fmtTime(S.time);
+  const sp = sunAt(S.time);
+  const sr = SUN.steps.find(s=>s.el>0), ss = [...SUN.steps].reverse().find(s=>s.el>0);
+  $("sunread").innerHTML = sp.el > 0
+    ? `Sun ${Math.round(sp.el)}° up, from the ${compass(sp.az)}<br>${Math.round(baseTemp(S.time))}°F at base`
+    : `Sun is down<br>${Math.round(baseTemp(S.time))}°F at base`;
+  if(sr && ss) $("sunread").title = `Sunrise about ${fmtTime(sr.h)}, sunset about ${fmtTime(ss.h)}`;
+}
+function renderDial(){
+  const r = R(), cx = 170, cy = 170, t = S.time, sp = sunAt(t);
+  const pt = (a, rr) => [cx + rr*Math.sin(a*rad), cy - rr*Math.cos(a*rad)];
+  let svg = "";
+  svg += `<circle cx="${cx}" cy="${cy}" r="126" fill="none" stroke="var(--line)" stroke-width="1"/>`;
+  svg += `<circle cx="${cx}" cy="${cy}" r="56" fill="none" stroke="var(--line)" stroke-width="1"/>`;
+  if(sp.el > 0){
+    const a0 = sp.az - 90, a1 = sp.az + 90;
+    const [x0,y0] = pt(a0,60), [x1,y1] = pt(a1,60);
+    svg += `<path d="M${x0} ${y0} A60 60 0 0 1 ${x1} ${y1}" fill="none" stroke="var(--sun)" stroke-width="5" stroke-linecap="round" opacity=".9"/>`;
+  }
+  ["N","E","S","W"].forEach((l,i) => { const [x,y] = pt(i*90, 148); svg += `<text x="${x}" y="${y+5}" text-anchor="middle" font-size="13" font-weight="800">${l}</text>`; });
+  r.zones.forEach(z => {
+    const s = zoneScore(z.id, t);
+    const a0 = z.aspect - 19, a1 = z.aspect + 19;
+    const [ox0,oy0] = pt(a0,120), [ox1,oy1] = pt(a1,120), [ix1,iy1] = pt(a1,66), [ix0,iy0] = pt(a0,66);
+    const op = s===null ? 0 : 0.15 + 0.85*clamp((s-40)/50,0,1);
+    const sel = S.zoneFilter === z.id;
+    svg += `<g class="wedge" data-z="${z.id}" role="button" tabindex="0" aria-label="${esc(z.name)}, score ${s===null?"no matching runs":s}">`;
+    svg += `<path d="M${ix0} ${iy0} L${ox0} ${oy0} A120 120 0 0 1 ${ox1} ${oy1} L${ix1} ${iy1} A66 66 0 0 0 ${ix0} ${iy0}Z" fill="var(--line)"/>`;
+    svg += `<path d="M${ix0} ${iy0} L${ox0} ${oy0} A120 120 0 0 1 ${ox1} ${oy1} L${ix1} ${iy1} A66 66 0 0 0 ${ix0} ${iy0}Z" fill="var(--accent)" opacity="${op}" stroke="${sel?"var(--ink)":"none"}" stroke-width="2.5"/>`;
+    const [lx,ly] = pt(z.aspect, 93);
+    svg += `<text x="${lx}" y="${ly-2}" text-anchor="middle" font-size="10.5" font-weight="800" style="fill:var(--ink)">${esc(z.short)}</text>`;
+    svg += `<text x="${lx}" y="${ly+11}" text-anchor="middle" font-size="11" font-weight="600" style="fill:var(--ink);font-family:var(--mono)">${s===null?"–":s}</text>`;
+    svg += `</g>`;
+  });
+  if(sp.el > 0){
+    const [sx,sy] = pt(sp.az, 134);
+    const rr = 6 + sp.el/8;
+    svg += `<circle cx="${sx}" cy="${sy}" r="${rr+5}" fill="var(--sun)" opacity=".25"/><circle cx="${sx}" cy="${sy}" r="${rr}" fill="var(--sun)"/>`;
+  }
+  svg += `<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="10" font-weight="800" letter-spacing="1">SLOPES</text><text x="${cx}" y="${cy+10}" text-anchor="middle" font-size="10" font-weight="800" letter-spacing="1">FACING</text>`;
+  $("dial").innerHTML = svg;
+  $("dial").querySelectorAll(".wedge").forEach(g => {
+    const go = () => { S.zoneFilter = S.zoneFilter === g.dataset.z ? null : g.dataset.z; renderAll(); };
+    g.onclick = go; g.onkeydown = e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } };
+  });
+}
+function scoredRuns(t){
+  return R().runs.filter(eligible).map(run => Object.assign({run}, scoreRun(run, t))).sort((a,b)=>b.score-a.score);
+}
+function renderPick(){
+  const list = scoredRuns(S.time);
+  if(!list.length){ $("pick").innerHTML = `<div class="why">No runs match your terrain and difficulty picks.</div>`; return; }
+  const p = list[0], z = R().zones.find(z=>z.id===p.run.z), [cls, lab] = tier(p.score);
+  $("pick").innerHTML = `<div class="label">Best right now</div>
+    <div class="name">${diffSym(p.run.d)}${esc(p.run.n)} <span class="score"><span class="tag t-${cls}">${lab} ${p.score}</span></span></div>
+    <div class="why">${esc(z.name)}, faces ${compass(p.aspect)}. ${esc(p.why.join(". "))}.</div>`;
+}
+function renderPlan(){
+  const r = R(), hours = [9,10,11,12,13,14,15];
+  const heatHours = [8.5,9.5,10.5,11.5,12.5,13.5,14.5,15.5];
+  $("plan").innerHTML = hours.map(h => {
+    let best = null;
+    r.zones.forEach(z => { const s = zoneScore(z.id, h); if(s!==null && (!best || s > best.s)) best = {z, s}; });
+    if(!best) return "";
+    const top = R().runs.filter(x=>x.z===best.z.id && eligible(x)).map(x=>Object.assign({run:x}, scoreRun(x,h))).sort((a,b)=>b.score-a.score)[0];
+    const heat = heatHours.map(hh => { const s = zoneScore(best.z.id, hh) ?? 0; return `<span style="background:var(--accent);opacity:${(0.12+0.88*clamp((s-40)/50,0,1)).toFixed(2)}" title="${fmtTime(hh)}: ${s}"></span>`; }).join("");
+    const cur = S.time >= h && S.time < h+1;
+    return `<div class="slot${cur?" cur":""}" data-h="${h}" role="button" tabindex="0" aria-label="Jump to ${fmtTime(h)}">
+      <div class="t">${fmtTime(h).replace(":00","")}</div>
+      <div style="min-width:0"><div class="z">${esc(best.z.name)}</div><div class="r">${esc(top.run.n)}: ${esc(top.why[0]||"")}</div></div>
+      <div class="heat" style="--n:${heatHours.length}" aria-hidden="true">${heat}</div></div>`;
+  }).join("");
+  $("plan").querySelectorAll(".slot").forEach(el => {
+    const go = () => { S.time = +el.dataset.h; renderAll(); };
+    el.onclick = go; el.onkeydown = e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } };
+  });
+}
+function renderRuns(){
+  const r = R();
+  let list = scoredRuns(S.time);
+  const hidden = r.runs.length - list.length;
+  if(S.zoneFilter) list = list.filter(x=>x.run.z===S.zoneFilter);
+  const zf = S.zoneFilter ? r.zones.find(z=>z.id===S.zoneFilter) : null;
+  $("listTitle").textContent = zf ? zf.name : "Ski this now";
+  $("filterLine").innerHTML = zf ? `<button type="button" id="clearZone">Show all zones</button>` : (hidden ? `${hidden} runs hidden by your picks` : "");
+  const cz = $("clearZone"); if(cz) cz.onclick = () => { S.zoneFilter = null; renderAll(); };
+  $("runs").innerHTML = list.map(x => {
+    const z = r.zones.find(z=>z.id===x.run.z), [cls, lab] = tier(x.score);
+    const open = S.openRun === x.run.n;
+    const g = x.run.t==="groom" ? (groomed(x.run) ? "groomed" : "not groomed") : TYPE_LABEL[x.run.t].toLowerCase().replace(/s$/,"");
+    const edited = edits()[x.run.n] ? " · edited" : "";
+    let h = `<div class="run"><button type="button" class="runrow" data-n="${esc(x.run.n)}" aria-expanded="${open}">
+      ${diffSym(x.run.d)}
+      <div style="min-width:0"><div class="nm">${esc(x.run.n)}</div>
+        <div class="meta">${esc(z.short)} · faces ${compass(x.aspect)} · ${g} · ${Math.round(x.Tnow)}°F${edited}</div>
+        <div class="why">${esc(x.why.join(". "))}</div></div>
+      <div class="score"><b>${x.score}</b><div class="bar"><i style="width:${x.score}%;background:var(--${cls==="prime"?"good":cls==="good"?"blue":cls==="fair"?"warn":"bad"})"></i></div><span class="tag t-${cls}">${lab}</span></div>
+    </button>`;
+    if(open){
+      h += `<div class="edit">
+        ${x.run.t==="groom" ? `<label class="toggle"><input type="checkbox" id="gr-${esc(x.run.n).replace(/\W/g,"")}" data-g="${esc(x.run.n)}" ${groomed(x.run)?"checked":""}> Groomed today</label>` : ""}
+        <div class="fields"><div class="field full"><label for="asp">Slope faces <span id="aspv">${compass(x.aspect)} (${Math.round(x.aspect)}°)</span></label>
+          <input type="range" id="asp" min="0" max="359" step="5" value="${Math.round(x.aspect)}" data-a="${esc(x.run.n)}"></div></div>
+        <div class="small">${esc(z.name)} · ${x.run.el[0].toLocaleString()}–${x.run.el[1].toLocaleString()} ft · about ${x.run.s}° pitch</div>
+        ${edits()[x.run.n] ? `<button type="button" class="linkbtn" data-reset="${esc(x.run.n)}">Reset direction to default</button>` : ""}
+      </div>`;
+    }
+    return h + `</div>`;
+  }).join("") || `<p class="small">No runs match. Widen your terrain or difficulty picks.</p>`;
+
+  $("runs").querySelectorAll(".runrow").forEach(b => b.onclick = () => { S.openRun = S.openRun === b.dataset.n ? null : b.dataset.n; renderRuns(); });
+  const byName = n => r.runs.find(x=>x.n===n);
+  $("runs").querySelectorAll("[data-g]").forEach(cb => cb.onchange = () => { setGroomed(byName(cb.dataset.g), cb.checked); renderAll(); });
+  $("runs").querySelectorAll("[data-a]").forEach(sl => {
+    sl.oninput = () => { $("aspv").textContent = `${compass(+sl.value)} (${sl.value}°)`; };
+    sl.onchange = () => { setAspect(byName(sl.dataset.a), +sl.value); renderAll(); };
+  });
+  $("runs").querySelectorAll("[data-reset]").forEach(b => b.onclick = () => { clearEdit(byName(b.dataset.reset)); renderAll(); });
+}
+function renderAll(){
+  const r = R();
+  $("resortName").textContent = r.name;
+  $("resortSub").textContent = r.sub;
+  buildSun();
+  renderResortSeg(); renderChips(); renderCond(); renderTime(); renderDial(); renderPick(); renderPlan(); renderRuns();
+}
+
+// ---------- Wiring ----------
+$("time").addEventListener("input", e => { S.time = +e.target.value; renderTime(); renderDial(); renderPick(); renderPlan(); renderRuns(); });
+["sky","wind","hi","lo","yhi","snow"].forEach(k => $(k).addEventListener("change", e => {
+  const v = e.target.value; if(v === "") return;
+  S.cond[k] = (k==="sky"||k==="wind") ? v : Math.round(+v);
+  save(); renderAll();
+}));
+$("date").addEventListener("change", e => { if(!e.target.value) return; S.cond.date = e.target.value; initTime(); save(); renderAll(); });
+try{ if(window.matchMedia("(min-width:920px)").matches) $("condBox").open = true; }catch(e){}
+
+renderAll();
+})();
+</script>
