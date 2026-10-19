@@ -1,0 +1,115 @@
+[
+ {
+  "id": "christie",
+  "name": "Christie Peak",
+  "lifts": [
+   "Bashor",
+   "Christie Peak Express",
+   "Greenhorn Ranch Express"
+  ],
+  "aspectDeg": 299.7340414090991,
+  "topFt": 8009,
+  "bottomFt": 6898,
+  "windExposed": false,
+  "runCount": 26
+ },
+ {
+  "id": "mahogany",
+  "name": "Mahogany Ridge & Fish Creek Canyon",
+  "lifts": [
+   "Mahogany Ridge Express"
+  ],
+  "aspectDeg": 308.24936726622747,
+  "topFt": 9799,
+  "bottomFt": 7934,
+  "windExposed": false,
+  "runCount": 14
+ },
+ {
+  "id": "morningside",
+  "name": "Morningside Park",
+  "lifts": [
+   "Morningside Lift"
+  ],
+  "aspectDeg": 148.54304322688205,
+  "topFt": 10531,
+  "bottomFt": 9989,
+  "windExposed": true,
+  "runCount": 16
+ },
+ {
+  "id": "werner",
+  "name": "Mt. Werner",
+  "lifts": [],
+  "aspectDeg": 322.29857686538577,
+  "topFt": 10564,
+  "bottomFt": 9610,
+  "windExposed": true,
+  "runCount": 11
+ },
+ {
+  "id": "pioneer",
+  "name": "Pioneer Ridge",
+  "lifts": [
+   "Pony Express"
+  ],
+  "aspectDeg": 269.7671559878793,
+  "topFt": 9791,
+  "bottomFt": 7949,
+  "windExposed": false,
+  "runCount": 22
+ },
+ {
+  "id": "storm",
+  "name": "Storm Peak",
+  "lifts": [
+   "Storm Peak Express",
+   "Bar UE",
+   "Four Points"
+  ],
+  "aspectDeg": 289.67244698108595,
+  "topFt": 10374,
+  "bottomFt": 7452,
+  "windExposed": true,
+  "runCount": 30
+ },
+ {
+  "id": "sundown",
+  "name": "Sundown",
+  "lifts": [
+   "Sundown Express"
+  ],
+  "aspectDeg": 259.97412590632126,
+  "topFt": 10375,
+  "bottomFt": 8477,
+  "windExposed": true,
+  "runCount": 6
+ },
+ {
+  "id": "sunshine",
+  "name": "Sunshine Peak",
+  "lifts": [
+   "South Peak",
+   "Sunshine Express"
+  ],
+  "aspectDeg": 219.81851389142366,
+  "topFt": 10380,
+  "bottomFt": 8447,
+  "windExposed": true,
+  "runCount": 29
+ },
+ {
+  "id": "thunderhead",
+  "name": "Thunderhead",
+  "lifts": [
+   "Burgess Creek",
+   "Thunderhead Express",
+   "Elkhead Express"
+  ],
+  "aspectDeg": 305.1486153750321,
+  "topFt": 9193,
+  "bottomFt": 7459,
+  "windExposed": false,
+  "runCount": 39
+ }
+]

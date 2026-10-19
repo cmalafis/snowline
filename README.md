@@ -1,1 +1,79 @@
-# snowline
+# Snowline
+
+Where the best snow is, hour by hour, at a given resort. See `SNOWLINE_BUILD.md` for the full brief.
+
+## Layout
+
+```
+config/resorts/<id>.json   per-resort config: OSM ski area, base/summit, zones, run overrides, aliases
+packages/core              framework-agnostic types, geo math and the scoring model (no I/O)
+packages/pipeline          data pipeline: OSM trails, DEM terrain analysis, validation, app export
+apps/web                   Next.js PWA: API routes (data, weather, feedback) and the mobile UI
+data/<id>/                 pipeline output (runs.json, lifts.json, zones.json, runs.md, app.json)
+deploy/openshift           BuildConfig, Deployment, Service, Route, feedback PVC
+reference/                 prototype, local knowledge, research notes, trail maps
+```
+
+## Local setup
+
+Node 20+.
+
+```sh
+npm install
+npm test            # unit + scenario tests (geo, terrain, solar vs NREL SPA, scoring)
+npm run dev         # the app on http://localhost:3000
+npm run build && npm run e2e   # Playwright smoke test against the production build
+```
+
+## Data pipeline
+
+```sh
+npm run pipeline -- steamboat            # fetch trails (cached), analyze terrain, print the run table
+npm run pipeline -- steamboat --refresh  # re-fetch OSM runs and lifts
+npm run validate -- steamboat            # compare against reference/local-knowledge.md
+npm run scores -- steamboat              # 9am-3pm score table for 10 runs under each test scenario
+```
+
+Steps:
+
+1. **Trails**: Overpass API, `piste:type=downhill` ways and `aerialway` ways in the resort bbox, plus the ski-area boundary. Raw response is cached in `data/<id>/osm.json`. Same-named ways are merged into one run.
+2. **DEM**: a 10 m USGS 3DEP GeoTIFF for the ski area, in the resort's UTM zone (cached in `data/<id>/dem.tif`, gitignored). If 3DEP is unreachable it falls back to Open-Meteo's ~90 m elevation, and every run is marked `demSource: "open-meteo"`.
+3. **Terrain**: each run is cut into ~50 m segments. Per segment: elevation, pitch and aspect from the DEM gradient (Horn's method on a lightly smoothed grid, corrected to true north). Never from the line direction. Area pistes (glades, bowls) are sampled on a grid inside the polygon. Per run: top/bottom elevation, length-weighted pitch, circular-mean aspect. "Mixed aspect" means the segment aspects span more than 90° after trimming the outer 10% of length.
+4. **Zones**: each run goes to the lift you'd ride to reach its top and lap it from its bottom. `zoneOverrides` merges lifts into named zones. A zone is wind-exposed when its top is above `treelineFt` or within `ridgeProximityFt` of the summit.
+
+5. **Export**: `data/<id>/app.json`, the slim file the app ships (simplified lines, profiles, mixed-aspect parts).
+
+The validation script also runs an independent DEM sanity check. Lifts climb roughly the fall line, so it compares each lift's top-to-bottom bearing with the DEM aspect of runs near the lift.
+
+## Adding a resort
+
+1. Find the ski area's OSM element (`landuse=winter_sports`) and create `config/resorts/<id>.json` (copy `steamboat.json`).
+2. Run `npm run pipeline -- <id>`. Read the zone table, then set `zoneOverrides`, `zoneNames` and `ignoreLifts` (transport gondolas) until the zones match how people talk about the mountain.
+3. Add the owner's notes to `reference/local-knowledge.md` and run `npm run validate -- <id>`.
+
+No code changes should be needed. If one is, it's a bug in the pipeline.
+
+## Scoring model
+
+`packages/core/src/scoring/`, pure TypeScript with every threshold in `config.ts`:
+
+- **Sun**: NOAA solar position (`solar.ts`), tested against NREL SPA reference values at Steamboat.
+- **Energy**: radiation absorbed by each slope (`cos i` from aspect and pitch, times direct-normal plus diffuse irradiance from the forecast, or clear sky scaled by cloud), integrated every 15 minutes since dawn and gated by temperature at the run's elevation.
+- **Surface**: frozen → softening → prime → heavy → slush after a refreeze. A slope only counts as refrozen if it gets enough sun in a day to have melted.
+- **Run types**: groomers (corduroy wears with traffic), ungroomed groomers, bumps, trees and bowls. Powder decays with tracking. Flat light, wind holds and cold-day sun are also modelled.
+- **Output**: 0–100, a label (Prime/Good/Fair/Skip) and the top two reasons.
+
+The app runs the model in the browser, so scrubbing time is instant and it works offline. **Demo** days replay the four test scenarios on real runs, which is useful off-season.
+
+## Deploy to OpenShift
+
+The app runs as one container: the Next.js standalone server plus each resort's `app.json`. The image builds in the cluster, so your laptop's architecture doesn't matter.
+
+```sh
+oc login ...                                # or use an existing session
+scripts/deploy-openshift.sh cmalafis-dev    # apply manifests, upload source, build, roll out, print the URL
+```
+
+- Testers' feedback ("how did it ski?" ratings, comments, aspect/grooming corrections) is appended to `/feedback/feedback.jsonl` on a 1 Gi PVC, and also logged to stdout. Read it with `oc exec deploy/snowline -- cat /feedback/feedback.jsonl`.
+- The Developer Sandbox scales idle deployments to zero. Bring it back with `oc scale deploy/snowline --replicas=1`, or rerun the script.
+- The same image runs anywhere that runs containers (e.g. AWS App Runner/ECS). Build step 6 covers AWS with CDK.

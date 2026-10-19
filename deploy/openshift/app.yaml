@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: snowline-feedback
+  labels: { app: snowline }
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests: { storage: 1Gi }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snowline
+  labels: { app: snowline, app.kubernetes.io/part-of: snowline }
+  annotations:
+    # Roll out automatically whenever a new image lands in the snowline image stream.
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"snowline:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"web\")].image"}]'
+spec:
+  replicas: 1
+  strategy:
+    # The feedback volume is ReadWriteOnce, so stop the old pod before starting the new one.
+    type: Recreate
+  selector:
+    matchLabels: { app: snowline }
+  template:
+    metadata:
+      labels: { app: snowline }
+    spec:
+      containers:
+        - name: web
+          image: snowline:latest
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: FEEDBACK_DIR
+              value: /feedback
+          resources:
+            requests: { cpu: 100m, memory: 256Mi }
+            limits: { cpu: "1", memory: 512Mi }
+          readinessProbe:
+            httpGet: { path: /api/health, port: http }
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /api/health, port: http }
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          volumeMounts:
+            - name: feedback
+              mountPath: /feedback
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: [ALL] }
+      volumes:
+        - name: feedback
+          persistentVolumeClaim:
+            claimName: snowline-feedback
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: snowline
+  labels: { app: snowline }
+spec:
+  selector: { app: snowline }
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: snowline
+  labels: { app: snowline }
+spec:
+  to: { kind: Service, name: snowline }
+  port: { targetPort: http }
+  # HTTPS is required for geolocation, the service worker and installing to the iOS home screen.
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

@@ -1,0 +1,68 @@
+import type { Difficulty, RunType } from "../types.ts";
+
+/** Every threshold the scoring model uses. Tune here, not in score.ts. */
+export interface ScoringConfig {
+  stepHours: number;
+  /** Day window the energy integration covers. */
+  dayStartHour: number;
+  dayEndHour: number;
+  lapseFPer1000Ft: number;
+
+  // Softening energy: radiation counts fully above `sunFullF`, not at all below `sunMinF`;
+  // air above `meltF` softens snow even in shade, reaching `shadeRate` per hour at `meltF + meltRangeF`.
+  sunMinF: number;
+  sunFullF: number;
+  meltF: number;
+  meltRangeF: number;
+  shadeRate: number;
+  /** Absorbed radiation above this counts as "in the sun". */
+  inSunThreshold: number;
+
+  /**
+   * A slope refreezes only if it melted yesterday: yesterday's high and last night's low at its elevation, plus
+   * enough sun over a full day (today's total energy stands in for yesterday's) that its surface went wet.
+   */
+  refreeze: { yesterdayHighAboveF: number; overnightLowBelowF: number; cancelledBySnowIn: number; minDailyEnergy: number };
+  /** Energy (normalised kWh/m²) at which each surface stage begins after a refreeze. */
+  surface: { softening: number; prime: number; heavy: number; slush: number };
+  /** Without a refreeze: heavy when warmer than this and energy above `heavy`. */
+  winterHeavyF: number;
+
+  powder: { minIn: number; fullIn: number; maxBonus: number; trackRateGroomer: number; trackRateOpen: number; trackRateTree: number; maxDecay: number };
+  flatLightCloud: number;
+  wind: { breezyGustMph: number; holdGustMph: number };
+  coldF: number;
+
+  /** Relative skier traffic, 0..1.5, by difficulty and run type. */
+  traffic: { byDifficulty: Record<Difficulty, number>; byType: Record<RunType, number> };
+  labels: { prime: number; good: number; fair: number };
+}
+
+export const DEFAULT_SCORING: ScoringConfig = {
+  stepHours: 0.25,
+  dayStartHour: 5,
+  dayEndHour: 17.5,
+  lapseFPer1000Ft: 3.5,
+
+  sunMinF: 15,
+  sunFullF: 26,
+  meltF: 32,
+  meltRangeF: 8,
+  shadeRate: 0.05,
+  inSunThreshold: 0.25,
+
+  refreeze: { yesterdayHighAboveF: 34, overnightLowBelowF: 28, cancelledBySnowIn: 3, minDailyEnergy: 2.9 },
+  surface: { softening: 0.65, prime: 1.3, heavy: 2.9, slush: 4.2 },
+  winterHeavyF: 34,
+
+  powder: { minIn: 4, fullIn: 14, maxBonus: 40, trackRateGroomer: 0.2, trackRateOpen: 0.12, trackRateTree: 0.06, maxDecay: 0.85 },
+  flatLightCloud: 80,
+  wind: { breezyGustMph: 25, holdGustMph: 35 },
+  coldF: 10,
+
+  traffic: {
+    byDifficulty: { novice: 1.2, easy: 1.2, intermediate: 1.0, advanced: 0.7, expert: 0.45, freeride: 0.3, extreme: 0.3, unknown: 0.8 },
+    byType: { groomer: 1.0, bump: 0.8, tree: 0.5, bowl: 0.6 },
+  },
+  labels: { prime: 80, good: 65, fair: 50 },
+};

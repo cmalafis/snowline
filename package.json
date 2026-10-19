@@ -1,0 +1,30 @@
+{
+  "name": "snowline",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "pipeline": "tsx packages/pipeline/src/cli/pipeline.ts",
+    "fetch-trails": "tsx packages/pipeline/src/cli/fetch-trails.ts",
+    "analyze": "tsx packages/pipeline/src/cli/analyze.ts",
+    "table": "tsx packages/pipeline/src/cli/print-table.ts",
+    "validate": "tsx packages/pipeline/src/cli/validate.ts",
+    "test": "vitest run",
+    "typecheck": "tsc -p packages/core && tsc -p packages/pipeline",
+    "export": "tsx packages/pipeline/src/cli/export.ts",
+    "scores": "tsx packages/pipeline/src/cli/scores.ts",
+    "dev": "npm run dev -w @snowline/web",
+    "build": "npm run build -w @snowline/web",
+    "e2e": "npm run e2e -w @snowline/web"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/proj4": "^2.5.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.12"
+  }
+}

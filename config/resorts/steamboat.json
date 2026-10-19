@@ -1,0 +1,306 @@
+{
+  "id": "steamboat",
+  "name": "Steamboat",
+  "tz": "America/Denver",
+  "osm": {
+    "skiArea": {
+      "type": "way",
+      "id": 530998526
+    },
+    "bbox": [
+      40.425,
+      -106.815,
+      40.487,
+      -106.725
+    ]
+  },
+  "base": {
+    "lat": 40.4572,
+    "lon": -106.8045,
+    "elevationFt": 6900
+  },
+  "summit": {
+    "lat": 40.4545,
+    "lon": -106.7425,
+    "elevationFt": 10568
+  },
+  "treelineFt": 11000,
+  "ridgeProximityFt": 400,
+  "ignoreLifts": [
+    "Steamboat Gondola",
+    "Wildhorse Gondola",
+    "Wild Blue Gondola I",
+    "Wild Blue Gondola II"
+  ],
+  "zoneOverrides": {
+    "Christie Peak Express": "christie",
+    "Bashor": "christie",
+    "Greenhorn Ranch Express": "christie",
+    "Thunderhead Express": "thunderhead",
+    "Burgess Creek": "thunderhead",
+    "Elkhead Express": "thunderhead",
+    "Storm Peak Express": "storm",
+    "Bar UE": "storm",
+    "Four Points": "storm",
+    "Sunshine Express": "sunshine",
+    "South Peak": "sunshine",
+    "Sundown Express": "sundown",
+    "Pony Express": "pioneer",
+    "Mahogany Ridge Express": "mahogany",
+    "Morningside Lift": "morningside"
+  },
+  "zoneNames": {
+    "christie": "Christie Peak",
+    "thunderhead": "Thunderhead",
+    "storm": "Storm Peak",
+    "werner": "Mt. Werner",
+    "morningside": "Morningside Park",
+    "sunshine": "Sunshine Peak",
+    "sundown": "Sundown",
+    "pioneer": "Pioneer Ridge",
+    "mahogany": "Mahogany Ridge & Fish Creek Canyon"
+  },
+  "runOverrides": {
+    "Lil' Rodeo Park": {
+      "exclude": true
+    },
+    "Maverick's Halfpipe": {
+      "exclude": true
+    },
+    "Rabbit Ears Terrain Park": {
+      "exclude": true
+    },
+    "All Out": {
+      "exclude": true
+    },
+    "Chute 1": {
+      "zone": "werner",
+      "type": "bowl",
+      "groomed": false
+    },
+    "Chute 2": {
+      "zone": "werner",
+      "type": "bowl",
+      "groomed": false
+    },
+    "Chute 3": {
+      "zone": "werner",
+      "type": "bowl",
+      "groomed": false
+    },
+    "No Names": {
+      "zone": "werner",
+      "type": "tree",
+      "groomed": false
+    },
+    "North St Pats": {
+      "zone": "werner",
+      "type": "tree",
+      "groomed": false
+    },
+    "Christmas Tree Bowl": {
+      "zone": "werner",
+      "type": "tree",
+      "groomed": false
+    },
+    "East Face": {
+      "zone": "werner",
+      "type": "tree",
+      "groomed": false
+    },
+    "The Gully": {
+      "zone": "werner",
+      "groomed": false
+    },
+    "The Ridge": {
+      "zone": "werner",
+      "type": "tree",
+      "groomed": false
+    },
+    "First Chance": {
+      "zone": "werner"
+    },
+    "Last Chance": {
+      "zone": "werner"
+    },
+    "Biscuits": {
+      "zone": "morningside"
+    },
+    "Gravy": {
+      "zone": "morningside"
+    },
+    "Cheesy Grits": {
+      "zone": "morningside"
+    },
+    "Frying Pan": {
+      "zone": "morningside"
+    },
+    "Jump Start": {
+      "zone": "morningside",
+      "type": "tree",
+      "groomed": false
+    },
+    "Hot Cakes": {
+      "type": "tree",
+      "groomed": false
+    },
+    "Shadows": {
+      "type": "tree",
+      "groomed": false
+    },
+    "Sideburn": {
+      "type": "tree",
+      "groomed": false
+    },
+    "Closets": {
+      "groomed": false
+    },
+    "Twilight": {
+      "groomed": false
+    },
+    "Triangle 3": {
+      "groomed": false
+    },
+    "Thick of It": {
+      "groomed": false
+    },
+    "Legend's Trees": {
+      "groomed": false
+    },
+    "Endless Gully": {
+      "groomed": false
+    },
+    "Ultimate Glades": {
+      "groomed": false
+    },
+    "Boulder Field": {
+      "groomed": false
+    },
+    "Two Step": {
+      "groomed": false
+    },
+    "Bird's Beak": {
+      "groomed": false
+    },
+    "Nostrils": {
+      "groomed": false
+    },
+    "Granola Bowl": {
+      "groomed": false
+    },
+    "White Out": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Tornado": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Hurricane": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Nelson's Run": {
+      "type": "bump"
+    },
+    "Vertigo": {
+      "type": "bump"
+    },
+    "BC Liftline": {
+      "type": "bump"
+    },
+    "Storm Peak North": {
+      "type": "bump"
+    },
+    "Quickdraw": {
+      "groomed": true
+    },
+    "Rainbow Upper": {
+      "groomed": true
+    },
+    "Rainbow Lower": {
+      "groomed": true
+    },
+    "Moonlight": {
+      "groomed": true
+    },
+    "Buddy's Run Upper": {
+      "groomed": true
+    },
+    "Buddy's Run Lower": {
+      "groomed": true
+    },
+    "Flintlock": {
+      "groomed": true
+    },
+    "Vagabond Upper": {
+      "groomed": true
+    },
+    "Vagabond Lower": {
+      "groomed": true
+    },
+    "Heavenly Daze": {
+      "groomed": true
+    },
+    "High Noon": {
+      "groomed": true
+    },
+    "Lower High Noon": {
+      "groomed": true
+    },
+    "Sunshine Lift Line Upper": {
+      "groomed": true
+    },
+    "Sunshine Liftline Lower": {
+      "groomed": true
+    },
+    "Over Easy": {
+      "groomed": true
+    },
+    "Lower Concentration": {
+      "groomed": true
+    },
+    "Tomahawk": {
+      "groomed": true
+    },
+    "Storm Peak South": {
+      "groomed": true
+    },
+    "One O'Clock": {
+      "groomed": true
+    },
+    "Two O'Clock": {
+      "groomed": true
+    },
+    "Rolex": {
+      "groomed": true
+    },
+    "Sitz": {
+      "groomed": true
+    },
+    "See Me": {
+      "groomed": true
+    },
+    "Vogue": {
+      "groomed": true
+    },
+    "Stampede": {
+      "groomed": true
+    }
+  },
+  "nameAliases": {
+    "Skidaddle": "Ski Daddle",
+    "Highline": "High Line",
+    "Westside": "West Side",
+    "Sideburns": "Sideburn",
+    "The Face": "Storm Peak South",
+    "Burgess Creek Lift Line": "BC Liftline"
+  },
+  "validation": {
+    "referenceZoneSource": "reference/prototype.html zone estimates (Sundown, Pioneer, Morningside removed: contradicted by lift fall lines)",
+    "referenceZoneAspects": {
+      "storm": 250,
+      "sunshine": 190
+    }
+  }
+}

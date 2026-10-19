@@ -1,0 +1,59 @@
+import type { Metadata, Viewport } from "next";
+import { Overpass, Overpass_Mono } from "next/font/google";
+import "./globals.css";
+
+const overpass = Overpass({ subsets: ["latin"], weight: ["400", "600", "800", "900"], variable: "--font-overpass" });
+const overpassMono = Overpass_Mono({ subsets: ["latin"], weight: ["400", "600"], variable: "--font-overpass-mono" });
+
+export const metadata: Metadata = {
+  title: "Snowline",
+  description: "Where the best snow is, hour by hour: runs ranked by sun, slope aspect, temperature and grooming.",
+  applicationName: "Snowline",
+  appleWebApp: { capable: true, title: "Snowline", statusBarStyle: "black-translucent" },
+  formatDetection: { telephone: false },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#EEF3F6" },
+    { media: "(prefers-color-scheme: dark)", color: "#0B161D" },
+  ],
+};
+
+// iPhone portrait launch screens: [CSS width, CSS height, pixel ratio].
+const SPLASH: [number, number, number][] = [
+  [430, 932, 3],
+  [393, 852, 3],
+  [428, 926, 3],
+  [390, 844, 3],
+  [375, 812, 3],
+  [414, 896, 2],
+  [375, 667, 2],
+];
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`${overpass.variable} ${overpassMono.variable}`} suppressHydrationWarning>
+      <head>
+        {SPLASH.map(([w, h, r]) => (
+          <link
+            key={`${w}x${h}`}
+            rel="apple-touch-startup-image"
+            href={`/splash/${w * r}/${h * r}`}
+            media={`(device-width: ${w}px) and (device-height: ${h}px) and (-webkit-device-pixel-ratio: ${r}) and (orientation: portrait)`}
+          />
+        ))}
+        {/* Apply a saved theme before paint to avoid a flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("snowline.theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`,
+          }}
+        />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}

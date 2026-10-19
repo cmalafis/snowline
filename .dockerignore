@@ -1,0 +1,12 @@
+.git
+**/node_modules
+**/.next
+apps/web/test-results
+apps/web/playwright-report
+apps/web/public/maplibre
+data/*/dem.tif
+data/*/cache
+data/*/osm.json
+reference/trailmaps
+.DS_Store
+.env*
