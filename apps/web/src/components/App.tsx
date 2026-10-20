@@ -18,13 +18,14 @@ import {
   type DayWeather,
   type LonLat,
   type ResortStatus,
+  type SharedGrooming,
   type ResortSummary,
 } from "@snowline/core";
 import { distanceToRun, nearby, rankAt, rankTreeAreasAt, scoreDay, zoneScoreAt, type Ranked } from "@/lib/model";
-import { DEFAULT_PREFS, flushFeedback, store, type Prefs } from "@/lib/storage";
+import { DEFAULT_PREFS, flushFeedback, sendGroomReport, store, type Prefs } from "@/lib/storage";
 import { DiffSymbol } from "./DiffSymbol";
 import { HourlyPlan } from "./HourlyPlan";
-import { CoverLabel, RunRow, groomLabel } from "./RunList";
+import { CoverLabel, RunRow, groomLabel, type GroomSource } from "./RunList";
 import { ResortPicker } from "./ResortPicker";
 import { RunSheet } from "./RunSheet";
 import { DifficultyPicker, MAX_LABEL, SettingsSheet, TerrainPicker } from "./SettingsSheet";
@@ -67,7 +68,10 @@ export function App() {
   const [hour, setHour] = useState(9);
   const [prefs, setPrefsState] = useState<Prefs>(DEFAULT_PREFS);
   const [favorites, setFavorites] = useState<string[]>([]);
+  /** This device's own "groomed today" reports. */
   const [groomed, setGroomed] = useState<Record<string, boolean>>({});
+  /** Everyone's reports for today, tallied by the server. */
+  const [shared, setShared] = useState<Record<string, SharedGrooming>>({});
   const [aspect, setAspect] = useState<Record<string, number>>({});
   const [zoneFilter, setZoneFilter] = useState<string | null>(null);
   const [openRun, setOpenRun] = useState<string | null>(null);
@@ -160,6 +164,25 @@ export function App() {
       .catch((e: Error) => setWeather({ state: "error", message: e.message }));
   }, [resortId, date, scenario, data, dayOffset]);
 
+  // Shared grooming reports apply to today only; refresh every few minutes and when the app comes back to the front.
+  const isToday = !demo && dayOffset === 0;
+  useEffect(() => {
+    setShared({});
+    if (!resortId || !isToday) return;
+    const load = () =>
+      getJson<{ runs: Record<string, SharedGrooming> }>(`/api/resorts/${resortId}/reports`)
+        .then(({ value }) => setShared(value.runs ?? {}))
+        .catch(() => {});
+    load();
+    const timer = window.setInterval(load, 3 * 60 * 1000);
+    const onVisible = () => document.visibilityState === "visible" && load();
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [resortId, isToday]);
+
   // Geolocation, only once the user asks for it.
   useEffect(() => {
     if (!nearMe) return;
@@ -188,7 +211,14 @@ export function App() {
 
   const resort = data.state === "ok" ? data.value : null;
   const wx = weather.state === "ok" ? weather.value : null;
-  const day = useMemo(() => (resort && wx ? scoreDay(resort, wx, { groomed, aspect }) : null), [resort, wx, groomed, aspect]);
+  // Grooming for scoring: your own report, else what other skiers reported today, else the run's usual pattern.
+  const groomedNow = useMemo(
+    () => ({ ...(isToday ? Object.fromEntries(Object.entries(shared).map(([id, g]) => [id, g.groomed])) : {}), ...groomed }),
+    [isToday, shared, groomed],
+  );
+  const day = useMemo(() => (resort && wx ? scoreDay(resort, wx, { groomed: groomedNow, aspect }) : null), [resort, wx, groomedNow, aspect]);
+  const groomSource = (runId: string): GroomSource =>
+    runId in groomed ? { kind: "you" } : isToday && shared[runId] ? { kind: "shared", yes: shared[runId]!.yes, no: shared[runId]!.no } : { kind: "usual" };
   const where = useMemo(() => (resort && loc ? nearby(resort, loc.p) : null), [resort, loc]);
   const atResort = !!where && where.near.size > 0;
   const ranked: Ranked[] = useMemo(() => (resort && day ? rankAt(resort, day, hour, prefs) : []), [resort, day, hour, prefs]);
@@ -530,7 +560,7 @@ export function App() {
                       <ScoreLabel score={best.s.score} label={best.s.label} />
                     </div>
                     <div className="subtle" style={{ fontSize: 14 }}>
-                      {zoneById.get(best.run.zone ?? "")?.name} · faces {compassPoint(best.run.aspectDeg)} · {groomLabel(best, groomed[best.run.id] ?? best.run.groomed, best.run.id in groomed)} · {best.s.tempF}°F
+                      {zoneById.get(best.run.zone ?? "")?.name} · faces {compassPoint(best.run.aspectDeg)} · {groomLabel(best, groomedNow[best.run.id] ?? best.run.groomed, groomSource(best.run.id))} · {best.s.tempF}°F
                     </div>
                     <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 6 }}>
                       {best.s.reasons.map((why, i) => (
@@ -647,13 +677,13 @@ export function App() {
                     key={x.run.id}
                     r={x}
                     zone={zoneById.get(x.run.zone ?? "")}
-                    groomedToday={groomed[x.run.id] ?? x.run.groomed}
+                    groomedToday={groomedNow[x.run.id] ?? x.run.groomed}
                     favorite={favorites.includes(x.run.id)}
-                    edited={x.run.id in aspect || x.run.id in groomed}
+                    edited={x.run.id in aspect}
                     distanceM={nearMe && loc && atResort ? distanceToRun(x.run, loc.p) : undefined}
                     treelineFt={r.treelineFt}
                     showZone={!zoneFilter}
-                    groomReported={x.run.id in groomed}
+                    groomSource={groomSource(x.run.id)}
                     onOpen={() => setOpenRun(x.run.id)}
                   />
                 ))}
@@ -754,13 +784,28 @@ export function App() {
           zone={zoneById.get(open.zone ?? "")}
           day={day.byRun.get(open.id)!}
           hour={hour}
-          groomedToday={groomed[open.id] ?? open.groomed}
+          groomedToday={groomedNow[open.id] ?? open.groomed}
           groomedOverride={open.id in groomed}
+          groomSource={groomSource(open.id)}
+          shareable={isToday}
           aspectFix={aspect[open.id]}
           favorite={favorites.includes(open.id)}
           onClose={() => setOpenRun(null)}
           onFavorite={() => setFavorites(store.toggleFavorite(r.id, open.id))}
-          onGroomed={(v) => setGroomed(store.setGroomed(r.id, date, open.id, v))}
+          onGroomed={(v) => {
+            setGroomed(store.setGroomed(r.id, date, open.id, v));
+            // Today's reports are shared with everyone (null withdraws yours).
+            if (isToday)
+              void sendGroomReport(r.id, open.id, v).then((res) => {
+                if (!res) return;
+                setShared((prev) => {
+                  const next = { ...prev };
+                  if (res.run) next[open.id] = res.run;
+                  else delete next[open.id];
+                  return next;
+                });
+              });
+          }}
           onAspect={(deg) => setAspect(store.setAspectFix(r.id, open.id, deg))}
           onShowMap={() => {
             setOpenRun(null);

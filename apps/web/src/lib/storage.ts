@@ -1,5 +1,5 @@
 "use client";
-import type { Difficulty, RunType } from "@snowline/core";
+import type { Difficulty, RunType, SharedGrooming } from "@snowline/core";
 
 // Per-device storage. No accounts in v1: everything lives in localStorage behind this small interface,
 // so a sync backend can slot in later without touching components.
@@ -115,28 +115,44 @@ export const store = {
   },
 };
 
-/** Send feedback to the server; queue it while offline and retry later. */
-export async function sendFeedback(payload: Record<string, unknown>): Promise<boolean> {
-  const body = { device: store.deviceId(), ...payload };
-  try {
-    const res = await fetch("/api/feedback", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
-    if (res.ok) return true;
-    if (res.status >= 400 && res.status < 500) return false;
-  } catch {}
-  write("outbox", [...read<unknown[]>("outbox", []), body].slice(-100));
-  return false;
+interface Queued {
+  url: string;
+  body: Record<string, unknown>;
 }
 
+/** POST JSON; while offline (or on a server error) queue it and retry later. Returns the response body when sent. */
+async function postOrQueue<T>(url: string, body: Record<string, unknown>): Promise<T | null> {
+  try {
+    const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    if (res.ok) return ((await res.json().catch(() => ({}))) as T) ?? ({} as T);
+    if (res.status >= 400 && res.status < 500) return null;
+  } catch {}
+  write("outbox", [...read<(Queued | Record<string, unknown>)[]>("outbox", []), { url, body }].slice(-100));
+  return null;
+}
+
+/** Send feedback to the server; queue it while offline and retry later. */
+export async function sendFeedback(payload: Record<string, unknown>): Promise<boolean> {
+  return (await postOrQueue("/api/feedback", { device: store.deviceId(), ...payload })) !== null;
+}
+
+/** Share a "groomed today?" report with everyone (null withdraws it). Returns the run's new shared tally when sent. */
+export async function sendGroomReport(resortId: string, runId: string, groomed: boolean | null): Promise<{ run: SharedGrooming | null } | null> {
+  return postOrQueue(`/api/resorts/${resortId}/reports`, { device: store.deviceId(), runId, groomed });
+}
+
+/** Retry queued posts (feedback and grooming reports). Older queues held bare feedback bodies. */
 export async function flushFeedback(): Promise<void> {
-  const box = read<Record<string, unknown>[]>("outbox", []);
+  const box = read<(Queued | Record<string, unknown>)[]>("outbox", []);
   if (!box.length) return;
   const left: unknown[] = [];
-  for (const b of box) {
+  for (const item of box) {
+    const q: Queued = "url" in item && "body" in item ? (item as Queued) : { url: "/api/feedback", body: item as Record<string, unknown> };
     try {
-      const res = await fetch("/api/feedback", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(b) });
-      if (!res.ok && res.status >= 500) left.push(b);
+      const res = await fetch(q.url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(q.body) });
+      if (!res.ok && res.status >= 500) left.push(q);
     } catch {
-      left.push(b);
+      left.push(q);
     }
   }
   write("outbox", left);

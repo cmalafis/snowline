@@ -4,7 +4,7 @@ import { compassPoint, exposureOf, fmtTime, scoreAt, type AppRun, type AppTreeAr
 import { tier } from "@/lib/model";
 import { sendFeedback, store } from "@/lib/storage";
 import { DiffSymbol } from "./DiffSymbol";
-import { CoverLabel } from "./RunList";
+import { CoverLabel, type GroomSource } from "./RunList";
 import { Alert, Icon, ScoreLabel } from "./ui";
 import { UnmarkedCautions } from "./Unmarked";
 
@@ -85,6 +85,8 @@ export function RunSheet({
   hour,
   groomedToday,
   groomedOverride,
+  groomSource,
+  shareable,
   aspectFix,
   favorite,
   onClose,
@@ -103,6 +105,9 @@ export function RunSheet({
   hour: number;
   groomedToday: boolean;
   groomedOverride: boolean;
+  groomSource: GroomSource;
+  /** Reports for today are shared with everyone; other days stay on this device. */
+  shareable: boolean;
   aspectFix: number | undefined;
   favorite: boolean;
   onClose: () => void;
@@ -288,15 +293,21 @@ export function RunSheet({
                       type="checkbox"
                       role="switch"
                       checked={groomedToday}
-                      onChange={(e) => {
-                        onGroomed(e.target.checked);
-                        void sendFeedback({ kind: "correction", resort: resortId, runId: run.id, runName: run.name, date, groomed: e.target.checked });
-                      }}
+                      onChange={(e) => onGroomed(e.target.checked)}
                       style={{ width: 44, height: 24, accentColor: "var(--pf-primary)", margin: 0 }}
                     />
-                    {groomedToday ? "Yes" : "No"}
-                    {groomedOverride ? " (your report)" : ""}
+                    <span>
+                      {groomedToday ? "Yes" : "No"}
+                      <span className="subtle" style={{ display: "block", fontSize: 13 }}>
+                        {groomSource.kind === "you"
+                          ? "Your report"
+                          : groomSource.kind === "shared"
+                            ? `Reported by ${groomedToday ? groomSource.yes : groomSource.no} ${(groomedToday ? groomSource.yes : groomSource.no) === 1 ? "skier" : "skiers"} today`
+                            : "Its usual pattern; tap if today's different"}
+                      </span>
+                    </span>
                   </label>
+                  {shareable && <div className="subtle" style={{ fontSize: 12 }}>Your report is shared with everyone for today.</div>}
                 </dd>
               </div>}
             </dl>
@@ -306,7 +317,7 @@ export function RunSheet({
               </button>
               {groomedOverride && (
                 <button type="button" className="btn btn-link" onClick={() => onGroomed(null)}>
-                  Reset grooming
+                  Withdraw my report
                 </button>
               )}
             </div>

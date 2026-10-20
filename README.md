@@ -104,6 +104,7 @@ scripts/deploy-openshift.sh cmalafis-dev    # apply manifests, upload source, bu
 
 - Testers' feedback ("how did it ski?" ratings, comments, aspect/grooming corrections) is appended to `/feedback/feedback.jsonl` on a 1 Gi PVC, and also logged to stdout. Read it with `oc exec deploy/snowline -- cat /feedback/feedback.jsonl`.
 - Resort daily reports (open/closed, lifts and runs open, conditions, resort-measured new snow) come from OpenSnow's partner API, which needs a key from OpenSnow. Add it once and restart: `oc create secret generic snowline-opensnow --from-literal=api-key=<key>` then `oc rollout restart deploy/snowline`. Without it the app falls back to the forecast and the off-season guess.
-- The resorts' own websites block automated access, so per-run grooming isn't fetched. Runs start from their usual grooming pattern (`groomed` in config, from research), and skiers' "groomed today" reports override it.
+- The resorts' own websites block automated access, so per-run grooming isn't fetched. Runs start from their usual grooming pattern (`groomed` in config, from research).
+- Skiers' "groomed today" reports are shared with everyone for that day (`/api/resorts/<id>/reports`). Each device's latest report counts once; the majority wins and a tie goes to the most recent. A device's own report always wins on that device. Reports are kept for three days in `/feedback/reports.jsonl`.
 - The Developer Sandbox scales idle deployments to zero. Bring it back with `oc scale deploy/snowline --replicas=1`, or rerun the script.
 - The same image runs anywhere that runs containers (e.g. AWS App Runner/ECS). Build step 6 covers AWS with CDK.
