@@ -18,6 +18,8 @@ metadata:
     image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"snowline:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"web\")].image"}]'
 spec:
   replicas: 1
+  # The Developer Sandbox caps ReplicaSets per project (30); keep only a couple of old revisions.
+  revisionHistoryLimit: 2
   strategy:
     # The feedback volume is ReadWriteOnce, so stop the old pod before starting the new one.
     type: Recreate
