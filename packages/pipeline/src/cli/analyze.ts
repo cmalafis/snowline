@@ -6,6 +6,15 @@ import { classifyRun } from "../runType.ts";
 import { assignLift, buildZones, zoneIdForLift, zoneLifts } from "../zones.ts";
 import { analysisConfig, dataPath, loadResort, readJson, writeJson } from "../resort.ts";
 import { loadCanopy, type CanopyGrid } from "../sources/canopy.ts";
+import { findTreeAreas } from "../treeAreas.ts";
+
+/**
+ * Year-round streams and rivers, plus any named creek. Intermittent unnamed lines are mostly auto-imported
+ * gullies that are dry under snow; flagging them would put a creek warning on nearly every tree area.
+ */
+function perennialWaterways(osm: OsmDump) {
+  return (osm.waterways ?? []).filter((w) => w.tags.intermittent !== "yes" || !!w.tags.name);
+}
 
 /** Trees within this distance shelter a run from wind and give it definition in flat light. */
 const SHELTER_RADIUS_M = 75;
@@ -140,6 +149,13 @@ export async function analyze(resortId: string) {
   await writeJson(dataPath(cfg.id, "lifts.json"), lifts);
   await writeJson(dataPath(cfg.id, "zones.json"), zones);
   console.log(`  ${runs.length} runs (${runs.filter((r) => r.name).length} named), ${lifts.length} lifts, ${zones.length} zones`);
+
+  // Unmarked tree areas need the ski-area boundary and canopy data; without either there are none.
+  const treeAreas = canopy
+    ? findTreeAreas({ resortId: cfg.id, boundary: osm.boundary, runs, zones, liftLines: lifts.map((l) => l.coordinates), waterways: perennialWaterways(osm).map((w) => w.geometry.map((g) => [g.lon, g.lat] as LonLat)), dem, rawDem: raw, canopy, proj })
+    : [];
+  await writeJson(dataPath(cfg.id, "treeAreas.json"), treeAreas);
+  console.log(`  ${treeAreas.length} unmarked tree areas (${treeAreas.reduce((t, a) => t + a.areaHa, 0).toFixed(0)} ha)`);
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) await analyze(process.argv[2]!);

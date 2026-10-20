@@ -4,6 +4,10 @@
   "tz": "America/Denver",
   "region": "Gunnison County, Colorado",
   "pass": "Epic",
+  "avalanche": {
+    "name": "Colorado Avalanche Information Center",
+    "url": "https://avalanche.state.co.us"
+  },
   "osm": {
     "skiArea": {
       "type": "way",

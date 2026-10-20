@@ -3,6 +3,10 @@
   "name": "Breckenridge",
   "region": "Summit County, Colorado",
   "pass": "Epic",
+  "avalanche": {
+    "name": "Colorado Avalanche Information Center",
+    "url": "https://avalanche.state.co.us"
+  },
   "tz": "America/Denver",
   "osm": {
     "skiArea": {

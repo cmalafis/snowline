@@ -3,6 +3,10 @@
   "name": "Steamboat",
   "region": "Routt County, Colorado",
   "pass": "Ikon",
+  "avalanche": {
+    "name": "Colorado Avalanche Information Center",
+    "url": "https://avalanche.state.co.us"
+  },
   "tz": "America/Denver",
   "osm": {
     "skiArea": {

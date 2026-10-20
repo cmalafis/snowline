@@ -35,6 +35,23 @@ test("picks a resort, ranks runs, scrubs time, opens a run, and works offline", 
   await expect(page.getByRole("heading", { name: "How did it ski?" })).toBeVisible();
   await page.keyboard.press("Escape");
 
+  // Unmarked tree areas: off until the cautions are accepted, then listed with their own warnings.
+  await expect(page.getByTestId("unmarked-section")).toHaveCount(0);
+  await page.getByRole("button", { name: "Read the cautions" }).click();
+  const sheet = page.getByTestId("unmarked-sheet");
+  await expect(sheet.getByText("Tree wells and deep snow can kill")).toBeVisible();
+  const showAreas = sheet.getByRole("button", { name: "Show unmarked areas" });
+  await expect(showAreas).toBeDisabled();
+  await sheet.getByRole("checkbox").check();
+  await showAreas.click();
+  const section = page.getByTestId("unmarked-section");
+  await expect(section).toBeVisible();
+  await expect(section.getByText("Off-piste: not marked, not patrolled like runs")).toBeVisible();
+  await section.getByTestId("run-row").first().getByRole("button").click();
+  await expect(page.getByTestId("unmarked-caution")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Hazards found for this area" })).toBeVisible();
+  await page.keyboard.press("Escape");
+
   // Offline: once the service worker has cached the app and data, a reload with no network still works.
   await page.evaluate(() => navigator.serviceWorker.ready);
   await page.reload();

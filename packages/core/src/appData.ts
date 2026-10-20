@@ -7,6 +7,7 @@ export interface AppResort {
   name: string;
   region: string | null;
   pass: string | null;
+  avalanche: { name: string; url: string } | null;
   tz: string;
   openHour: number;
   closeHour: number;
@@ -49,6 +50,20 @@ export interface AppRun extends ScoringRun {
   points: LonLat[];
 }
 
+/**
+ * An unmarked tree area: forest between mapped runs that looks skiable in the canopy and terrain data. Scored
+ * like a glade; shown only when the user has opted in and accepted the cautions.
+ */
+export interface AppTreeArea extends AppRun {
+  unmarked: true;
+  areaHa: number;
+  /** Rectangles covering the area (each its own polygon ring). */
+  polygons: LonLat[][];
+  /** Hazards found in the data for this area. */
+  hazards: string[];
+  nearRuns: string[];
+}
+
 export interface AppResortData {
   version: string;
   generatedAt: string;
@@ -56,6 +71,7 @@ export interface AppResortData {
   zones: AppZone[];
   lifts: AppLift[];
   runs: AppRun[];
+  treeAreas?: AppTreeArea[];
 }
 
 /** One entry in the resort picker. */

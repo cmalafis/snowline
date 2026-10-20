@@ -1,5 +1,7 @@
-import { circularMean, compassPoint, type AppResortData, type AppRun, type Lift, type LonLat, type Run, type Segment, type Zone } from "@snowline/core";
+import { circularMean, compassPoint, type AppResortData, type AppRun, type AppTreeArea, type Lift, type LonLat, type Run, type Segment, type Zone } from "@snowline/core";
+import { existsSync } from "node:fs";
 import { dataPath, loadResort, readJson, writeJson } from "../resort.ts";
+import type { TreeArea } from "../treeAreas.ts";
 
 const round = (n: number, d: number) => Math.round(n * 10 ** d) / 10 ** d;
 const roundLL = ([lon, lat]: LonLat): LonLat => [round(lon, 5), round(lat, 5)];
@@ -87,6 +89,35 @@ export async function exportApp(resortId: string) {
       points: (r.segments.length > 60 ? r.segments.filter((_, i) => i % Math.ceil(r.segments.length / 60) === 0) : r.segments).map((s) => roundLL(s.at)),
     }));
 
+  // Unmarked tree areas, scored like glades. Difficulty from pitch: they're never easy, being unmarked.
+  const treeAreas: AppTreeArea[] = existsSync(dataPath(cfg.id, "treeAreas.json"))
+    ? (await readJson<TreeArea[]>(dataPath(cfg.id, "treeAreas.json"))).map((a) => ({
+        id: a.id,
+        name: a.name,
+        difficulty: a.pitchDeg >= 25 ? "expert" : "advanced",
+        type: "tree",
+        groomed: false,
+        aspectDeg: a.aspectDeg,
+        pitchDeg: a.pitchDeg,
+        topFt: a.topFt,
+        bottomFt: a.bottomFt,
+        zone: a.zone,
+        lengthM: 0,
+        mixedAspect: false,
+        canopyPct: a.canopyPct,
+        shelterPct: a.shelterPct,
+        geometry: "area",
+        lines: [],
+        profile: [],
+        points: a.points,
+        unmarked: true,
+        areaHa: a.areaHa,
+        polygons: a.polygons,
+        hazards: a.hazards,
+        nearRuns: a.nearRuns,
+      }))
+    : [];
+
   const all = appRuns.flatMap((r) => r.lines.flat());
   const lons = all.map((p) => p[0]);
   const lats = all.map((p) => p[1]);
@@ -98,6 +129,7 @@ export async function exportApp(resortId: string) {
       name: cfg.name,
       region: cfg.region ?? null,
       pass: cfg.pass ?? null,
+      avalanche: cfg.avalanche ?? null,
       tz: cfg.tz,
       openHour: cfg.hours?.open ?? 8.5,
       closeHour: cfg.hours?.close ?? 16,
@@ -118,9 +150,10 @@ export async function exportApp(resortId: string) {
     })),
     lifts: lifts.filter((l) => l.kind !== "station").map((l) => ({ name: l.name, kind: l.kind, line: l.coordinates.map(roundLL) })),
     runs: appRuns,
+    treeAreas,
   };
   await writeJson(dataPath(cfg.id, "app.json"), data);
-  console.log(`  app.json: ${appRuns.length} runs, ${data.zones.length} zones, ${(JSON.stringify(data).length / 1024).toFixed(0)} KB`);
+  console.log(`  app.json: ${appRuns.length} runs, ${treeAreas.length} tree areas, ${data.zones.length} zones, ${(JSON.stringify(data).length / 1024).toFixed(0)} KB`);
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) await exportApp(process.argv[2]!);

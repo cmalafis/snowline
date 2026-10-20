@@ -10,7 +10,7 @@ import type { LonLat } from "@snowline/core";
  */
 const WCS = "https://www.mrlc.gov/geoserver/mrlc_download/wcs";
 const COVERAGE = "mrlc_download__nlcd_tcc_conus_2021_v2021-4";
-const ALBERS = "+proj=aea +lat_0=23 +lon_0=-96 +lat_1=29.5 +lat_2=45.5 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs";
+export const ALBERS = "+proj=aea +lat_0=23 +lon_0=-96 +lat_1=29.5 +lat_2=45.5 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs";
 const toAlbers = proj4("EPSG:4326", ALBERS);
 
 export class CanopyGrid {

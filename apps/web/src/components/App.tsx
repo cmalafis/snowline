@@ -19,7 +19,7 @@ import {
   type LonLat,
   type ResortSummary,
 } from "@snowline/core";
-import { distanceToRun, nearby, rankAt, scoreDay, zoneScoreAt, type Ranked } from "@/lib/model";
+import { distanceToRun, nearby, rankAt, rankTreeAreasAt, scoreDay, zoneScoreAt, type Ranked } from "@/lib/model";
 import { DEFAULT_PREFS, flushFeedback, store, type Prefs } from "@/lib/storage";
 import { DiffSymbol } from "./DiffSymbol";
 import { HourlyPlan } from "./HourlyPlan";
@@ -28,6 +28,7 @@ import { ResortPicker } from "./ResortPicker";
 import { RunSheet } from "./RunSheet";
 import { DifficultyPicker, MAX_LABEL, SettingsSheet, TerrainPicker } from "./SettingsSheet";
 import { Alert, BrandMark, Icon, ScoreLabel } from "./ui";
+import { UnmarkedCautions, UnmarkedSheet } from "./Unmarked";
 import { WeatherStrip } from "./WeatherStrip";
 import { ZonesCard, rankZones } from "./Zones";
 
@@ -76,10 +77,15 @@ export function App() {
   const [locError, setLocError] = useState<string | null>(null);
   const [nearMe, setNearMe] = useState(false);
   const [favOnly, setFavOnly] = useState(false);
+  /** Unmarked tree areas: off until the user turns them on and accepts the cautions. */
+  const [unmarkedOn, setUnmarkedOn] = useState(false);
+  const [unmarkedSheet, setUnmarkedSheet] = useState(false);
+  const [showAllTrees, setShowAllTrees] = useState(false);
 
   // Boot: prefs, resort list, service worker, queued feedback.
   useEffect(() => {
     setPrefsState(store.prefs());
+    setUnmarkedOn(store.unmarked().on);
     getJson<ResortSummary[]>("/api/resorts?conditions=1")
       .then(({ value }) => {
         setResorts(value);
@@ -161,6 +167,12 @@ export function App() {
     return () => navigator.geolocation.clearWatch(id);
   }, [nearMe]);
 
+  const setUnmarked = useCallback((on: boolean) => {
+    if (on && !store.unmarked().acceptedAt) return setUnmarkedSheet(true);
+    store.setUnmarked(on);
+    setUnmarkedOn(on);
+  }, []);
+
   const setPrefs = useCallback((p: Prefs) => {
     setPrefsState(p);
     store.setPrefs(p);
@@ -213,7 +225,7 @@ export function App() {
   const sun = day ? day.ctx.steps.reduce((m, s) => (Math.abs(s.hour - hour) < Math.abs(m.hour - hour) ? s : m)).sun : { elevationDeg: 0, azimuthDeg: 180 };
   const sunrise = day?.ctx.steps.find((s) => s.sun.elevationDeg > 0)?.hour;
   const best = ranked[0];
-  const open = openRun ? resort.runs.find((x) => x.id === openRun) : null;
+  const open = openRun ? (resort.runs.find((x) => x.id === openRun) ?? resort.treeAreas?.find((x) => x.id === openRun) ?? null) : null;
 
   // Runs tab filters.
   const q = query.trim().toLowerCase();
@@ -224,6 +236,13 @@ export function App() {
   if (q) list = list.filter((x) => x.run.name.toLowerCase().includes(q));
   const hiddenByPrefs = resort.runs.length - ranked.length;
   const shown = showAll ? list : list.slice(0, 25);
+  // Unmarked tree areas follow the same zone, search and near-me filters.
+  let trees = unmarkedOn && day ? rankTreeAreasAt(resort, day, hour, prefs) : [];
+  if (zoneFilter) trees = trees.filter((x) => x.run.zone === zoneFilter);
+  if (q) trees = trees.filter((x) => x.run.name.toLowerCase().includes(q));
+  if (nearMe && loc && atResort) trees = trees.filter((x) => distanceToRun(x.run, loc.p) <= 1200);
+  const treesShown = showAllTrees ? trees : trees.slice(0, 8);
+  const hasTreeAreas = (resort.treeAreas?.length ?? 0) > 0;
   const visibleIds = new Set(list.map((x) => x.run.id));
   const allTypes = prefs.types.length === 4;
   const anyFilter = !!zoneFilter || favOnly || nearMe || !!q || !allTypes || prefs.maxDifficulty !== "expert";
@@ -626,13 +645,67 @@ export function App() {
                 )}
               </div>
             )}
+
+            {day && hasTreeAreas && unmarkedOn && (
+              <section aria-label="Unmarked tree areas" data-testid="unmarked-section" style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+                  <h2 className="card-title">Unmarked tree areas</h2>
+                  <button type="button" className="btn btn-link" style={{ minHeight: 32, fontSize: 14 }} onClick={() => setUnmarked(false)}>
+                    Hide
+                  </button>
+                </div>
+                <div className="alert alert-danger" role="note">
+                  <Icon name="danger" />
+                  <div>
+                    <div className="alert-title">Off-piste: not marked, not patrolled like runs</div>
+                    <div className="alert-body">
+                      <UnmarkedCautions avalanche={r.avalanche} compact />
+                      <span style={{ display: "block", marginTop: 8 }}>Open an area for its hazards and the full cautions.</span>
+                    </div>
+                  </div>
+                </div>
+                {treesShown.map((x) => (
+                  <RunRow
+                    key={x.run.id}
+                    r={x}
+                    zone={zoneById.get(x.run.zone ?? "")}
+                    groomedToday={false}
+                    favorite={favorites.includes(x.run.id)}
+                    edited={x.run.id in aspect}
+                    distanceM={nearMe && loc && atResort ? distanceToRun(x.run, loc.p) : undefined}
+                    treelineFt={r.treelineFt}
+                    showZone={!zoneFilter}
+                    unmarked={{ areaHa: x.run.areaHa, hazards: x.run.hazards.length }}
+                    onOpen={() => setOpenRun(x.run.id)}
+                  />
+                ))}
+                {!trees.length && <div className="card subtle">No unmarked tree areas match these filters.</div>}
+                {trees.length > treesShown.length && (
+                  <button type="button" className="btn btn-secondary" onClick={() => setShowAllTrees(true)}>
+                    Show all {trees.length} unmarked areas
+                  </button>
+                )}
+              </section>
+            )}
+            {day && hasTreeAreas && !unmarkedOn && (
+              <section className="card" aria-label="Unmarked tree areas" style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <h2 className="card-title">Tree skiing between the runs?</h2>
+                <div className="card-sub">
+                  Snowline can show {resort.treeAreas!.length} unmarked tree areas at {r.name}, found in tree-cover and terrain data. They&apos;re off-piste and not
+                  patrolled like runs, so they&apos;re off until you read the cautions.
+                </div>
+                <button type="button" className="btn btn-secondary" style={{ alignSelf: "flex-start" }} onClick={() => setUnmarkedSheet(true)}>
+                  Read the cautions
+                </button>
+              </section>
+            )}
           </>
         )}
 
         {tab === "map" && (
           <>
             {compactTime}
-            {day ? <MapView data={resort} day={day} hour={hour} visible={visibleIds} onOpen={setOpenRun} /> : <div className="card subtle">Scores need a forecast.</div>}
+            {day ? <MapView data={resort} day={day} hour={hour} visible={visibleIds} treeAreas={unmarkedOn ? (resort.treeAreas ?? []) : null} onOpen={setOpenRun} /> : <div className="card subtle">Scores need a forecast.</div>}
             {(zoneFilter || favOnly || q) && (
               <div className="subtle" style={{ fontSize: 14 }}>
                 Showing {list.length} runs that match your filters on the Runs tab.
@@ -668,10 +741,24 @@ export function App() {
             setOpenRun(null);
             setTab("map");
           }}
+          avalanche={r.avalanche}
         />
       )}
       {pickerEl}
-      {settings && <SettingsSheet prefs={prefs} resortId={r.id} onPrefs={setPrefs} onClose={() => setSettings(false)} />}
+      {settings && <SettingsSheet prefs={prefs} resortId={r.id} onPrefs={setPrefs} onClose={() => setSettings(false)} unmarkedOn={unmarkedOn} onUnmarked={setUnmarked} />}
+      {unmarkedSheet && (
+        <UnmarkedSheet
+          avalanche={r.avalanche}
+          onClose={() => setUnmarkedSheet(false)}
+          onAccept={() => {
+            store.setUnmarked(true, true);
+            setUnmarkedOn(true);
+            setUnmarkedSheet(false);
+            setSettings(false);
+            setTab("runs");
+          }}
+        />
+      )}
     </>
   );
 }

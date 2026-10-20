@@ -87,6 +87,16 @@ export const store = {
     write("ratings", [...store.ratings().filter((x) => !(x.runId === r.runId && x.date === r.date)), r].slice(-500));
   },
 
+  /**
+   * Unmarked tree areas are off until the user turns them on and accepts the cautions (recorded with the date,
+   * so a later change to the cautions can ask again).
+   */
+  unmarked: (): { on: boolean; acceptedAt: string | null } => read("unmarked", { on: false, acceptedAt: null }),
+  setUnmarked(on: boolean, accepted = false): void {
+    const prev = store.unmarked();
+    write("unmarked", { on, acceptedAt: accepted ? new Date().toISOString() : prev.acceptedAt });
+  },
+
   theme: (): "system" | "light" | "dark" => {
     try {
       const t = localStorage.getItem(PREFIX + "theme");

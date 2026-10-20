@@ -40,6 +40,7 @@ export function RunRow({
   distanceM,
   treelineFt,
   showZone,
+  unmarked,
   onOpen,
 }: {
   r: Ranked;
@@ -50,12 +51,14 @@ export function RunRow({
   distanceM?: number;
   treelineFt: number;
   showZone: boolean;
+  /** Set for unmarked tree areas: their size and how many hazards the data found. */
+  unmarked?: { areaHa: number; hazards: number };
   onOpen: () => void;
 }) {
   const meta = [
     showZone ? zone?.name : null,
     `faces ${compassPoint(r.run.aspectDeg)}${r.run.mixedAspect ? " (mixed)" : ""}`,
-    groomLabel(r, groomedToday),
+    unmarked ? `${Math.round(unmarked.areaHa * 2.47)} acres of trees` : groomLabel(r, groomedToday),
     `${r.s.tempF}°F`,
     edited ? "edited" : null,
     distanceM !== undefined ? (distanceM < 1000 ? `${Math.round(distanceM / 10) * 10} m away` : `${(distanceM / 1609).toFixed(1)} mi away`) : null,
@@ -95,6 +98,20 @@ export function RunRow({
           ))}
         </span>
         <span style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+          {unmarked && (
+            <>
+              <span className="label label-sm label-skip">
+                <Icon name="danger" size={14} />
+                Unmarked, off-piste
+              </span>
+              {unmarked.hazards > 0 && (
+                <span className="label label-sm label-fair">
+                  <Icon name="warning" size={14} />
+                  {unmarked.hazards} {unmarked.hazards === 1 ? "hazard" : "hazards"} found
+                </span>
+              )}
+            </>
+          )}
           {[...new Set(r.s.warnings.map(warningTag))].map((w) => (
             <span key={w} className="label label-sm label-fair">
               <Icon name="warning" size={14} />

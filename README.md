@@ -55,6 +55,32 @@ The validation script also runs an independent DEM sanity check. Lifts climb rou
 
 No code changes should be needed. If one is, it's a bug in the pipeline.
 
+## Unmarked tree areas
+
+`packages/pipeline/src/treeAreas.ts` scans each ski-area boundary on a 30 m grid for forest that looks skiable but isn't a mapped run:
+- canopy of 25–70% (open enough to ski)
+- slope of 15–40°
+- at least 40 m from mapped runs and 30 m from lifts
+
+Matching cells are grouped into areas of at least 1 ha with 150 ft of vertical, named after the runs they sit between, and checked for hazards:
+- pockets over 45° (possible cliffs)
+- a year-round creek running through
+- no mapped run at the bottom
+- close to the ski-area boundary
+- tight trees
+
+Output goes to `data/<id>/treeAreas.json` and into `app.json`. Thresholds live in `DEFAULT_TREE_AREAS`.
+
+In the app the layer is **off by default**. Turning it on shows the cautions, and the user must accept them first. The cautions cover:
+- closures
+- patrol
+- tree wells
+- what 30 m data can't see
+- avalanches, linking the resort's `avalanche` center from config
+- finding the way out
+
+Areas then appear in their own section on the Runs tab and on the map. Each area's details open with a caution banner and the hazards found for that area.
+
 ## Scoring model
 
 `packages/core/src/scoring/`, pure TypeScript with every threshold in `config.ts`:

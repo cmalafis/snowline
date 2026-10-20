@@ -13,6 +13,8 @@ export interface ResortConfig {
   region?: string;
   /** Season pass the resort is on, e.g. "Ikon" or "Epic". */
   pass?: string;
+  /** Regional avalanche center, linked from the unmarked-trees cautions. */
+  avalanche?: { name: string; url: string };
   tz: string;
   osm: {
     /** OSM element holding the ski area boundary (landuse=winter_sports). */

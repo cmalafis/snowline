@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import { compassPoint, exposureOf, fmtTime, scoreAt, type AppRun, type AppZone, type RunScore } from "@snowline/core";
+import { compassPoint, exposureOf, fmtTime, scoreAt, type AppRun, type AppTreeArea, type AppZone, type RunScore } from "@snowline/core";
 import { tier } from "@/lib/model";
 import { sendFeedback, store } from "@/lib/storage";
 import { DiffSymbol } from "./DiffSymbol";
 import { CoverLabel } from "./RunList";
 import { Alert, Icon, ScoreLabel } from "./ui";
+import { UnmarkedCautions } from "./Unmarked";
 
 const POINTS = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"] as const;
 const DIRECTION: Record<string, string> = { N: "North", NE: "Northeast", E: "East", SE: "Southeast", S: "South", SW: "Southwest", W: "West", NW: "Northwest" };
@@ -91,10 +92,11 @@ export function RunSheet({
   onGroomed,
   onAspect,
   onShowMap,
+  avalanche,
 }: {
   resortId: string;
   date: string;
-  run: AppRun;
+  run: AppRun | AppTreeArea;
   treelineFt: number;
   zone: AppZone | undefined;
   day: RunScore[];
@@ -108,7 +110,9 @@ export function RunSheet({
   onGroomed: (v: boolean | null) => void;
   onAspect: (deg: number | null) => void;
   onShowMap: () => void;
+  avalanche: { name: string; url: string } | null;
 }) {
+  const area = "unmarked" in run ? run : null;
   const s = scoreAt(day, hour);
   const best = day.reduce((m, x) => (x.score > m.score ? x : m));
   const previous = store.ratings().find((r) => r.runId === run.id && r.date === date)?.rating ?? null;
@@ -131,6 +135,12 @@ export function RunSheet({
 
   const shownAspect = aspectFix ?? run.aspectDeg;
   const facts: [string, string][] = [
+    ...(area
+      ? ([
+          ["Size", `${Math.round(area.areaHa * 2.47)} acres (${area.areaHa} ha)`],
+          ["Between", area.nearRuns.length ? area.nearRuns.join(", ") : "No named runs nearby"],
+        ] as [string, string][])
+      : []),
     ["Tree cover", run.canopyPct !== undefined ? `${run.canopyPct}% canopy on the run, ${run.shelterPct}% around it` : "No canopy data; estimated from the run type"],
     [
       "Faces",
@@ -163,6 +173,12 @@ export function RunSheet({
           </div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", marginTop: 8 }}>
             <ScoreLabel score={s.score} label={s.label} />
+            {area && (
+              <span className="label label-skip">
+                <Icon name="danger" size={16} />
+                Unmarked, off-piste
+              </span>
+            )}
             <span className="label label-neutral">
               Best around {fmtTime(best.hour)} ({best.score})
             </span>
@@ -181,6 +197,45 @@ export function RunSheet({
         </div>
 
         <div className="sheet-body">
+          {area && (
+            <>
+              <div className="alert alert-danger" role="alert" data-testid="unmarked-caution">
+                <Icon name="danger" />
+                <div>
+                  <div className="alert-title">Unmarked tree area: use caution</div>
+                  <div className="alert-body">
+                    Found in tree-cover and terrain data, not on the trail map. Not patrolled like a run, and it may be closed. Obey all closures and ski with a
+                    partner.
+                  </div>
+                </div>
+              </div>
+              <section className="card" aria-label="Hazards found for this area">
+                <h3 className="card-title" style={{ marginBottom: 8 }}>
+                  Hazards found for this area
+                </h3>
+                {area.hazards.length ? (
+                  <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+                    {area.hazards.map((h) => (
+                      <li key={h} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                        <Icon name="warning" style={{ color: "var(--a-warn-icon)", marginTop: 2 }} />
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="subtle" style={{ margin: 0, fontSize: 14 }}>
+                    None found in the data. That doesn&apos;t mean there aren&apos;t any.
+                  </p>
+                )}
+              </section>
+              <section className="card" aria-label="Before you go in">
+                <h3 className="card-title" style={{ marginBottom: 10 }}>
+                  Before you go in
+                </h3>
+                <UnmarkedCautions avalanche={avalanche} />
+              </section>
+            </>
+          )}
           {s.warnings.map((w) => (
             <Alert key={w} variant="warning" title={w}>
               {/lift holds/i.test(w) && exposureOf(run, treelineFt) < 0.5
@@ -225,7 +280,7 @@ export function RunSheet({
                   <dd>{value}</dd>
                 </div>
               ))}
-              <div>
+              {!area && <div>
                 <dt>Groomed today</dt>
                 <dd>
                   <label style={{ display: "inline-flex", alignItems: "center", gap: 10, minHeight: 44, cursor: "pointer" }}>
@@ -243,7 +298,7 @@ export function RunSheet({
                     {groomedOverride ? " (your report)" : ""}
                   </label>
                 </dd>
-              </div>
+              </div>}
             </dl>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               <button type="button" className="btn btn-link" onClick={() => setEditAspect((v) => !v)} aria-expanded={editAspect}>
@@ -281,12 +336,14 @@ export function RunSheet({
             )}
           </section>
 
-          <section className="card" aria-label="Elevation profile">
-            <h3 className="card-title" style={{ marginBottom: 8 }}>
-              Elevation profile
-            </h3>
-            <ProfileChart profile={run.profile} />
-          </section>
+          {!area && (
+            <section className="card" aria-label="Elevation profile">
+              <h3 className="card-title" style={{ marginBottom: 8 }}>
+                Elevation profile
+              </h3>
+              <ProfileChart profile={run.profile} />
+            </section>
+          )}
 
           <section className="card" aria-label="How did it ski?" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             <h3 className="card-title">How did it ski?</h3>

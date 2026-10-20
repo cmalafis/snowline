@@ -23,6 +23,8 @@ export interface OsmDump {
   pistes: OsmWay[];
   pisteRelations: OsmRelation[];
   lifts: OsmWay[];
+  /** Streams and rivers: a hazard in unmarked tree areas. Absent in dumps fetched before this was added. */
+  waterways?: OsmWay[];
 }
 
 async function overpass(query: string): Promise<{ elements: any[] }> {
@@ -57,13 +59,15 @@ export async function fetchResortOsm(cfg: ResortConfig): Promise<OsmDump> {
 ${boundaryQ}
 way["piste:type"="downhill"](${bbox});out tags geom;
 relation["route"="piste"]["piste:type"="downhill"](${bbox});out tags geom;
-way["aerialway"](${bbox});out tags geom;`;
+way["aerialway"](${bbox});out tags geom;
+way["waterway"~"^(stream|river|brook|canal|ditch)$"](${bbox});out tags geom;`;
   const { elements } = await overpass(q);
 
   const boundary: [number, number][][] = [];
   const pistes: OsmWay[] = [];
   const pisteRelations: OsmRelation[] = [];
   const lifts: OsmWay[] = [];
+  const waterways: OsmWay[] = [];
   for (const el of elements) {
     const tags = el.tags ?? {};
     if (area && el.type === area.type && el.id === area.id) {
@@ -72,6 +76,7 @@ way["aerialway"](${bbox});out tags geom;`;
     } else if (el.type === "way" && tags["piste:type"] === "downhill") pistes.push(el);
     else if (el.type === "relation" && tags.route === "piste") pisteRelations.push(el);
     else if (el.type === "way" && tags.aerialway) lifts.push(el);
+    else if (el.type === "way" && tags.waterway) waterways.push(el);
   }
-  return { fetchedAt: new Date().toISOString(), boundary, pistes, pisteRelations, lifts };
+  return { fetchedAt: new Date().toISOString(), boundary, pistes, pisteRelations, lifts, waterways };
 }

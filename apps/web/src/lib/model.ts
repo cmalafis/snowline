@@ -6,6 +6,7 @@ import {
   zoneScore,
   type AppResortData,
   type AppRun,
+  type AppTreeArea,
   type AppZone,
   type DayContext,
   type DayWeather,
@@ -36,7 +37,7 @@ export function scoreDay(data: AppResortData, weather: DayWeather, adj: Adjustme
   );
   const zones = new Map(data.zones.map((z) => [z.id, z]));
   const byRun = new Map<string, RunScore[]>();
-  for (const run of data.runs) {
+  for (const run of [...data.runs, ...(data.treeAreas ?? [])]) {
     byRun.set(run.id, scoreRunDay(run, zones.get(run.zone ?? ""), ctx, { groomedToday: adj.groomed[run.id], aspectDeg: adj.aspect[run.id] }));
   }
   return { ctx, byRun };
@@ -56,6 +57,15 @@ export interface Ranked {
 export function rankAt(data: AppResortData, day: ScoredDay, hour: number, prefs: Prefs): Ranked[] {
   return data.runs
     .filter((r) => eligible(r, prefs))
+    .map((run) => ({ run, s: scoreAt(day.byRun.get(run.id)!, hour) }))
+    .sort((a, b) => b.s.score - a.s.score || a.run.name.localeCompare(b.run.name));
+}
+
+/** Unmarked tree areas at an hour, best first (difficulty preference applies; terrain type doesn't). */
+export function rankTreeAreasAt(data: AppResortData, day: ScoredDay, hour: number, prefs: Prefs): { run: AppTreeArea; s: RunScore }[] {
+  const max = DIFF_ORDER.indexOf(prefs.maxDifficulty);
+  return (data.treeAreas ?? [])
+    .filter((a) => DIFF_ORDER.indexOf(a.difficulty) <= max)
     .map((run) => ({ run, s: scoreAt(day.byRun.get(run.id)!, hour) }))
     .sort((a, b) => b.s.score - a.s.score || a.run.name.localeCompare(b.run.name));
 }

@@ -47,7 +47,22 @@ export function DifficultyPicker({ prefs, onPrefs }: { prefs: Prefs; onPrefs: (p
   );
 }
 
-export function SettingsSheet({ prefs, resortId, onPrefs, onClose }: { prefs: Prefs; resortId: string; onPrefs: (p: Prefs) => void; onClose: () => void }) {
+export function SettingsSheet({
+  prefs,
+  resortId,
+  onPrefs,
+  onClose,
+  unmarkedOn,
+  onUnmarked,
+}: {
+  prefs: Prefs;
+  resortId: string;
+  onPrefs: (p: Prefs) => void;
+  onClose: () => void;
+  unmarkedOn: boolean;
+  /** Turning on goes through the cautions screen; turning off is immediate. */
+  onUnmarked: (on: boolean) => void;
+}) {
   const [theme, setTheme] = useState(store.theme());
   const [text, setText] = useState("");
   const [sent, setSent] = useState<null | "sent" | "queued">(null);
@@ -84,6 +99,24 @@ export function SettingsSheet({ prefs, resortId, onPrefs, onClose }: { prefs: Pr
               <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 6 }}>Hardest you&apos;ll ski</div>
               <DifficultyPicker prefs={prefs} onPrefs={onPrefs} />
             </div>
+          </section>
+
+          <section className="card" style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <h3 className="card-title">Unmarked tree areas</h3>
+            <div className="card-sub">
+              Forest between the runs that looks skiable in tree-cover and terrain data. Off-piste, not patrolled like runs, and it may be closed. You&apos;ll see the
+              cautions before it turns on.
+            </div>
+            <label style={{ display: "flex", alignItems: "center", gap: 12, minHeight: 44, cursor: "pointer", fontWeight: 500 }}>
+              <input
+                type="checkbox"
+                role="switch"
+                checked={unmarkedOn}
+                onChange={(e) => onUnmarked(e.target.checked)}
+                style={{ width: 44, height: 24, accentColor: "var(--pf-primary)", margin: 0 }}
+              />
+              Show unmarked tree areas
+            </label>
           </section>
 
           <section className="card" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
