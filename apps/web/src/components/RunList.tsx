@@ -7,7 +7,12 @@ import { Icon, ScoreLabel } from "./ui";
 const TONE = { up: "var(--pf-prime)", down: "var(--pf-skip)", flat: "var(--pf-border-strong)" } as const;
 
 /** Where today's grooming status comes from: your own report, other skiers' shared reports, or the run's usual pattern. */
-export type GroomSource = { kind: "you" } | { kind: "shared"; yes: number; no: number } | { kind: "usual" };
+export type GroomSource =
+  | { kind: "you" }
+  | { kind: "shared"; yes: number; no: number }
+  /** Reported, but not by enough skiers yet to override the usual pattern. */
+  | { kind: "pending"; groomed: boolean; count: number }
+  | { kind: "usual" };
 
 const skiers = (n: number) => `${n} ${n === 1 ? "skier" : "skiers"}`;
 
@@ -15,7 +20,10 @@ export function groomLabel(r: Pick<Ranked, "run">, groomedToday: boolean, source
   if (r.run.type === "groomer") {
     if (source.kind === "you") return groomedToday ? "groomed (your report)" : "not groomed (your report)";
     if (source.kind === "shared") return groomedToday ? `groomed (${skiers(source.yes)} reported)` : `not groomed (${skiers(source.no)} reported)`;
-    return groomedToday ? "usually groomed" : "not usually groomed";
+    const usual = groomedToday ? "usually groomed" : "not usually groomed";
+    if (source.kind === "pending")
+      return source.groomed === groomedToday ? `${usual} (${skiers(source.count)} agrees)` : `${usual} · ${skiers(source.count)} says ${source.groomed ? "groomed" : "not groomed"} today`;
+    return usual;
   }
   return { bump: "bumps", tree: "glades", bowl: "bowl/chute" }[r.run.type];
 }

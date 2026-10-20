@@ -1,38 +1,46 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Browser, type Page } from "@playwright/test";
 
-test("a grooming report from one phone shows up on another", async ({ browser }) => {
-  const phoneA = await browser.newContext({ serviceWorkers: "block" });
-  const phoneB = await browser.newContext({ serviceWorkers: "block" });
-  const a = await phoneA.newPage();
-  const b = await phoneB.newPage();
+async function phone(browser: Browser): Promise<Page> {
+  const ctx = await browser.newContext({ serviceWorkers: "block" });
+  const page = await ctx.newPage();
+  await page.goto("/?resort=steamboat");
+  await page.getByRole("tab", { name: "Runs" }).click();
+  return page;
+}
 
-  // Phone A: find a usually-groomed run on today's live forecast and report it wasn't groomed.
-  await a.goto("/?resort=steamboat");
-  await a.getByRole("tab", { name: "Runs" }).click();
-  const rowA = a.getByTestId("run-row").filter({ hasText: "usually groomed" }).first();
-  await expect(rowA).toBeVisible({ timeout: 30_000 });
-  const name = (await rowA.getByTestId("run-name").innerText()).trim();
-  await rowA.getByRole("button").click();
-  const toggle = a.getByRole("switch");
-  await expect(toggle).toBeChecked();
-  await toggle.uncheck();
-  await expect(a.getByText("Your report is shared with everyone for today.")).toBeVisible();
-  await a.keyboard.press("Escape");
-  // Not groomed scores lower, so it may drop out of the top of the list: search for it.
-  await a.getByRole("searchbox", { name: "Find a run" }).fill(name);
-  await expect(a.getByTestId("run-row").filter({ hasText: name }).first()).toContainText("not groomed (your report)");
+async function findRun(page: Page, name: string) {
+  await page.getByRole("searchbox", { name: "Find a run" }).fill(name);
+  const row = page.getByTestId("run-row").filter({ hasText: name }).first();
+  await expect(row).toBeVisible({ timeout: 30_000 });
+  return row;
+}
 
-  // Phone B: a different device sees the shared report.
-  await b.goto("/?resort=steamboat");
-  await b.getByRole("tab", { name: "Runs" }).click();
-  await b.getByRole("searchbox", { name: "Find a run" }).fill(name);
-  const rowB = b.getByTestId("run-row").filter({ hasText: name }).first();
-  await expect(rowB).toContainText("not groomed (1 skier reported)", { timeout: 30_000 });
+async function report(page: Page, name: string, groomed: boolean | null) {
+  await (await findRun(page, name)).getByRole("button").click();
+  if (groomed === null) await page.getByRole("button", { name: "Withdraw my report" }).click();
+  else await page.getByRole("switch").setChecked(groomed);
+  await page.keyboard.press("Escape");
+}
 
-  // Clean up: phone A withdraws its report.
-  await a.getByTestId("run-row").filter({ hasText: name }).first().getByRole("button").click();
-  await a.getByRole("button", { name: "Withdraw my report" }).click();
-  await a.keyboard.press("Escape");
-  await phoneA.close();
-  await phoneB.close();
+test("grooming reports change a run for everyone once two skiers agree", async ({ browser }) => {
+  const a = await phone(browser);
+  const firstGroomed = a.getByTestId("run-row").filter({ hasText: "usually groomed" }).first();
+  await expect(firstGroomed).toBeVisible({ timeout: 30_000 });
+  const name = (await firstGroomed.getByTestId("run-name").innerText()).trim();
+
+  // One report: a hint for others, not an override.
+  await report(a, name, false);
+  await expect(await findRun(a, name)).toContainText("not groomed (your report)");
+  const b = await phone(browser);
+  await expect(await findRun(b, name)).toContainText("usually groomed · 1 skier says not groomed today");
+
+  // A second phone agrees: now it's not groomed for everyone.
+  await report(b, name, false);
+  const c = await phone(browser);
+  await expect(await findRun(c, name)).toContainText("not groomed (2 skiers reported)");
+
+  // Clean up.
+  await report(a, name, null);
+  await report(b, name, null);
+  for (const p of [a, b, c]) await p.context().close();
 });

@@ -302,12 +302,16 @@ export function RunSheet({
                         {groomSource.kind === "you"
                           ? "Your report"
                           : groomSource.kind === "shared"
-                            ? `Reported by ${groomedToday ? groomSource.yes : groomSource.no} ${(groomedToday ? groomSource.yes : groomSource.no) === 1 ? "skier" : "skiers"} today`
-                            : "Its usual pattern; tap if today's different"}
+                            ? `Reported by ${groomedToday ? groomSource.yes : groomSource.no} skiers today`
+                            : groomSource.kind === "pending"
+                              ? groomSource.groomed === groomedToday
+                                ? `Its usual pattern; ${groomSource.count} ${groomSource.count === 1 ? "skier agrees" : "skiers agree"}`
+                                : `Its usual pattern. ${groomSource.count} ${groomSource.count === 1 ? "skier says" : "skiers say"} ${groomSource.groomed ? "groomed" : "not groomed"} today; one more matching report changes it for everyone.`
+                              : "Its usual pattern; tap if today's different"}
                       </span>
                     </span>
                   </label>
-                  {shareable && <div className="subtle" style={{ fontSize: 12 }}>Your report is shared with everyone for today.</div>}
+                  {shareable && <div className="subtle" style={{ fontSize: 12 }}>Your report is shared for today. It changes the run for everyone once a second skier agrees.</div>}
                 </dd>
               </div>}
             </dl>

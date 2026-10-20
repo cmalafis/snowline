@@ -213,12 +213,18 @@ export function App() {
   const wx = weather.state === "ok" ? weather.value : null;
   // Grooming for scoring: your own report, else what other skiers reported today, else the run's usual pattern.
   const groomedNow = useMemo(
-    () => ({ ...(isToday ? Object.fromEntries(Object.entries(shared).map(([id, g]) => [id, g.groomed])) : {}), ...groomed }),
+    // Only reports confirmed by enough skiers override the usual pattern for everyone.
+    () => ({ ...(isToday ? Object.fromEntries(Object.entries(shared).filter(([, g]) => g.confirmed).map(([id, g]) => [id, g.groomed])) : {}), ...groomed }),
     [isToday, shared, groomed],
   );
   const day = useMemo(() => (resort && wx ? scoreDay(resort, wx, { groomed: groomedNow, aspect }) : null), [resort, wx, groomedNow, aspect]);
-  const groomSource = (runId: string): GroomSource =>
-    runId in groomed ? { kind: "you" } : isToday && shared[runId] ? { kind: "shared", yes: shared[runId]!.yes, no: shared[runId]!.no } : { kind: "usual" };
+  const groomSource = (runId: string): GroomSource => {
+    if (runId in groomed) return { kind: "you" };
+    const g = isToday ? shared[runId] : undefined;
+    if (!g) return { kind: "usual" };
+    if (g.confirmed) return { kind: "shared", yes: g.yes, no: g.no };
+    return { kind: "pending", groomed: g.groomed, count: g.groomed ? g.yes : g.no };
+  };
   const where = useMemo(() => (resort && loc ? nearby(resort, loc.p) : null), [resort, loc]);
   const atResort = !!where && where.near.size > 0;
   const ranked: Ranked[] = useMemo(() => (resort && day ? rankAt(resort, day, hour, prefs) : []), [resort, day, hour, prefs]);
