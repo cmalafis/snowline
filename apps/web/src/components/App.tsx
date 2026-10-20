@@ -439,6 +439,7 @@ export function App() {
                   favorite={favorites.includes(x.run.id)}
                   edited={x.run.id in aspect || x.run.id in groomed}
                   distanceM={nearMe && loc && atResort ? distanceToRun(x.run, loc.p) : undefined}
+                  treelineFt={r.treelineFt}
                   onOpen={() => setOpenRun(x.run.id)}
                 />
               ))}
@@ -463,6 +464,7 @@ export function App() {
           resortId={r.id}
           date={date}
           run={open}
+          treelineFt={r.treelineFt}
           zone={zoneById.get(open.zone ?? "")}
           day={day.byRun.get(open.id)!}
           hour={hour}

@@ -1,6 +1,6 @@
 {
  "version": "2026-10-20",
- "generatedAt": "2026-10-20T00:37:35.148Z",
+ "generatedAt": "2026-10-20T00:47:51.840Z",
  "resort": {
   "id": "breckenridge",
   "name": "Breckenridge",
@@ -2365,6 +2365,8 @@
    "zone": "peak-6",
    "lengthM": 4875,
    "mixedAspect": false,
+   "canopyPct": 4,
+   "shelterPct": 3,
    "geometry": "area",
    "lines": [
     [
@@ -2623,6 +2625,8 @@
    "zone": "peak-6",
    "lengthM": 2450,
    "mixedAspect": false,
+   "canopyPct": 19,
+   "shelterPct": 19,
    "geometry": "area",
    "lines": [
     [
@@ -2873,6 +2877,8 @@
    "zone": "t-bar",
    "lengthM": 11600,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 8,
    "geometry": "area",
    "lines": [
     [
@@ -3187,6 +3193,8 @@
    "zone": "peak-10",
    "lengthM": 4950,
    "mixedAspect": false,
+   "canopyPct": 40,
+   "shelterPct": 37,
    "geometry": "area",
    "lines": [
     [
@@ -3429,6 +3437,8 @@
    "zone": "imperial",
    "lengthM": 7550,
    "mixedAspect": false,
+   "canopyPct": 4,
+   "shelterPct": 3,
    "geometry": "area",
    "lines": [
     [
@@ -3699,6 +3709,8 @@
    "zone": "imperial",
    "lengthM": 4800,
    "mixedAspect": false,
+   "canopyPct": 3,
+   "shelterPct": 2,
    "geometry": "area",
    "lines": [
     [
@@ -3941,6 +3953,8 @@
    "zone": "imperial",
    "lengthM": 6175,
    "mixedAspect": false,
+   "canopyPct": 1,
+   "shelterPct": 1,
    "geometry": "area",
    "lines": [
     [
@@ -4195,6 +4209,8 @@
    "zone": "peak-7-alpine",
    "lengthM": 9325,
    "mixedAspect": false,
+   "canopyPct": 3,
+   "shelterPct": 3,
    "geometry": "area",
    "lines": [
     [
@@ -4473,6 +4489,8 @@
    "zone": "peak-7-alpine",
    "lengthM": 9150,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 9,
    "geometry": "area",
    "lines": [
     [
@@ -4735,6 +4753,8 @@
    "zone": "peak-7-alpine",
    "lengthM": 5000,
    "mixedAspect": true,
+   "canopyPct": 26,
+   "shelterPct": 26,
    "parts": [
     {
      "aspectDeg": 85,
@@ -5026,6 +5046,8 @@
    "zone": "peak-6",
    "lengthM": 4625,
    "mixedAspect": false,
+   "canopyPct": 1,
+   "shelterPct": 1,
    "geometry": "area",
    "lines": [
     [
@@ -5280,6 +5302,8 @@
    "zone": "peak-6",
    "lengthM": 4475,
    "mixedAspect": false,
+   "canopyPct": 6,
+   "shelterPct": 5,
    "geometry": "area",
    "lines": [
     [
@@ -5582,6 +5606,8 @@
    "zone": "peak-6",
    "lengthM": 11800,
    "mixedAspect": false,
+   "canopyPct": 23,
+   "shelterPct": 23,
    "geometry": "area",
    "lines": [
     [
@@ -5920,6 +5946,8 @@
    "zone": "peak-6",
    "lengthM": 7125,
    "mixedAspect": false,
+   "canopyPct": 2,
+   "shelterPct": 3,
    "geometry": "area",
    "lines": [
     [
@@ -6226,6 +6254,8 @@
    "zone": "peak-6",
    "lengthM": 5000,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 9,
    "geometry": "area",
    "lines": [
     [
@@ -6480,6 +6510,8 @@
    "zone": "imperial",
    "lengthM": 6625,
    "mixedAspect": true,
+   "canopyPct": 3,
+   "shelterPct": 2,
    "parts": [
     {
      "aspectDeg": 135,
@@ -6779,6 +6811,8 @@
    "zone": "north-face",
    "lengthM": 3675,
    "mixedAspect": false,
+   "canopyPct": 51,
+   "shelterPct": 47,
    "geometry": "area",
    "lines": [
     [
@@ -7033,6 +7067,8 @@
    "zone": "peak-8",
    "lengthM": 1473,
    "mixedAspect": true,
+   "canopyPct": 15,
+   "shelterPct": 22,
    "parts": [
     {
      "aspectDeg": 91,
@@ -7422,6 +7458,8 @@
    "zone": "peak-10",
    "lengthM": 1640,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -7741,6 +7779,8 @@
    "zone": "peak-10",
    "lengthM": 1279,
    "mixedAspect": false,
+   "canopyPct": 11,
+   "shelterPct": 24,
    "geometry": "line",
    "lines": [
     [
@@ -8040,6 +8080,8 @@
    "zone": "peak-10",
    "lengthM": 743,
    "mixedAspect": false,
+   "canopyPct": 35,
+   "shelterPct": 40,
    "geometry": "line",
    "lines": [
     [
@@ -8237,6 +8279,8 @@
    "zone": "peak-10",
    "lengthM": 486,
    "mixedAspect": false,
+   "canopyPct": 27,
+   "shelterPct": 35,
    "geometry": "line",
    "lines": [
     [
@@ -8356,6 +8400,8 @@
    "zone": "peak-10",
    "lengthM": 1186,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 19,
    "geometry": "line",
    "lines": [
     [
@@ -8607,6 +8653,8 @@
    "zone": "t-bar",
    "lengthM": 822,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 16,
    "geometry": "line",
    "lines": [
     [
@@ -8798,6 +8846,8 @@
    "zone": "peak-8",
    "lengthM": 1106,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 18,
    "geometry": "line",
    "lines": [
     [
@@ -9037,6 +9087,8 @@
    "zone": "peak-8",
    "lengthM": 768,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 20,
    "geometry": "line",
    "lines": [
     [
@@ -9220,6 +9272,8 @@
    "zone": "peak-8",
    "lengthM": 1152,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 16,
    "geometry": "line",
    "lines": [
     [
@@ -9459,6 +9513,8 @@
    "zone": "peak-8",
    "lengthM": 404,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 16,
    "geometry": "line",
    "lines": [
     [
@@ -9566,6 +9622,8 @@
    "zone": "peak-8",
    "lengthM": 369,
    "mixedAspect": false,
+   "canopyPct": 20,
+   "shelterPct": 25,
    "geometry": "line",
    "lines": [
     [
@@ -9673,6 +9731,8 @@
    "zone": "peak-8",
    "lengthM": 494,
    "mixedAspect": false,
+   "canopyPct": 11,
+   "shelterPct": 20,
    "geometry": "line",
    "lines": [
     [
@@ -9792,6 +9852,8 @@
    "zone": "peak-8",
    "lengthM": 1296,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 17,
    "geometry": "line",
    "lines": [
     [
@@ -10071,6 +10133,8 @@
    "zone": "peak-8",
    "lengthM": 1010,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 22,
    "geometry": "line",
    "lines": [
     [
@@ -10282,6 +10346,8 @@
    "zone": "peak-8",
    "lengthM": 747,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 19,
    "geometry": "line",
    "lines": [
     [
@@ -10479,6 +10545,8 @@
    "zone": "peak-8",
    "lengthM": 408,
    "mixedAspect": false,
+   "canopyPct": 19,
+   "shelterPct": 25,
    "geometry": "line",
    "lines": [
     [
@@ -10586,6 +10654,8 @@
    "zone": "peak-8",
    "lengthM": 411,
    "mixedAspect": false,
+   "canopyPct": 38,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -10689,6 +10759,8 @@
    "zone": "peak-8",
    "lengthM": 836,
    "mixedAspect": false,
+   "canopyPct": 16,
+   "shelterPct": 25,
    "geometry": "line",
    "lines": [
     [
@@ -10876,6 +10948,8 @@
    "zone": "peak-8",
    "lengthM": 1608,
    "mixedAspect": false,
+   "canopyPct": 13,
+   "shelterPct": 23,
    "geometry": "line",
    "lines": [
     [
@@ -11187,6 +11261,8 @@
    "zone": "peak-8",
    "lengthM": 1090,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 22,
    "geometry": "line",
    "lines": [
     [
@@ -11442,6 +11518,8 @@
    "zone": "peak-8",
    "lengthM": 750,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -11617,6 +11695,8 @@
    "zone": "peak-8",
    "lengthM": 966,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 30,
    "geometry": "line",
    "lines": [
     [
@@ -11832,6 +11912,8 @@
    "zone": "peak-8",
    "lengthM": 143,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 25,
    "geometry": "line",
    "lines": [
     [
@@ -11891,6 +11973,8 @@
    "zone": "t-bar",
    "lengthM": 651,
    "mixedAspect": false,
+   "canopyPct": 19,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -12038,6 +12122,8 @@
    "zone": "peak-7-alpine",
    "lengthM": 297,
    "mixedAspect": false,
+   "canopyPct": 11,
+   "shelterPct": 16,
    "geometry": "line",
    "lines": [
     [
@@ -12121,6 +12207,8 @@
    "zone": "t-bar",
    "lengthM": 631,
    "mixedAspect": false,
+   "canopyPct": 28,
+   "shelterPct": 28,
    "geometry": "line",
    "lines": [
     [
@@ -12272,6 +12360,8 @@
    "zone": "t-bar",
    "lengthM": 205,
    "mixedAspect": false,
+   "canopyPct": 24,
+   "shelterPct": 25,
    "geometry": "line",
    "lines": [
     [
@@ -12343,6 +12433,8 @@
    "zone": "t-bar",
    "lengthM": 619,
    "mixedAspect": false,
+   "canopyPct": 21,
+   "shelterPct": 19,
    "geometry": "line",
    "lines": [
     [
@@ -12498,6 +12590,8 @@
    "zone": "peak-7",
    "lengthM": 897,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 17,
    "geometry": "line",
    "lines": [
     [
@@ -12697,6 +12791,8 @@
    "zone": "peak-8",
    "lengthM": 2991,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -13208,6 +13304,8 @@
    "zone": "peak-7",
    "lengthM": 2388,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 25,
    "geometry": "line",
    "lines": [
     [
@@ -13683,6 +13781,8 @@
    "zone": "peak-7",
    "lengthM": 770,
    "mixedAspect": false,
+   "canopyPct": 17,
+   "shelterPct": 33,
    "geometry": "line",
    "lines": [
     [
@@ -13870,6 +13970,8 @@
    "zone": "peak-7",
    "lengthM": 311,
    "mixedAspect": false,
+   "canopyPct": 5,
+   "shelterPct": 27,
    "geometry": "line",
    "lines": [
     [
@@ -13961,6 +14063,8 @@
    "zone": "peak-7",
    "lengthM": 3278,
    "mixedAspect": false,
+   "canopyPct": 21,
+   "shelterPct": 33,
    "geometry": "line",
    "lines": [
     [
@@ -14486,6 +14590,8 @@
    "zone": "peak-7",
    "lengthM": 1109,
    "mixedAspect": false,
+   "canopyPct": 13,
+   "shelterPct": 32,
    "geometry": "line",
    "lines": [
     [
@@ -14729,6 +14835,8 @@
    "zone": "peak-7",
    "lengthM": 1559,
    "mixedAspect": false,
+   "canopyPct": 21,
+   "shelterPct": 35,
    "geometry": "line",
    "lines": [
     [
@@ -15072,6 +15180,8 @@
    "zone": "peak-7",
    "lengthM": 1124,
    "mixedAspect": false,
+   "canopyPct": 21,
+   "shelterPct": 37,
    "geometry": "line",
    "lines": [
     [
@@ -15327,6 +15437,8 @@
    "zone": "peak-8",
    "lengthM": 256,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 21,
    "geometry": "line",
    "lines": [
     [
@@ -15402,6 +15514,8 @@
    "zone": "peak-8",
    "lengthM": 361,
    "mixedAspect": false,
+   "canopyPct": 27,
+   "shelterPct": 27,
    "geometry": "line",
    "lines": [
     [
@@ -15497,6 +15611,8 @@
    "zone": "peak-8",
    "lengthM": 858,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 17,
    "geometry": "line",
    "lines": [
     [
@@ -15724,6 +15840,8 @@
    "zone": "peak-8",
    "lengthM": 558,
    "mixedAspect": false,
+   "canopyPct": 31,
+   "shelterPct": 39,
    "geometry": "line",
    "lines": [
     [
@@ -15871,6 +15989,8 @@
    "zone": "peak-8",
    "lengthM": 313,
    "mixedAspect": false,
+   "canopyPct": 5,
+   "shelterPct": 17,
    "geometry": "line",
    "lines": [
     [
@@ -15958,6 +16078,8 @@
    "zone": "peak-8",
    "lengthM": 274,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 21,
    "geometry": "line",
    "lines": [
     [
@@ -16041,6 +16163,8 @@
    "zone": "peak-8",
    "lengthM": 886,
    "mixedAspect": false,
+   "canopyPct": 5,
+   "shelterPct": 13,
    "geometry": "line",
    "lines": [
     [
@@ -16236,6 +16360,8 @@
    "zone": "peak-8",
    "lengthM": 965,
    "mixedAspect": false,
+   "canopyPct": 32,
+   "shelterPct": 37,
    "geometry": "line",
    "lines": [
     [
@@ -16459,6 +16585,8 @@
    "zone": "peak-8",
    "lengthM": 376,
    "mixedAspect": true,
+   "canopyPct": 27,
+   "shelterPct": 39,
    "parts": [
     {
      "aspectDeg": 139,
@@ -16591,6 +16719,8 @@
    "zone": "peak-8",
    "lengthM": 706,
    "mixedAspect": false,
+   "canopyPct": 24,
+   "shelterPct": 28,
    "geometry": "line",
    "lines": [
     [
@@ -16750,6 +16880,8 @@
    "zone": "peak-9",
    "lengthM": 1632,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -17085,6 +17217,8 @@
    "zone": "peak-9",
    "lengthM": 1755,
    "mixedAspect": false,
+   "canopyPct": 11,
+   "shelterPct": 24,
    "geometry": "line",
    "lines": [
     [
@@ -17468,6 +17602,8 @@
    "zone": "peak-9",
    "lengthM": 881,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 24,
    "geometry": "line",
    "lines": [
     [
@@ -17671,6 +17807,8 @@
    "zone": "peak-9",
    "lengthM": 718,
    "mixedAspect": false,
+   "canopyPct": 24,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -17858,6 +17996,8 @@
    "zone": "peak-9",
    "lengthM": 1287,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -18145,6 +18285,8 @@
    "zone": "peak-8",
    "lengthM": 1666,
    "mixedAspect": true,
+   "canopyPct": 26,
+   "shelterPct": 38,
    "parts": [
     {
      "aspectDeg": 137,
@@ -18536,6 +18678,8 @@
    "zone": "peak-9",
    "lengthM": 702,
    "mixedAspect": true,
+   "canopyPct": 28,
+   "shelterPct": 33,
    "parts": [
     {
      "aspectDeg": 57,
@@ -18728,6 +18872,8 @@
    "zone": "peak-8",
    "lengthM": 2629,
    "mixedAspect": false,
+   "canopyPct": 16,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -19307,6 +19453,8 @@
    "zone": "peak-9",
    "lengthM": 612,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 22,
    "geometry": "line",
    "lines": [
     [
@@ -19466,6 +19614,8 @@
    "zone": "peak-8",
    "lengthM": 306,
    "mixedAspect": false,
+   "canopyPct": 7,
+   "shelterPct": 25,
    "geometry": "line",
    "lines": [
     [
@@ -19553,6 +19703,8 @@
    "zone": "peak-9",
    "lengthM": 449,
    "mixedAspect": false,
+   "canopyPct": 11,
+   "shelterPct": 21,
    "geometry": "line",
    "lines": [
     [
@@ -19664,6 +19816,8 @@
    "zone": "peak-9",
    "lengthM": 1570,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 23,
    "geometry": "line",
    "lines": [
     [
@@ -19987,6 +20141,8 @@
    "zone": "peak-8",
    "lengthM": 432,
    "mixedAspect": true,
+   "canopyPct": 18,
+   "shelterPct": 34,
    "parts": [
     {
      "aspectDeg": 4,
@@ -20128,6 +20284,8 @@
    "zone": "peak-9",
    "lengthM": 1655,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 27,
    "geometry": "line",
    "lines": [
     [
@@ -20447,6 +20605,8 @@
    "zone": "peak-9",
    "lengthM": 2473,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 24,
    "geometry": "line",
    "lines": [
     [
@@ -20956,6 +21116,8 @@
    "zone": "peak-9",
    "lengthM": 2070,
    "mixedAspect": false,
+   "canopyPct": 31,
+   "shelterPct": 36,
    "geometry": "line",
    "lines": [
     [
@@ -21379,6 +21541,8 @@
    "zone": "peak-9",
    "lengthM": 1205,
    "mixedAspect": false,
+   "canopyPct": 22,
+   "shelterPct": 34,
    "geometry": "line",
    "lines": [
     [
@@ -21622,6 +21786,8 @@
    "zone": "peak-9",
    "lengthM": 908,
    "mixedAspect": false,
+   "canopyPct": 13,
+   "shelterPct": 24,
    "geometry": "line",
    "lines": [
     [
@@ -21825,6 +21991,8 @@
    "zone": "peak-9",
    "lengthM": 1420,
    "mixedAspect": false,
+   "canopyPct": 17,
+   "shelterPct": 32,
    "geometry": "line",
    "lines": [
     [
@@ -22120,6 +22288,8 @@
    "zone": "peak-9",
    "lengthM": 279,
    "mixedAspect": false,
+   "canopyPct": 16,
+   "shelterPct": 24,
    "geometry": "line",
    "lines": [
     [
@@ -22203,6 +22373,8 @@
    "zone": "peak-9",
    "lengthM": 421,
    "mixedAspect": false,
+   "canopyPct": 43,
+   "shelterPct": 43,
    "geometry": "line",
    "lines": [
     [
@@ -22318,6 +22490,8 @@
    "zone": "peak-10",
    "lengthM": 1701,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 18,
    "geometry": "line",
    "lines": [
     [
@@ -22685,6 +22859,8 @@
    "zone": "imperial",
    "lengthM": 243,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 4,
    "geometry": "line",
    "lines": [
     [
@@ -22756,6 +22932,8 @@
    "zone": "peak-10",
    "lengthM": 234,
    "mixedAspect": false,
+   "canopyPct": 13,
+   "shelterPct": 28,
    "geometry": "line",
    "lines": [
     [
@@ -22835,6 +23013,8 @@
    "zone": "imperial",
    "lengthM": 409,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 1,
    "geometry": "line",
    "lines": [
     [
@@ -22930,6 +23110,8 @@
    "zone": "peak-10",
    "lengthM": 1286,
    "mixedAspect": false,
+   "canopyPct": 29,
+   "shelterPct": 37,
    "geometry": "line",
    "lines": [
     [
@@ -23217,6 +23399,8 @@
    "zone": "imperial",
    "lengthM": 254,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 3,
    "geometry": "line",
    "lines": [
     [
@@ -23288,6 +23472,8 @@
    "zone": "peak-8",
    "lengthM": 1169,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 16,
    "geometry": "line",
    "lines": [
     [
@@ -23573,6 +23759,8 @@
    "zone": "peak-8",
    "lengthM": 20,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 9,
    "geometry": "line",
    "lines": [
     [
@@ -23612,6 +23800,8 @@
    "zone": "peak-6",
    "lengthM": 1928,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 30,
    "geometry": "line",
    "lines": [
     [
@@ -24019,6 +24209,8 @@
    "zone": "peak-9",
    "lengthM": 402,
    "mixedAspect": false,
+   "canopyPct": 34,
+   "shelterPct": 37,
    "geometry": "line",
    "lines": [
     [
@@ -24126,6 +24318,8 @@
    "zone": "peak-9",
    "lengthM": 845,
    "mixedAspect": false,
+   "canopyPct": 28,
+   "shelterPct": 27,
    "geometry": "line",
    "lines": [
     [
@@ -24309,6 +24503,8 @@
    "zone": "peak-9",
    "lengthM": 142,
    "mixedAspect": false,
+   "canopyPct": 7,
+   "shelterPct": 14,
    "geometry": "line",
    "lines": [
     [
@@ -24368,6 +24564,8 @@
    "zone": "peak-9",
    "lengthM": 606,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 24,
    "geometry": "line",
    "lines": [
     [
@@ -24503,6 +24701,8 @@
    "zone": "peak-9",
    "lengthM": 629,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 29,
    "geometry": "line",
    "lines": [
     [
@@ -24642,6 +24842,8 @@
    "zone": "peak-9",
    "lengthM": 1043,
    "mixedAspect": false,
+   "canopyPct": 11,
+   "shelterPct": 29,
    "geometry": "line",
    "lines": [
     [
@@ -24861,6 +25063,8 @@
    "zone": "peak-10",
    "lengthM": 214,
    "mixedAspect": false,
+   "canopyPct": 28,
+   "shelterPct": 37,
    "geometry": "line",
    "lines": [
     [
@@ -24924,6 +25128,8 @@
    "zone": "peak-9",
    "lengthM": 230,
    "mixedAspect": false,
+   "canopyPct": 26,
+   "shelterPct": 31,
    "geometry": "line",
    "lines": [
     [
@@ -25007,6 +25213,8 @@
    "zone": "peak-9",
    "lengthM": 767,
    "mixedAspect": false,
+   "canopyPct": 7,
+   "shelterPct": 18,
    "geometry": "line",
    "lines": [
     [
@@ -25182,6 +25390,8 @@
    "zone": "peak-9",
    "lengthM": 374,
    "mixedAspect": false,
+   "canopyPct": 35,
+   "shelterPct": 44,
    "geometry": "line",
    "lines": [
     [
@@ -25289,6 +25499,8 @@
    "zone": "peak-9",
    "lengthM": 487,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 22,
    "geometry": "line",
    "lines": [
     [
@@ -25408,6 +25620,8 @@
    "zone": "peak-9",
    "lengthM": 818,
    "mixedAspect": false,
+   "canopyPct": 13,
+   "shelterPct": 16,
    "geometry": "line",
    "lines": [
     [
@@ -25615,6 +25829,8 @@
    "zone": "peak-9",
    "lengthM": 1229,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 18,
    "geometry": "line",
    "lines": [
     [
@@ -25870,6 +26086,8 @@
    "zone": "peak-8",
    "lengthM": 981,
    "mixedAspect": true,
+   "canopyPct": 31,
+   "shelterPct": 33,
    "parts": [
     {
      "aspectDeg": 355,
@@ -26131,6 +26349,8 @@
    "zone": "peak-6",
    "lengthM": 542,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 7,
    "geometry": "line",
    "lines": [
     [
@@ -26262,6 +26482,8 @@
    "zone": "peak-6",
    "lengthM": 837,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 30,
    "geometry": "line",
    "lines": [
     [
@@ -26449,6 +26671,8 @@
    "zone": "peak-6",
    "lengthM": 1567,
    "mixedAspect": false,
+   "canopyPct": 17,
+   "shelterPct": 33,
    "geometry": "line",
    "lines": [
     [
@@ -26780,6 +27004,8 @@
    "zone": "peak-6",
    "lengthM": 1082,
    "mixedAspect": false,
+   "canopyPct": 5,
+   "shelterPct": 17,
    "geometry": "line",
    "lines": [
     [
@@ -27011,6 +27237,8 @@
    "zone": "peak-6",
    "lengthM": 1402,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 22,
    "geometry": "line",
    "lines": [
     [
@@ -27298,6 +27526,8 @@
    "zone": "north-face",
    "lengthM": 680,
    "mixedAspect": false,
+   "canopyPct": 37,
+   "shelterPct": 43,
    "geometry": "line",
    "lines": [
     [
@@ -27457,6 +27687,8 @@
    "zone": "north-face",
    "lengthM": 437,
    "mixedAspect": false,
+   "canopyPct": 46,
+   "shelterPct": 45,
    "geometry": "line",
    "lines": [
     [
@@ -27572,6 +27804,8 @@
    "zone": "north-face",
    "lengthM": 666,
    "mixedAspect": false,
+   "canopyPct": 32,
+   "shelterPct": 36,
    "geometry": "line",
    "lines": [
     [
@@ -27731,6 +27965,8 @@
    "zone": "north-face",
    "lengthM": 449,
    "mixedAspect": false,
+   "canopyPct": 47,
+   "shelterPct": 44,
    "geometry": "line",
    "lines": [
     [
@@ -27850,6 +28086,8 @@
    "zone": "north-face",
    "lengthM": 284,
    "mixedAspect": false,
+   "canopyPct": 41,
+   "shelterPct": 41,
    "geometry": "line",
    "lines": [
     [
@@ -27937,6 +28175,8 @@
    "zone": "north-face",
    "lengthM": 207,
    "mixedAspect": false,
+   "canopyPct": 41,
+   "shelterPct": 44,
    "geometry": "line",
    "lines": [
     [
@@ -28004,6 +28244,8 @@
    "zone": "north-face",
    "lengthM": 383,
    "mixedAspect": false,
+   "canopyPct": 49,
+   "shelterPct": 47,
    "geometry": "line",
    "lines": [
     [
@@ -28107,6 +28349,8 @@
    "zone": "peak-9",
    "lengthM": 1082,
    "mixedAspect": true,
+   "canopyPct": 11,
+   "shelterPct": 26,
    "parts": [
     {
      "aspectDeg": 59,
@@ -28376,6 +28620,8 @@
    "zone": "peak-9",
    "lengthM": 187,
    "mixedAspect": false,
+   "canopyPct": 27,
+   "shelterPct": 21,
    "geometry": "line",
    "lines": [
     [
@@ -28443,6 +28689,8 @@
    "zone": "back-bowls",
    "lengthM": 863,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 14,
    "geometry": "line",
    "lines": [
     [
@@ -28630,6 +28878,8 @@
    "zone": "back-bowls",
    "lengthM": 827,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 13,
    "geometry": "line",
    "lines": [
     [
@@ -28817,6 +29067,8 @@
    "zone": "back-bowls",
    "lengthM": 782,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 12,
    "geometry": "line",
    "lines": [
     [
@@ -29000,6 +29252,8 @@
    "zone": "back-bowls",
    "lengthM": 741,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 14,
    "geometry": "line",
    "lines": [
     [
@@ -29171,6 +29425,8 @@
    "zone": "back-bowls",
    "lengthM": 730,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 18,
    "geometry": "line",
    "lines": [
     [
@@ -29346,6 +29602,8 @@
    "zone": "back-bowls",
    "lengthM": 647,
    "mixedAspect": false,
+   "canopyPct": 19,
+   "shelterPct": 22,
    "geometry": "line",
    "lines": [
     [
@@ -29497,6 +29755,8 @@
    "zone": "back-bowls",
    "lengthM": 632,
    "mixedAspect": false,
+   "canopyPct": 20,
+   "shelterPct": 20,
    "geometry": "line",
    "lines": [
     [
@@ -29640,6 +29900,8 @@
    "zone": "back-bowls",
    "lengthM": 543,
    "mixedAspect": false,
+   "canopyPct": 19,
+   "shelterPct": 21,
    "geometry": "line",
    "lines": [
     [
@@ -29767,6 +30029,8 @@
    "zone": "back-bowls",
    "lengthM": 430,
    "mixedAspect": false,
+   "canopyPct": 13,
+   "shelterPct": 18,
    "geometry": "line",
    "lines": [
     [
@@ -29890,6 +30154,8 @@
    "zone": "back-bowls",
    "lengthM": 354,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 16,
    "geometry": "line",
    "lines": [
     [
@@ -29993,6 +30259,8 @@
    "zone": "back-bowls",
    "lengthM": 295,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 16,
    "geometry": "line",
    "lines": [
     [
@@ -30080,6 +30348,8 @@
    "zone": "back-bowls",
    "lengthM": 1181,
    "mixedAspect": false,
+   "canopyPct": 20,
+   "shelterPct": 24,
    "geometry": "line",
    "lines": [
     [
@@ -30327,6 +30597,8 @@
    "zone": "back-bowls",
    "lengthM": 300,
    "mixedAspect": false,
+   "canopyPct": 13,
+   "shelterPct": 16,
    "geometry": "line",
    "lines": [
     [
@@ -30414,6 +30686,8 @@
    "zone": "peak-10",
    "lengthM": 1085,
    "mixedAspect": false,
+   "canopyPct": 23,
+   "shelterPct": 29,
    "geometry": "line",
    "lines": [
     [
@@ -30661,6 +30935,8 @@
    "zone": "peak-10",
    "lengthM": 601,
    "mixedAspect": false,
+   "canopyPct": 20,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -30808,6 +31084,8 @@
    "zone": "peak-10",
    "lengthM": 605,
    "mixedAspect": true,
+   "canopyPct": 27,
+   "shelterPct": 36,
    "parts": [
     {
      "aspectDeg": 46,
@@ -30984,6 +31262,8 @@
    "zone": "peak-10",
    "lengthM": 162,
    "mixedAspect": false,
+   "canopyPct": 20,
+   "shelterPct": 31,
    "geometry": "line",
    "lines": [
     [
@@ -31043,6 +31323,8 @@
    "zone": "peak-10",
    "lengthM": 362,
    "mixedAspect": false,
+   "canopyPct": 13,
+   "shelterPct": 20,
    "geometry": "line",
    "lines": [
     [
@@ -31158,6 +31440,8 @@
    "zone": "peak-10",
    "lengthM": 218,
    "mixedAspect": false,
+   "canopyPct": 20,
+   "shelterPct": 34,
    "geometry": "line",
    "lines": [
     [
@@ -31237,6 +31521,8 @@
    "zone": "peak-6",
    "lengthM": 1101,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 31,
    "geometry": "line",
    "lines": [
     [
@@ -31468,6 +31754,8 @@
    "zone": "peak-6",
    "lengthM": 978,
    "mixedAspect": true,
+   "canopyPct": 26,
+   "shelterPct": 33,
    "parts": [
     {
      "aspectDeg": 49,
@@ -31708,6 +31996,8 @@
    "zone": "peak-6",
    "lengthM": 375,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 33,
    "geometry": "line",
    "lines": [
     [
@@ -31811,6 +32101,8 @@
    "zone": "peak-6",
    "lengthM": 284,
    "mixedAspect": false,
+   "canopyPct": 27,
+   "shelterPct": 38,
    "geometry": "line",
    "lines": [
     [
@@ -31898,6 +32190,8 @@
    "zone": "imperial",
    "lengthM": 538,
    "mixedAspect": false,
+   "canopyPct": 3,
+   "shelterPct": 3,
    "geometry": "line",
    "lines": [
     [
@@ -32021,6 +32315,8 @@
    "zone": "t-bar",
    "lengthM": 418,
    "mixedAspect": false,
+   "canopyPct": 5,
+   "shelterPct": 7,
    "geometry": "line",
    "lines": [
     [
@@ -32136,6 +32432,8 @@
    "zone": "peak-8",
    "lengthM": 647,
    "mixedAspect": false,
+   "canopyPct": 7,
+   "shelterPct": 18,
    "geometry": "line",
    "lines": [
     [
@@ -32291,6 +32589,8 @@
    "zone": "north-face",
    "lengthM": 743,
    "mixedAspect": false,
+   "canopyPct": 44,
+   "shelterPct": 45,
    "geometry": "line",
    "lines": [
     [
@@ -32442,6 +32742,8 @@
    "zone": "peak-9",
    "lengthM": 441,
    "mixedAspect": false,
+   "canopyPct": 22,
+   "shelterPct": 22,
    "geometry": "line",
    "lines": [
     [
@@ -32573,6 +32875,8 @@
    "zone": "peak-6",
    "lengthM": 1339,
    "mixedAspect": true,
+   "canopyPct": 34,
+   "shelterPct": 36,
    "parts": [
     {
      "aspectDeg": 79,
@@ -32917,6 +33221,8 @@
    "zone": "peak-7",
    "lengthM": 484,
    "mixedAspect": false,
+   "canopyPct": 32,
+   "shelterPct": 37,
    "geometry": "line",
    "lines": [
     [
@@ -33040,6 +33346,8 @@
    "zone": "peak-6",
    "lengthM": 1417,
    "mixedAspect": true,
+   "canopyPct": 6,
+   "shelterPct": 7,
    "parts": [
     {
      "aspectDeg": 5,
@@ -33365,6 +33673,8 @@
    "zone": "north-face",
    "lengthM": 798,
    "mixedAspect": true,
+   "canopyPct": 56,
+   "shelterPct": 53,
    "parts": [
     {
      "aspectDeg": 354,
@@ -33564,6 +33874,8 @@
    "zone": "north-face",
    "lengthM": 669,
    "mixedAspect": false,
+   "canopyPct": 53,
+   "shelterPct": 53,
    "geometry": "line",
    "lines": [
     [
@@ -33727,6 +34039,8 @@
    "zone": "peak-10",
    "lengthM": 176,
    "mixedAspect": false,
+   "canopyPct": 21,
+   "shelterPct": 33,
    "geometry": "line",
    "lines": [
     [
@@ -33798,6 +34112,8 @@
    "zone": "back-bowls",
    "lengthM": 854,
    "mixedAspect": false,
+   "canopyPct": 3,
+   "shelterPct": 7,
    "geometry": "line",
    "lines": [
     [
@@ -33989,6 +34305,8 @@
    "zone": "peak-7",
    "lengthM": 569,
    "mixedAspect": false,
+   "canopyPct": 19,
+   "shelterPct": 30,
    "geometry": "line",
    "lines": [
     [
@@ -34132,6 +34450,8 @@
    "zone": "imperial",
    "lengthM": 764,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 1,
    "geometry": "line",
    "lines": [
     [
@@ -34291,6 +34611,8 @@
    "zone": "imperial",
    "lengthM": 318,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 1,
    "geometry": "line",
    "lines": [
     [
@@ -34390,6 +34712,8 @@
    "zone": "imperial",
    "lengthM": 351,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 1,
    "geometry": "line",
    "lines": [
     [
@@ -34489,6 +34813,8 @@
    "zone": "imperial",
    "lengthM": 271,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 0,
    "geometry": "line",
    "lines": [
     [
@@ -34572,6 +34898,8 @@
    "zone": "imperial",
    "lengthM": 284,
    "mixedAspect": false,
+   "canopyPct": 1,
+   "shelterPct": 3,
    "geometry": "line",
    "lines": [
     [
@@ -34651,6 +34979,8 @@
    "zone": "peak-6",
    "lengthM": 526,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 9,
    "geometry": "line",
    "lines": [
     [
@@ -34774,6 +35104,8 @@
    "zone": "imperial",
    "lengthM": 256,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 2,
    "geometry": "line",
    "lines": [
     [
@@ -34849,6 +35181,8 @@
    "zone": "imperial",
    "lengthM": 284,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 2,
    "geometry": "line",
    "lines": [
     [
@@ -34936,6 +35270,8 @@
    "zone": "imperial",
    "lengthM": 240,
    "mixedAspect": false,
+   "canopyPct": 2,
+   "shelterPct": 3,
    "geometry": "line",
    "lines": [
     [
@@ -35011,6 +35347,8 @@
    "zone": "peak-6",
    "lengthM": 210,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 0,
    "geometry": "line",
    "lines": [
     [
@@ -35082,6 +35420,8 @@
    "zone": "peak-6",
    "lengthM": 229,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 1,
    "geometry": "line",
    "lines": [
     [
@@ -35153,6 +35493,8 @@
    "zone": "peak-6",
    "lengthM": 189,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 0,
    "geometry": "line",
    "lines": [
     [
@@ -35220,6 +35562,8 @@
    "zone": "peak-6",
    "lengthM": 168,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 0,
    "geometry": "line",
    "lines": [
     [
@@ -35287,6 +35631,8 @@
    "zone": "peak-6",
    "lengthM": 148,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 0,
    "geometry": "line",
    "lines": [
     [
@@ -35346,6 +35692,8 @@
    "zone": "peak-6",
    "lengthM": 129,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 0,
    "geometry": "line",
    "lines": [
     [
@@ -35405,6 +35753,8 @@
    "zone": "peak-6",
    "lengthM": 130,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 0,
    "geometry": "line",
    "lines": [
     [
@@ -35464,6 +35814,8 @@
    "zone": "peak-6",
    "lengthM": 390,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 2,
    "geometry": "line",
    "lines": [
     [
@@ -35563,6 +35915,8 @@
    "zone": "peak-6",
    "lengthM": 358,
    "mixedAspect": false,
+   "canopyPct": 2,
+   "shelterPct": 2,
    "geometry": "line",
    "lines": [
     [
@@ -35650,6 +36004,8 @@
    "zone": "peak-6",
    "lengthM": 335,
    "mixedAspect": false,
+   "canopyPct": 3,
+   "shelterPct": 2,
    "geometry": "line",
    "lines": [
     [
@@ -35737,6 +36093,8 @@
    "zone": "peak-6",
    "lengthM": 343,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 4,
    "geometry": "line",
    "lines": [
     [
@@ -35828,6 +36186,8 @@
    "zone": "peak-6",
    "lengthM": 389,
    "mixedAspect": false,
+   "canopyPct": 4,
+   "shelterPct": 6,
    "geometry": "line",
    "lines": [
     [
@@ -35927,6 +36287,8 @@
    "zone": "peak-6",
    "lengthM": 414,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 6,
    "geometry": "line",
    "lines": [
     [
@@ -36026,6 +36388,8 @@
    "zone": "peak-6",
    "lengthM": 317,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 10,
    "geometry": "line",
    "lines": [
     [
@@ -36117,6 +36481,8 @@
    "zone": "peak-6",
    "lengthM": 312,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 8,
    "geometry": "line",
    "lines": [
     [
@@ -36196,6 +36562,8 @@
    "zone": "peak-7-alpine",
    "lengthM": 241,
    "mixedAspect": false,
+   "canopyPct": 13,
+   "shelterPct": 17,
    "geometry": "line",
    "lines": [
     [
@@ -36267,6 +36635,8 @@
    "zone": "peak-7-alpine",
    "lengthM": 382,
    "mixedAspect": false,
+   "canopyPct": 2,
+   "shelterPct": 2,
    "geometry": "line",
    "lines": [
     [
@@ -36366,6 +36736,8 @@
    "zone": "peak-7-alpine",
    "lengthM": 416,
    "mixedAspect": false,
+   "canopyPct": 2,
+   "shelterPct": 3,
    "geometry": "line",
    "lines": [
     [
@@ -36473,6 +36845,8 @@
    "zone": "peak-7-alpine",
    "lengthM": 754,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 3,
    "geometry": "line",
    "lines": [
     [
@@ -36658,6 +37032,8 @@
    "zone": "t-bar",
    "lengthM": 191,
    "mixedAspect": false,
+   "canopyPct": 6,
+   "shelterPct": 9,
    "geometry": "line",
    "lines": [
     [
@@ -36725,6 +37101,8 @@
    "zone": "t-bar",
    "lengthM": 423,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 1,
    "geometry": "line",
    "lines": [
     [
@@ -36828,6 +37206,8 @@
    "zone": "t-bar",
    "lengthM": 334,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 1,
    "geometry": "line",
    "lines": [
     [
@@ -36923,6 +37303,8 @@
    "zone": "t-bar",
    "lengthM": 311,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 1,
    "geometry": "line",
    "lines": [
     [
@@ -37002,6 +37384,8 @@
    "zone": "t-bar",
    "lengthM": 364,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 1,
    "geometry": "line",
    "lines": [
     [
@@ -37089,6 +37473,8 @@
    "zone": "t-bar",
    "lengthM": 306,
    "mixedAspect": false,
+   "canopyPct": 3,
+   "shelterPct": 1,
    "geometry": "line",
    "lines": [
     [
@@ -37168,6 +37554,8 @@
    "zone": "t-bar",
    "lengthM": 281,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 2,
    "geometry": "line",
    "lines": [
     [
@@ -37251,6 +37639,8 @@
    "zone": "t-bar",
    "lengthM": 285,
    "mixedAspect": false,
+   "canopyPct": 6,
+   "shelterPct": 3,
    "geometry": "line",
    "lines": [
     [
@@ -37334,6 +37724,8 @@
    "zone": "t-bar",
    "lengthM": 317,
    "mixedAspect": false,
+   "canopyPct": 3,
+   "shelterPct": 5,
    "geometry": "line",
    "lines": [
     [
@@ -37421,6 +37813,8 @@
    "zone": "t-bar",
    "lengthM": 210,
    "mixedAspect": false,
+   "canopyPct": 7,
+   "shelterPct": 3,
    "geometry": "line",
    "lines": [
     [
@@ -37484,6 +37878,8 @@
    "zone": "t-bar",
    "lengthM": 173,
    "mixedAspect": false,
+   "canopyPct": 5,
+   "shelterPct": 3,
    "geometry": "line",
    "lines": [
     [
@@ -37551,6 +37947,8 @@
    "zone": "t-bar",
    "lengthM": 174,
    "mixedAspect": false,
+   "canopyPct": 4,
+   "shelterPct": 5,
    "geometry": "line",
    "lines": [
     [
@@ -37622,6 +38020,8 @@
    "zone": "peak-10",
    "lengthM": 1050,
    "mixedAspect": false,
+   "canopyPct": 35,
+   "shelterPct": 41,
    "geometry": "line",
    "lines": [
     [
@@ -37909,6 +38309,8 @@
    "zone": "north-face",
    "lengthM": 287,
    "mixedAspect": true,
+   "canopyPct": 41,
+   "shelterPct": 45,
    "parts": [
     {
      "aspectDeg": 321,
@@ -38008,6 +38410,8 @@
    "zone": "north-face",
    "lengthM": 698,
    "mixedAspect": false,
+   "canopyPct": 54,
+   "shelterPct": 54,
    "geometry": "line",
    "lines": [
     [
@@ -38191,6 +38595,8 @@
    "zone": "peak-6",
    "lengthM": 494,
    "mixedAspect": false,
+   "canopyPct": 4,
+   "shelterPct": 3,
    "geometry": "line",
    "lines": [
     [
@@ -38314,6 +38720,8 @@
    "zone": "peak-6",
    "lengthM": 537,
    "mixedAspect": false,
+   "canopyPct": 3,
+   "shelterPct": 2,
    "geometry": "line",
    "lines": [
     [
@@ -38441,6 +38849,8 @@
    "zone": "peak-6",
    "lengthM": 393,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 2,
    "geometry": "line",
    "lines": [
     [
@@ -38544,6 +38954,8 @@
    "zone": "peak-6",
    "lengthM": 453,
    "mixedAspect": false,
+   "canopyPct": 4,
+   "shelterPct": 2,
    "geometry": "line",
    "lines": [
     [
@@ -38655,6 +39067,8 @@
    "zone": "peak-6",
    "lengthM": 533,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 1,
    "geometry": "line",
    "lines": [
     [

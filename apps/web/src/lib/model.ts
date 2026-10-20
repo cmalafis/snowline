@@ -1,5 +1,6 @@
 import {
   buildDayContext,
+  exposureOf,
   haversineM,
   scoreAt,
   scoreRunDay,
@@ -69,6 +70,12 @@ export function tier(score: number): "prime" | "good" | "fair" | "skip" {
 }
 
 export const TIER_COLOR = { prime: "var(--good)", good: "var(--blue)", fair: "var(--warn)", skip: "var(--bad)" } as const;
+
+/** "in the trees" / "tree-lined" / "open", from measured canopy (exposureOf in the scoring module). */
+export function coverLabel(run: AppRun, treelineFt: number): string {
+  const e = exposureOf(run, treelineFt);
+  return run.topFt > treelineFt ? "above treeline" : e < 0.35 ? "in the trees" : e < 0.7 ? "tree-lined" : "open";
+}
 
 export const TYPE_LABEL = { groomer: "Groomers", bump: "Bumps", tree: "Trees", bowl: "Bowls & chutes" } as const;
 

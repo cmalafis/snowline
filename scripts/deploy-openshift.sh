@@ -24,7 +24,7 @@ STAGE=$(mktemp -d -t snowline-src)
 trap 'rm -rf "$STAGE"' EXIT
 rsync -a \
   --exclude .git --exclude node_modules --exclude .next --exclude test-results --exclude playwright-report \
-  --exclude 'apps/web/public/maplibre' --exclude 'data/*/dem.tif' --exclude 'data/*/osm.json' --exclude 'data/*/cache' \
+  --exclude 'apps/web/public/maplibre' --exclude 'data/*/dem.tif' --exclude 'data/*/canopy.tif' --exclude 'data/*/osm.json' --exclude 'data/*/cache' \
   --exclude 'reference/trailmaps' --exclude .DS_Store --exclude '.env*' \
   ./ "$STAGE/"
 echo "Uploading $(du -sh "$STAGE" | cut -f1) of source"

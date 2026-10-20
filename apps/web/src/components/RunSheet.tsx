@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { compassPoint, fmtTime, scoreAt, type AppRun, type AppZone, type RunScore } from "@snowline/core";
-import { TIER_COLOR, tier } from "@/lib/model";
+import { TIER_COLOR, coverLabel, tier } from "@/lib/model";
 import { sendFeedback, store } from "@/lib/storage";
 import { DiffSymbol } from "./DiffSymbol";
 
@@ -62,6 +62,7 @@ export function RunSheet({
   resortId,
   date,
   run,
+  treelineFt,
   zone,
   day,
   hour,
@@ -77,6 +78,7 @@ export function RunSheet({
   resortId: string;
   date: string;
   run: AppRun;
+  treelineFt: number;
   zone: AppZone | undefined;
   day: RunScore[];
   hour: number;
@@ -152,6 +154,14 @@ export function RunSheet({
 
         <h3 className="label mt-3">Elevation profile</h3>
         <ProfileChart profile={run.profile} />
+
+        <h3 className="label mt-3">Tree cover</h3>
+        <p className="text-[15px]">
+          <b>{coverLabel(run, treelineFt)}</b>
+          {run.canopyPct !== undefined
+            ? ` · ${run.canopyPct}% canopy on the run, ${run.shelterPct}% around it. Trees block wind, give definition in flat light, keep powder longer and shade the snow.`
+            : " · no canopy data; estimated from the run type."}
+        </p>
 
         <h3 className="label mt-3">Slope</h3>
         <p className="text-[15px]">

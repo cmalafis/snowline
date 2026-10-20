@@ -1,6 +1,6 @@
 "use client";
 import { compassPoint, type AppZone } from "@snowline/core";
-import { TIER_COLOR, tier, type Ranked } from "@/lib/model";
+import { TIER_COLOR, coverLabel, tier, type Ranked } from "@/lib/model";
 import { DiffSymbol } from "./DiffSymbol";
 
 export function groomLabel(r: Ranked, groomedToday: boolean): string {
@@ -15,6 +15,7 @@ export function RunRow({
   favorite,
   edited,
   distanceM,
+  treelineFt,
   onOpen,
 }: {
   r: Ranked;
@@ -23,6 +24,7 @@ export function RunRow({
   favorite: boolean;
   edited: boolean;
   distanceM?: number;
+  treelineFt: number;
   onOpen: () => void;
 }) {
   const t = tier(r.s.score);
@@ -42,7 +44,8 @@ export function RunRow({
         </span>
         <span className="mono muted block text-[12.5px]">
           {zone?.name ?? "—"} · faces {compassPoint(r.run.aspectDeg)}
-          {r.run.mixedAspect ? " (mixed)" : ""} · {groomLabel(r, groomedToday)} · {r.s.tempF}°F
+          {r.run.mixedAspect ? " (mixed)" : ""} · {groomLabel(r, groomedToday)}
+          {r.run.type !== "tree" ? ` · ${coverLabel(r.run, treelineFt)}` : ""} · {r.s.tempF}°F
           {edited ? " · edited" : ""}
           {distanceM !== undefined ? ` · ${distanceM < 1000 ? `${Math.round(distanceM / 10) * 10} m` : `${(distanceM / 1609).toFixed(1)} mi`}` : ""}
         </span>

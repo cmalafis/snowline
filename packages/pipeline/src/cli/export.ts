@@ -79,6 +79,7 @@ export async function exportApp(resortId: string) {
       zone: r.zone,
       lengthM: r.lengthM,
       mixedAspect: r.mixedAspect,
+      ...(r.canopyPct !== undefined ? { canopyPct: r.canopyPct, shelterPct: r.shelterPct } : {}),
       ...(r.mixedAspect ? { parts: aspectParts(r.segments) } : {}),
       geometry: r.geometry,
       lines: r.coordinates.map((c) => simplify(c, 0.00006).map(roundLL)),

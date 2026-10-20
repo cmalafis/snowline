@@ -22,6 +22,7 @@ interface ScenarioSpec {
   newSnowIn: number;
   newSnowBaseIn?: number;
   stormTotalIn?: number;
+  overnightMaxGustMph?: number;
   base: StationSpec;
   summit: StationSpec;
 }
@@ -57,6 +58,7 @@ function build(s: ScenarioSpec): DayWeather {
     newSnowIn: s.newSnowIn,
     ...(s.newSnowBaseIn !== undefined ? { newSnowBaseIn: s.newSnowBaseIn } : {}),
     ...(s.stormTotalIn !== undefined ? { stormTotalIn: s.stormTotalIn } : {}),
+    ...(s.overnightMaxGustMph !== undefined ? { overnightMaxGustMph: s.overnightMaxGustMph } : {}),
     source: `scenario:${s.id}`,
   };
 }
@@ -100,6 +102,7 @@ const SPECS: ScenarioSpec[] = [
     date: "2027-02-20",
     cloudCover: 15,
     newSnowIn: 0,
+    overnightMaxGustMph: 55,
     base: { elevationFt: BASE_FT, lowF: 12, highF: 28, yesterdayHighF: 30, overnightLowF: 12, windMph: 12, gustMph: 26 },
     summit: { elevationFt: SUMMIT_FT, lowF: 4, highF: 16, yesterdayHighF: 18, overnightLowF: 4, windMph: 30, gustMph: 52 },
   },
@@ -112,6 +115,7 @@ const SPECS: ScenarioSpec[] = [
     newSnowIn: 6,
     newSnowBaseIn: 4,
     stormTotalIn: 14,
+    overnightMaxGustMph: 32,
     base: { elevationFt: BASE_FT, lowF: 16, highF: 23, yesterdayHighF: 22, overnightLowF: 15, windMph: 8, gustMph: 18 },
     summit: { elevationFt: SUMMIT_FT, lowF: 6, highF: 12, yesterdayHighF: 12, overnightLowF: 5, windMph: 15, gustMph: 30 },
   },

@@ -147,14 +147,58 @@ describe("scenario: overcast flat light", () => {
 
 describe("scenario: strong wind", () => {
   const ctx = buildDayContext(RESORT, scenario("wind"));
-  const bowl = run("summit bowl", "bowl", 270, { topFt: 10500, bottomFt: 9800 });
+  const at = (r: ScoringRun, exposed = true) => scoreAt(scoreRunDay(r, { id: "z", windExposed: exposed }, ctx), 11);
+  const openBowl = run("summit bowl", "bowl", 270, { topFt: 10500, bottomFt: 9800, canopyPct: 2, shelterPct: 5 });
+  const glades = run("glades", "tree", 270, { topFt: 10500, bottomFt: 9800, canopyPct: 50, shelterPct: 50 });
+  const treeLined = run("tree-lined groomer", "groomer", 270, { topFt: 10500, bottomFt: 9800, canopyPct: 15, shelterPct: 45 });
+  const openGroomer = run("open groomer", "groomer", 270, { topFt: 10500, bottomFt: 9800, canopyPct: 2, shelterPct: 5 });
 
-  it("penalises exposed zones and warns of lift holds", () => {
-    const exposed = scoreAt(scoreRunDay(bowl, { id: "z", windExposed: true }, ctx), 11);
-    const sheltered = scoreAt(scoreRunDay(bowl, { id: "z", windExposed: false }, ctx), 11);
-    expect(exposed.score).toBeLessThan(sheltered.score - 15);
-    expect(exposed.warnings[0]).toMatch(/Gusts to \d+ mph: lift holds likely/);
-    expect(exposed.reasons).toContain("Exposed to strong wind");
+  it("warns of lift holds and hammers open terrain", () => {
+    const s = at(openBowl);
+    expect(s.warnings[0]).toMatch(/Gusts to \d+ mph: lift holds likely/);
+    expect(s.reasons).toContain("Exposed to strong wind");
+  });
+
+  it("protects runs in or along the trees, even in an exposed zone", () => {
+    expect(at(glades).score).toBeGreaterThan(at(openBowl).score + 25);
+    expect(at(glades).reasons.join(" ")).toMatch(/Sheltered from the wind in the trees/);
+    expect(at(treeLined).score).toBeGreaterThan(at(openGroomer).score + 15);
+  });
+
+  it("is harsher in zones up on the ridge", () => {
+    expect(at(openBowl, true).score).toBeLessThan(at(openBowl, false).score);
+  });
+
+  it("scours open, ungroomed snow after a windy night", () => {
+    // An open bowl with no wind today, after a windy night: scouring is the main thing wrong with it.
+    const calmDay = buildDayContext(RESORT, {
+      ...scenario("wind"),
+      summit: { ...scenario("wind").summit!, hourly: scenario("wind").summit!.hourly.map((p) => ({ ...p, gustMph: 10 })) },
+    });
+    const scoured = scoreAt(scoreRunDay(openBowl, { id: "z", windExposed: true }, calmDay), 11);
+    expect(scoured.reasons.join(" ")).toMatch(/Wind-scoured overnight \(gusts to 55 mph\), likely firm or icy/);
+    const calmNight = buildDayContext(RESORT, { ...calmDay.weather, overnightMaxGustMph: 10 });
+    expect(scoreAt(scoreRunDay(openBowl, { id: "z", windExposed: true }, calmNight), 11).score).toBeGreaterThan(scoured.score + 8);
+    // Glades in the same spot aren't scoured.
+    expect(scoreAt(scoreRunDay(glades, { id: "z", windExposed: true }, calmDay), 11).reasons.join(" ")).not.toMatch(/Wind-scoured/);
+  });
+
+  it("canopy shades a glade from the sun", async () => {
+    const spring = buildDayContext(RESORT, scenario("spring"));
+    const open = scoreRunDay(run("open", "bump", 180, { canopyPct: 0, shelterPct: 0 }), undefined, spring);
+    const shaded = scoreRunDay(run("glade", "bump", 180, { canopyPct: 60, shelterPct: 60 }), undefined, spring);
+    const firstPrime = (d: typeof open) => d.find((s) => s.state === "prime")!.hour;
+    expect(firstPrime(shaded)).toBeGreaterThan(firstPrime(open));
+  });
+});
+
+describe("tree cover in flat light", () => {
+  const ctx = buildDayContext(RESORT, scenario("flatlight"));
+  it("helps a tree-lined groomer, not just glades", () => {
+    const lined = scoreAt(scoreRunDay(run("lined", "groomer", 300, { canopyPct: 15, shelterPct: 45 }), undefined, ctx), 11);
+    const open = scoreAt(scoreRunDay(run("open", "groomer", 300, { canopyPct: 0, shelterPct: 0 }), undefined, ctx), 11);
+    expect(lined.score).toBeGreaterThan(open.score);
+    expect(lined.reasons.join(" ") + "").toMatch(/Tree-lined|definition/);
   });
 });
 

@@ -32,6 +32,9 @@ export interface ScoringRun {
   zone: string | null;
   /** Mixed-aspect runs: parts scored separately, then length-weighted. */
   parts?: { aspectDeg: number; pitchDeg: number; weight: number }[];
+  /** Tree canopy on the run and within ~75 m of it, percent. Without them, the run type stands in. */
+  canopyPct?: number;
+  shelterPct?: number;
 }
 
 export interface ScoringZone {
@@ -86,6 +89,20 @@ export interface RunScore {
 const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const DIRECTION: Record<string, string> = { N: "North", NE: "Northeast", E: "East", SE: "Southeast", S: "South", SW: "Southwest", W: "West", NW: "Northwest" };
 
+/** Canopy on and around a run; without measurements, the run type stands in. */
+function cover(run: ScoringRun): { canopy: number; shelter: number } {
+  const canopy = run.canopyPct ?? (run.type === "tree" ? 45 : 10);
+  return { canopy, shelter: run.shelterPct ?? canopy };
+}
+
+/** 0 = deep in the trees, 1 = wide open (and always 1 above treeline). */
+export function exposureOf(run: ScoringRun, treelineFt: number, cfg: ScoringConfig = DEFAULT_SCORING): number {
+  if (run.topFt > treelineFt) return 1;
+  const { canopy, shelter } = cover(run);
+  const t = cfg.trees;
+  return 1 - clamp((Math.max(canopy, shelter) - t.openBelowPct) / (t.shelteredAbovePct - t.openBelowPct));
+}
+
 export function buildDayContext(resort: ResortClock, weather: DayWeather, cfg: ScoringConfig = DEFAULT_SCORING): DayContext {
   const steps = [];
   for (let h = cfg.dayStartHour; h <= cfg.dayEndHour + 1e-9; h += cfg.stepHours) {
@@ -112,7 +129,7 @@ interface Timeline {
 }
 
 /** Absorbed radiation and cumulative softening energy across the day for one slope orientation. */
-function timeline(ctx: DayContext, midFt: number, aspectDeg: number, pitchDeg: number): Timeline {
+function timeline(ctx: DayContext, midFt: number, aspectDeg: number, pitchDeg: number, canopyPct: number): Timeline {
   const { cfg, weather } = ctx;
   const station = stationFor(weather, midFt);
   const altitudeM = midFt * M_PER_FT;
@@ -128,7 +145,9 @@ function timeline(ctx: DayContext, midFt: number, aspectDeg: number, pitchDeg: n
       directNormal: sampleHourly(station.hourly, hour, (p) => p.directNormal, 0.5),
       diffuse: sampleHourly(station.hourly, hour, (p) => p.diffuse, 0.5),
     };
-    const a = slopeRadiation(sun, aspectDeg, pitchDeg, irradiance(sun, altitudeM, cloudAt(weather, hour, midFt), forecast));
+    // Trees on the run shade it.
+    const shade = 1 - cfg.trees.sunShade * (canopyPct / 100);
+    const a = shade * slopeRadiation(sun, aspectDeg, pitchDeg, irradiance(sun, altitudeM, cloudAt(weather, hour, midFt), forecast));
     absorbed.push(a);
     energy.push(e);
     if (since === null && a >= cfg.inSunThreshold && sun.elevationDeg > 0) since = hour;
@@ -189,6 +208,8 @@ function scorePart(
     overnightLowAt(weather, midFt, lapse) < cfg.refreeze.overnightLowBelowF &&
     overnight < cfg.refreeze.cancelledBySnowIn &&
     tl.dailyEnergy >= cfg.refreeze.minDailyEnergy;
+  const exposure = exposureOf(run, resort.treelineFt, cfg);
+  const sheltered = 1 - exposure;
   const hrs = Math.max(0, hour - resort.openHour);
   // Snow falling during the day fills tracks back in.
   const hrsTracked = Math.max(0, hrs - today * cfg.powder.refillHoursPerIn);
@@ -256,7 +277,8 @@ function scorePart(
     sc = kind === "bump" ? 62 : kind === "tree" ? 60 : 64;
     if (powder) {
       const bonus = (Math.min(snow, cfg.powder.fullIn) / cfg.powder.fullIn) * cfg.powder.maxBonus;
-      const rate = kind === "tree" ? cfg.powder.trackRateTree : cfg.powder.trackRateOpen;
+      // Trees hold powder longer: blend the track rate by how sheltered the run is.
+      const rate = cfg.powder.trackRateOpen + (cfg.powder.trackRateTree - cfg.powder.trackRateOpen) * Math.max(sheltered, kind === "tree" ? 0.8 : 0);
       const decay = Math.min(cfg.powder.maxDecay, traffic * rate * hrsTracked);
       const now = bonus * (1 - decay);
       sc += now;
@@ -281,14 +303,17 @@ function scorePart(
   const aboveTreeline = run.topFt > resort.treelineFt;
   const falling = precipRateAt(weather, hour, midFt, lapse);
   const snowingNow = falling.snowIn > 0.2;
+  const treeLined = sheltered >= 0.5;
+
+  // Flat light: open terrain loses definition; trees (on or along a run) give it back.
   if (cloudAt(weather, hour, midFt) >= cfg.flatLightCloud || snowingNow) {
-    if (kind === "bowl") {
-      const p = aboveTreeline ? 14 : 10;
-      (sc -= p), add(-p, "Flat light in the open");
-    } else if (kind === "tree") (sc += 8), add(8, "Trees give definition in flat light");
-    else if (kind === "bump") {
-      const p = aboveTreeline ? 8 : 4;
-      (sc -= p), add(-p, "Hard to read bumps in flat light");
+    if (kind === "bowl" || kind === "bump") {
+      const p = (kind === "bowl" ? (aboveTreeline ? 14 : 10) : aboveTreeline ? 8 : 4) * exposure;
+      if (p >= 1) (sc -= p), add(-p, kind === "bowl" ? "Flat light in the open" : "Hard to read bumps in flat light");
+    }
+    if (treeLined) {
+      const b = 8 * sheltered;
+      (sc += b), add(b, kind === "tree" ? "Trees give definition in flat light" : "Tree-lined, easier to see in flat light");
     }
   }
 
@@ -297,12 +322,31 @@ function scorePart(
     warnings.push(`Rain below the snow line (${Math.round(T)}°F here)`);
   } else if (snowingNow && !powder) add(3, "Snowing now, fresh coat building");
 
+  // Wind reaches a run in proportion to its exposure, more so in zones up on the ridge.
   const { gustMph } = windAt(weather, hour, run.topFt);
+  const reach = exposure * (zone?.windExposed ? 1 : 0.6);
   if (gustMph >= cfg.wind.holdGustMph) {
     warnings.push(`Gusts to ${Math.round(gustMph)} mph: lift holds likely`);
-    if (zone?.windExposed) (sc -= 25), add(-25, "Exposed to strong wind");
-    else (sc -= 3), add(-3, "Windy");
-  } else if (gustMph >= cfg.wind.breezyGustMph && zone?.windExposed) (sc -= 8), add(-8, "Breezy up top");
+    const p = 25 * reach;
+    if (p >= 3) (sc -= p), add(-p, exposure >= 0.5 ? "Exposed to strong wind" : "Some wind getting through the trees");
+    if (treeLined) (sc += 6 * sheltered), add(6 * sheltered, "Sheltered from the wind in the trees");
+  } else if (gustMph >= cfg.wind.breezyGustMph) {
+    const p = 8 * reach;
+    if (p >= 2) (sc -= p), add(-p, "Breezy, exposed to the wind");
+    if (treeLined) (sc += 3 * sheltered), add(3 * sheltered, "Out of the wind in the trees");
+  }
+  if (gustMph >= cfg.wind.blowingSnowGustMph && (snowingNow || fresh >= 2)) {
+    const p = 8 * exposure;
+    if (p >= 2) (sc -= p), add(-p, "Blowing snow, poor visibility in the open");
+  }
+
+  // A windy night strips and hardens open snow; tonight's grooming fixes groomers, nothing fixes the open.
+  const nightGust = weather.overnightMaxGustMph ?? 0;
+  if (nightGust >= cfg.wind.scourGustMph && kind !== "groom") {
+    const p = 12 * exposure * (zone?.windExposed ? 1 : 0.7);
+    if (p >= 2) (sc -= p), add(-p, `Wind-scoured overnight (gusts to ${Math.round(nightGust)} mph), likely firm or icy`);
+    else if (sheltered >= 0.6 && snow >= 2) (sc += 4), add(4, "Trees kept last night's wind off the snow");
+  }
 
   if (T < cfg.coldF) {
     if (inSun) (sc += 4), add(3, "In the sun, takes the edge off the cold");
@@ -322,7 +366,7 @@ export function scoreRunDay(run: ScoringRun, zone: ScoringZone | undefined, ctx:
         ? run.parts
         : [{ aspectDeg: run.aspectDeg, pitchDeg: run.pitchDeg, weight: 1 }];
   const total = parts.reduce((t, p) => t + p.weight, 0);
-  const timelines = parts.map((p) => timeline(ctx, midFt, p.aspectDeg, p.pitchDeg));
+  const timelines = parts.map((p) => timeline(ctx, midFt, p.aspectDeg, p.pitchDeg, cover(run).canopy));
   const main = parts.indexOf(parts.reduce((m, p) => (p.weight > m.weight ? p : m)));
   const groomedToday = adj.groomedToday ?? run.groomed;
   const out: RunScore[] = [];

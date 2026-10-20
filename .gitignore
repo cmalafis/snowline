@@ -5,3 +5,4 @@ data/*/cache/
 .env*
 reference/trailmaps/*
 *.tsbuildinfo
+data/*/canopy.tif

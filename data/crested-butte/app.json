@@ -1,6 +1,6 @@
 {
  "version": "2026-10-20",
- "generatedAt": "2026-10-20T00:36:53.146Z",
+ "generatedAt": "2026-10-20T00:47:52.718Z",
  "resort": {
   "id": "crested-butte",
   "name": "Crested Butte",
@@ -948,6 +948,8 @@
    "zone": "high-lift",
    "lengthM": 575,
    "mixedAspect": false,
+   "canopyPct": 1,
+   "shelterPct": 10,
    "geometry": "area",
    "lines": [
     [
@@ -1086,6 +1088,8 @@
    "zone": "high-lift",
    "lengthM": 200,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 17,
    "geometry": "area",
    "lines": [
     [
@@ -1160,6 +1164,8 @@
    "zone": "high-lift",
    "lengthM": 800,
    "mixedAspect": false,
+   "canopyPct": 36,
+   "shelterPct": 31,
    "geometry": "area",
    "lines": [
     [
@@ -1334,6 +1340,8 @@
    "zone": "high-lift",
    "lengthM": 800,
    "mixedAspect": false,
+   "canopyPct": 5,
+   "shelterPct": 9,
    "geometry": "area",
    "lines": [
     [
@@ -1520,6 +1528,8 @@
    "zone": "high-lift",
    "lengthM": 75,
    "mixedAspect": false,
+   "canopyPct": 38,
+   "shelterPct": 34,
    "geometry": "area",
    "lines": [
     [
@@ -1574,6 +1584,8 @@
    "zone": "high-lift",
    "lengthM": 750,
    "mixedAspect": false,
+   "canopyPct": 24,
+   "shelterPct": 25,
    "geometry": "area",
    "lines": [
     [
@@ -1744,6 +1756,8 @@
    "zone": "high-lift",
    "lengthM": 675,
    "mixedAspect": false,
+   "canopyPct": 3,
+   "shelterPct": 11,
    "geometry": "area",
    "lines": [
     [
@@ -1914,6 +1928,8 @@
    "zone": "north-face",
    "lengthM": 800,
    "mixedAspect": false,
+   "canopyPct": 1,
+   "shelterPct": 6,
    "geometry": "area",
    "lines": [
     [
@@ -2100,6 +2116,8 @@
    "zone": "north-face",
    "lengthM": 325,
    "mixedAspect": false,
+   "canopyPct": 26,
+   "shelterPct": 18,
    "geometry": "area",
    "lines": [
     [
@@ -2202,6 +2220,8 @@
    "zone": "north-face",
    "lengthM": 375,
    "mixedAspect": false,
+   "canopyPct": 13,
+   "shelterPct": 8,
    "geometry": "area",
    "lines": [
     [
@@ -2308,6 +2328,8 @@
    "zone": "north-face",
    "lengthM": 425,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 9,
    "geometry": "area",
    "lines": [
     [
@@ -2454,6 +2476,8 @@
    "zone": "north-face",
    "lengthM": 1450,
    "mixedAspect": false,
+   "canopyPct": 1,
+   "shelterPct": 5,
    "geometry": "area",
    "lines": [
     [
@@ -2764,6 +2788,8 @@
    "zone": "north-face",
    "lengthM": 250,
    "mixedAspect": false,
+   "canopyPct": 21,
+   "shelterPct": 18,
    "geometry": "area",
    "lines": [
     [
@@ -2850,6 +2876,8 @@
    "zone": "north-face",
    "lengthM": 1350,
    "mixedAspect": false,
+   "canopyPct": 6,
+   "shelterPct": 9,
    "geometry": "area",
    "lines": [
     [
@@ -3124,6 +3152,8 @@
    "zone": "north-face",
    "lengthM": 325,
    "mixedAspect": false,
+   "canopyPct": 3,
+   "shelterPct": 8,
    "geometry": "area",
    "lines": [
     [
@@ -3218,6 +3248,8 @@
    "zone": "north-face",
    "lengthM": 150,
    "mixedAspect": false,
+   "canopyPct": 17,
+   "shelterPct": 15,
    "geometry": "area",
    "lines": [
     [
@@ -3284,6 +3316,8 @@
    "zone": "banana-peel",
    "lengthM": 875,
    "mixedAspect": false,
+   "canopyPct": 4,
+   "shelterPct": 16,
    "geometry": "area",
    "lines": [
     [
@@ -3478,6 +3512,8 @@
    "zone": "silver-queen",
    "lengthM": 400,
    "mixedAspect": true,
+   "canopyPct": 1,
+   "shelterPct": 12,
    "parts": [
     {
      "aspectDeg": 276,
@@ -3618,6 +3654,8 @@
    "zone": "north-face",
    "lengthM": 1625,
    "mixedAspect": false,
+   "canopyPct": 7,
+   "shelterPct": 9,
    "geometry": "area",
    "lines": [
     [
@@ -3804,6 +3842,8 @@
    "zone": "paradise",
    "lengthM": 450,
    "mixedAspect": false,
+   "canopyPct": 34,
+   "shelterPct": 33,
    "geometry": "area",
    "lines": [
     [
@@ -3942,6 +3982,8 @@
    "zone": "paradise",
    "lengthM": 25,
    "mixedAspect": false,
+   "canopyPct": 30,
+   "shelterPct": 19,
    "geometry": "area",
    "lines": [
     [
@@ -3992,6 +4034,8 @@
    "zone": "paradise",
    "lengthM": 500,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 22,
    "geometry": "area",
    "lines": [
     [
@@ -4134,6 +4178,8 @@
    "zone": "paradise",
    "lengthM": 300,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 24,
    "geometry": "area",
    "lines": [
     [
@@ -4236,6 +4282,8 @@
    "zone": "paradise",
    "lengthM": 400,
    "mixedAspect": false,
+   "canopyPct": 7,
+   "shelterPct": 13,
    "geometry": "area",
    "lines": [
     [
@@ -4350,6 +4398,8 @@
    "zone": "paradise",
    "lengthM": 300,
    "mixedAspect": false,
+   "canopyPct": 5,
+   "shelterPct": 7,
    "geometry": "area",
    "lines": [
     [
@@ -4448,6 +4498,8 @@
    "zone": "paradise",
    "lengthM": 325,
    "mixedAspect": false,
+   "canopyPct": 16,
+   "shelterPct": 20,
    "geometry": "area",
    "lines": [
     [
@@ -4554,6 +4606,8 @@
    "zone": "north-face",
    "lengthM": 1150,
    "mixedAspect": false,
+   "canopyPct": 1,
+   "shelterPct": 6,
    "geometry": "area",
    "lines": [
     [
@@ -4784,6 +4838,8 @@
    "zone": "north-face",
    "lengthM": 950,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 2,
    "geometry": "area",
    "lines": [
     [
@@ -5002,6 +5058,8 @@
    "zone": "north-face",
    "lengthM": 725,
    "mixedAspect": false,
+   "canopyPct": 5,
+   "shelterPct": 5,
    "geometry": "area",
    "lines": [
     [
@@ -5164,6 +5222,8 @@
    "zone": "north-face",
    "lengthM": 400,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 18,
    "geometry": "area",
    "lines": [
     [
@@ -5274,6 +5334,8 @@
    "zone": "north-face",
    "lengthM": 400,
    "mixedAspect": false,
+   "canopyPct": 20,
+   "shelterPct": 20,
    "geometry": "area",
    "lines": [
     [
@@ -5384,6 +5446,8 @@
    "zone": "north-face",
    "lengthM": 175,
    "mixedAspect": false,
+   "canopyPct": 29,
+   "shelterPct": 29,
    "geometry": "area",
    "lines": [
     [
@@ -5454,6 +5518,8 @@
    "zone": "north-face",
    "lengthM": 150,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 13,
    "geometry": "area",
    "lines": [
     [
@@ -5524,6 +5590,8 @@
    "zone": "north-face",
    "lengthM": 75,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 4,
    "geometry": "area",
    "lines": [
     [
@@ -5578,6 +5646,8 @@
    "zone": "north-face",
    "lengthM": 175,
    "mixedAspect": false,
+   "canopyPct": 21,
+   "shelterPct": 23,
    "geometry": "area",
    "lines": [
     [
@@ -5656,6 +5726,8 @@
    "zone": "north-face",
    "lengthM": 1175,
    "mixedAspect": false,
+   "canopyPct": 48,
+   "shelterPct": 44,
    "geometry": "area",
    "lines": [
     [
@@ -5898,6 +5970,8 @@
    "zone": "high-lift",
    "lengthM": 250,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 15,
    "geometry": "area",
    "lines": [
     [
@@ -5988,6 +6062,8 @@
    "zone": "high-lift",
    "lengthM": 500,
    "mixedAspect": false,
+   "canopyPct": 26,
+   "shelterPct": 21,
    "geometry": "area",
    "lines": [
     [
@@ -6118,6 +6194,8 @@
    "zone": "high-lift",
    "lengthM": 450,
    "mixedAspect": false,
+   "canopyPct": 24,
+   "shelterPct": 20,
    "geometry": "area",
    "lines": [
     [
@@ -6252,6 +6330,8 @@
    "zone": "high-lift",
    "lengthM": 300,
    "mixedAspect": false,
+   "canopyPct": 29,
+   "shelterPct": 31,
    "geometry": "area",
    "lines": [
     [
@@ -6350,6 +6430,8 @@
    "zone": "high-lift",
    "lengthM": 300,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 16,
    "geometry": "area",
    "lines": [
     [
@@ -6452,6 +6534,8 @@
    "zone": "high-lift",
    "lengthM": 275,
    "mixedAspect": false,
+   "canopyPct": 25,
+   "shelterPct": 26,
    "geometry": "area",
    "lines": [
     [
@@ -6550,6 +6634,8 @@
    "zone": "high-lift",
    "lengthM": 550,
    "mixedAspect": false,
+   "canopyPct": 45,
+   "shelterPct": 38,
    "geometry": "area",
    "lines": [
     [
@@ -6692,6 +6778,8 @@
    "zone": "high-lift",
    "lengthM": 275,
    "mixedAspect": false,
+   "canopyPct": 29,
+   "shelterPct": 32,
    "geometry": "area",
    "lines": [
     [
@@ -6790,6 +6878,8 @@
    "zone": "high-lift",
    "lengthM": 175,
    "mixedAspect": false,
+   "canopyPct": 7,
+   "shelterPct": 22,
    "geometry": "area",
    "lines": [
     [
@@ -6868,6 +6958,8 @@
    "zone": "north-face",
    "lengthM": 1050,
    "mixedAspect": false,
+   "canopyPct": 45,
+   "shelterPct": 42,
    "geometry": "area",
    "lines": [
     [
@@ -7090,6 +7182,8 @@
    "zone": "high-lift",
    "lengthM": 550,
    "mixedAspect": false,
+   "canopyPct": 13,
+   "shelterPct": 22,
    "geometry": "area",
    "lines": [
     [
@@ -7232,6 +7326,8 @@
    "zone": "north-face",
    "lengthM": 125,
    "mixedAspect": false,
+   "canopyPct": 17,
+   "shelterPct": 23,
    "geometry": "area",
    "lines": [
     [
@@ -7298,6 +7394,8 @@
    "zone": "north-face",
    "lengthM": 500,
    "mixedAspect": false,
+   "canopyPct": 30,
+   "shelterPct": 34,
    "geometry": "area",
    "lines": [
     [
@@ -7424,6 +7522,8 @@
    "zone": "north-face",
    "lengthM": 1225,
    "mixedAspect": false,
+   "canopyPct": 52,
+   "shelterPct": 45,
    "geometry": "area",
    "lines": [
     [
@@ -7690,6 +7790,8 @@
    "zone": "banana-peel",
    "lengthM": 400,
    "mixedAspect": false,
+   "canopyPct": 39,
+   "shelterPct": 37,
    "geometry": "area",
    "lines": [
     [
@@ -7800,6 +7902,8 @@
    "zone": "banana-peel",
    "lengthM": 625,
    "mixedAspect": false,
+   "canopyPct": 37,
+   "shelterPct": 37,
    "geometry": "area",
    "lines": [
     [
@@ -7946,6 +8050,8 @@
    "zone": "banana-peel",
    "lengthM": 350,
    "mixedAspect": false,
+   "canopyPct": 36,
+   "shelterPct": 40,
    "geometry": "area",
    "lines": [
     [
@@ -8048,6 +8154,8 @@
    "zone": "banana-peel",
    "lengthM": 1100,
    "mixedAspect": false,
+   "canopyPct": 35,
+   "shelterPct": 30,
    "geometry": "area",
    "lines": [
     [
@@ -8278,6 +8386,8 @@
    "zone": "banana-peel",
    "lengthM": 325,
    "mixedAspect": false,
+   "canopyPct": 22,
+   "shelterPct": 27,
    "geometry": "area",
    "lines": [
     [
@@ -8384,6 +8494,8 @@
    "zone": "banana-peel",
    "lengthM": 400,
    "mixedAspect": false,
+   "canopyPct": 34,
+   "shelterPct": 28,
    "geometry": "area",
    "lines": [
     [
@@ -8506,6 +8618,8 @@
    "zone": "banana-peel",
    "lengthM": 150,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 2,
    "geometry": "area",
    "lines": [
     [
@@ -8568,6 +8682,8 @@
    "zone": "high-lift",
    "lengthM": 250,
    "mixedAspect": false,
+   "canopyPct": 23,
+   "shelterPct": 27,
    "geometry": "area",
    "lines": [
     [
@@ -8654,6 +8770,8 @@
    "zone": "high-lift",
    "lengthM": 575,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 27,
    "geometry": "area",
    "lines": [
     [
@@ -8796,6 +8914,8 @@
    "zone": "high-lift",
    "lengthM": 375,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 31,
    "geometry": "area",
    "lines": [
     [
@@ -8898,6 +9018,8 @@
    "zone": "high-lift",
    "lengthM": 225,
    "mixedAspect": false,
+   "canopyPct": 19,
+   "shelterPct": 21,
    "geometry": "area",
    "lines": [
     [
@@ -8980,6 +9102,8 @@
    "zone": "high-lift",
    "lengthM": 600,
    "mixedAspect": false,
+   "canopyPct": 35,
+   "shelterPct": 30,
    "geometry": "area",
    "lines": [
     [
@@ -9122,6 +9246,8 @@
    "zone": "paradise",
    "lengthM": 450,
    "mixedAspect": false,
+   "canopyPct": 6,
+   "shelterPct": 17,
    "geometry": "area",
    "lines": [
     [
@@ -9240,6 +9366,8 @@
    "zone": "teocalli",
    "lengthM": 1350,
    "mixedAspect": false,
+   "canopyPct": 45,
+   "shelterPct": 37,
    "geometry": "area",
    "lines": [
     [
@@ -9510,6 +9638,8 @@
    "zone": "north-face",
    "lengthM": 125,
    "mixedAspect": false,
+   "canopyPct": 19,
+   "shelterPct": 18,
    "geometry": "area",
    "lines": [
     [
@@ -9580,6 +9710,8 @@
    "zone": "north-face",
    "lengthM": 150,
    "mixedAspect": false,
+   "canopyPct": 36,
+   "shelterPct": 24,
    "geometry": "area",
    "lines": [
     [
@@ -9646,6 +9778,8 @@
    "zone": "north-face",
    "lengthM": 100,
    "mixedAspect": false,
+   "canopyPct": 25,
+   "shelterPct": 24,
    "geometry": "area",
    "lines": [
     [
@@ -9704,6 +9838,8 @@
    "zone": "north-face",
    "lengthM": 100,
    "mixedAspect": false,
+   "canopyPct": 3,
+   "shelterPct": 18,
    "geometry": "area",
    "lines": [
     [
@@ -9758,6 +9894,8 @@
    "zone": "north-face",
    "lengthM": 600,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 13,
    "geometry": "area",
    "lines": [
     [
@@ -9900,6 +10038,8 @@
    "zone": "north-face",
    "lengthM": 100,
    "mixedAspect": false,
+   "canopyPct": 6,
+   "shelterPct": 11,
    "geometry": "area",
    "lines": [
     [
@@ -9962,6 +10102,8 @@
    "zone": "north-face",
    "lengthM": 125,
    "mixedAspect": false,
+   "canopyPct": 21,
+   "shelterPct": 17,
    "geometry": "area",
    "lines": [
     [
@@ -10024,6 +10166,8 @@
    "zone": "north-face",
    "lengthM": 525,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 14,
    "geometry": "area",
    "lines": [
     [
@@ -10150,6 +10294,8 @@
    "zone": "paradise",
    "lengthM": 250,
    "mixedAspect": false,
+   "canopyPct": 26,
+   "shelterPct": 19,
    "geometry": "area",
    "lines": [
     [
@@ -10236,6 +10382,8 @@
    "zone": "paradise",
    "lengthM": 1000,
    "mixedAspect": false,
+   "canopyPct": 40,
+   "shelterPct": 35,
    "geometry": "area",
    "lines": [
     [
@@ -10446,6 +10594,8 @@
    "zone": "silver-queen",
    "lengthM": 600,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 11,
    "geometry": "area",
    "lines": [
     [
@@ -10604,6 +10754,8 @@
    "zone": "banana-peel",
    "lengthM": 150,
    "mixedAspect": false,
+   "canopyPct": 46,
+   "shelterPct": 41,
    "geometry": "area",
    "lines": [
     [
@@ -10670,6 +10822,8 @@
    "zone": "banana-peel",
    "lengthM": 1500,
    "mixedAspect": false,
+   "canopyPct": 44,
+   "shelterPct": 42,
    "geometry": "area",
    "lines": [
     [
@@ -10972,6 +11126,8 @@
    "zone": "banana-peel",
    "lengthM": 700,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 32,
    "geometry": "area",
    "lines": [
     [
@@ -11138,6 +11294,8 @@
    "zone": "banana-peel",
    "lengthM": 50,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 8,
    "geometry": "area",
    "lines": [
     [
@@ -11184,6 +11342,8 @@
    "zone": "banana-peel",
    "lengthM": 600,
    "mixedAspect": false,
+   "canopyPct": 39,
+   "shelterPct": 31,
    "geometry": "area",
    "lines": [
     [
@@ -11322,6 +11482,8 @@
    "zone": "banana-peel",
    "lengthM": 1350,
    "mixedAspect": false,
+   "canopyPct": 53,
+   "shelterPct": 50,
    "geometry": "area",
    "lines": [
     [
@@ -11592,6 +11754,8 @@
    "zone": "banana-peel",
    "lengthM": 150,
    "mixedAspect": false,
+   "canopyPct": 45,
+   "shelterPct": 43,
    "geometry": "area",
    "lines": [
     [
@@ -11654,6 +11818,8 @@
    "zone": "banana-peel",
    "lengthM": 225,
    "mixedAspect": false,
+   "canopyPct": 52,
+   "shelterPct": 46,
    "geometry": "area",
    "lines": [
     [
@@ -11732,6 +11898,8 @@
    "zone": "silver-queen",
    "lengthM": 1425,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 20,
    "geometry": "area",
    "lines": [
     [
@@ -12018,6 +12186,8 @@
    "zone": "banana-peel",
    "lengthM": 50,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 10,
    "geometry": "area",
    "lines": [
     [
@@ -12068,6 +12238,8 @@
    "zone": "silver-queen",
    "lengthM": 425,
    "mixedAspect": false,
+   "canopyPct": 4,
+   "shelterPct": 17,
    "geometry": "area",
    "lines": [
     [
@@ -12198,6 +12370,8 @@
    "zone": "paradise",
    "lengthM": 75,
    "mixedAspect": false,
+   "canopyPct": 23,
+   "shelterPct": 16,
    "geometry": "area",
    "lines": [
     [
@@ -12252,6 +12426,8 @@
    "zone": "paradise",
    "lengthM": 25,
    "mixedAspect": false,
+   "canopyPct": 38,
+   "shelterPct": 23,
    "geometry": "area",
    "lines": [
     [
@@ -12298,6 +12474,8 @@
    "zone": "high-lift",
    "lengthM": 150,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 14,
    "geometry": "area",
    "lines": [
     [
@@ -12364,6 +12542,8 @@
    "zone": "high-lift",
    "lengthM": 275,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 18,
    "geometry": "area",
    "lines": [
     [
@@ -12450,6 +12630,8 @@
    "zone": "north-face",
    "lengthM": 500,
    "mixedAspect": false,
+   "canopyPct": 2,
+   "shelterPct": 13,
    "geometry": "area",
    "lines": [
     [
@@ -12584,6 +12766,8 @@
    "zone": "high-lift",
    "lengthM": 1175,
    "mixedAspect": false,
+   "canopyPct": 44,
+   "shelterPct": 40,
    "geometry": "area",
    "lines": [
     [
@@ -12818,6 +13002,8 @@
    "zone": "high-lift",
    "lengthM": 150,
    "mixedAspect": false,
+   "canopyPct": 33,
+   "shelterPct": 25,
    "geometry": "area",
    "lines": [
     [
@@ -12880,6 +13066,8 @@
    "zone": "high-lift",
    "lengthM": 150,
    "mixedAspect": false,
+   "canopyPct": 7,
+   "shelterPct": 16,
    "geometry": "area",
    "lines": [
     [
@@ -12946,6 +13134,8 @@
    "zone": "high-lift",
    "lengthM": 175,
    "mixedAspect": false,
+   "canopyPct": 39,
+   "shelterPct": 26,
    "geometry": "area",
    "lines": [
     [
@@ -13020,6 +13210,8 @@
    "zone": "high-lift",
    "lengthM": 475,
    "mixedAspect": false,
+   "canopyPct": 34,
+   "shelterPct": 27,
    "geometry": "area",
    "lines": [
     [
@@ -13142,6 +13334,8 @@
    "zone": "high-lift",
    "lengthM": 450,
    "mixedAspect": true,
+   "canopyPct": 38,
+   "shelterPct": 35,
    "parts": [
     {
      "aspectDeg": 88,
@@ -13281,6 +13475,8 @@
    "zone": "high-lift",
    "lengthM": 425,
    "mixedAspect": false,
+   "canopyPct": 40,
+   "shelterPct": 31,
    "geometry": "area",
    "lines": [
     [
@@ -13399,6 +13595,8 @@
    "zone": "high-lift",
    "lengthM": 1875,
    "mixedAspect": true,
+   "canopyPct": 1,
+   "shelterPct": 3,
    "parts": [
     {
      "aspectDeg": 5,
@@ -13618,6 +13816,8 @@
    "zone": "high-lift",
    "lengthM": 50,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 16,
    "geometry": "area",
    "lines": [
     [
@@ -13668,6 +13868,8 @@
    "zone": "north-face",
    "lengthM": 475,
    "mixedAspect": false,
+   "canopyPct": 5,
+   "shelterPct": 10,
    "geometry": "area",
    "lines": [
     [
@@ -13798,6 +14000,8 @@
    "zone": "north-face",
    "lengthM": 150,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 21,
    "geometry": "area",
    "lines": [
     [
@@ -13872,6 +14076,8 @@
    "zone": "north-face",
    "lengthM": 225,
    "mixedAspect": true,
+   "canopyPct": 27,
+   "shelterPct": 28,
    "parts": [
     {
      "aspectDeg": 48,
@@ -13980,6 +14186,8 @@
    "zone": "north-face",
    "lengthM": 1750,
    "mixedAspect": true,
+   "canopyPct": 14,
+   "shelterPct": 12,
    "parts": [
     {
      "aspectDeg": 45,
@@ -14216,6 +14424,8 @@
    "zone": "north-face",
    "lengthM": 200,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 16,
    "geometry": "area",
    "lines": [
     [
@@ -14290,6 +14500,8 @@
    "zone": "paradise",
    "lengthM": 225,
    "mixedAspect": false,
+   "canopyPct": 48,
+   "shelterPct": 41,
    "geometry": "area",
    "lines": [
     [
@@ -14368,6 +14580,8 @@
    "zone": "paradise",
    "lengthM": 125,
    "mixedAspect": false,
+   "canopyPct": 30,
+   "shelterPct": 20,
    "geometry": "area",
    "lines": [
     [
@@ -14434,6 +14648,8 @@
    "zone": "red-lady",
    "lengthM": 500,
    "mixedAspect": false,
+   "canopyPct": 27,
+   "shelterPct": 33,
    "geometry": "area",
    "lines": [
     [
@@ -14564,6 +14780,8 @@
    "zone": "red-lady",
    "lengthM": 275,
    "mixedAspect": false,
+   "canopyPct": 50,
+   "shelterPct": 46,
    "geometry": "area",
    "lines": [
     [
@@ -14650,6 +14868,8 @@
    "zone": "red-lady",
    "lengthM": 250,
    "mixedAspect": false,
+   "canopyPct": 53,
+   "shelterPct": 49,
    "geometry": "area",
    "lines": [
     [
@@ -14732,6 +14952,8 @@
    "zone": "paradise",
    "lengthM": 300,
    "mixedAspect": false,
+   "canopyPct": 28,
+   "shelterPct": 20,
    "geometry": "area",
    "lines": [
     [
@@ -14838,6 +15060,8 @@
    "zone": "banana-peel",
    "lengthM": 1750,
    "mixedAspect": false,
+   "canopyPct": 65,
+   "shelterPct": 63,
    "geometry": "area",
    "lines": [
     [
@@ -15052,6 +15276,8 @@
    "zone": "high-lift",
    "lengthM": 725,
    "mixedAspect": false,
+   "canopyPct": 5,
+   "shelterPct": 10,
    "geometry": "area",
    "lines": [
     [
@@ -15222,6 +15448,8 @@
    "zone": "paradise",
    "lengthM": 275,
    "mixedAspect": false,
+   "canopyPct": 41,
+   "shelterPct": 34,
    "geometry": "area",
    "lines": [
     [
@@ -15316,6 +15544,8 @@
    "zone": "north-face",
    "lengthM": 800,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 14,
    "geometry": "area",
    "lines": [
     [
@@ -15506,6 +15736,8 @@
    "zone": "north-face",
    "lengthM": 150,
    "mixedAspect": false,
+   "canopyPct": 20,
+   "shelterPct": 18,
    "geometry": "area",
    "lines": [
     [
@@ -15576,6 +15808,8 @@
    "zone": "north-face",
    "lengthM": 525,
    "mixedAspect": false,
+   "canopyPct": 35,
+   "shelterPct": 27,
    "geometry": "area",
    "lines": [
     [
@@ -15702,6 +15936,8 @@
    "zone": "silver-queen",
    "lengthM": 1573,
    "mixedAspect": false,
+   "canopyPct": 30,
+   "shelterPct": 33,
    "geometry": "line",
    "lines": [
     [
@@ -16077,6 +16313,8 @@
    "zone": "prospect-gold-link",
    "lengthM": 1670,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 23,
    "geometry": "line",
    "lines": [
     [
@@ -16456,6 +16694,8 @@
    "zone": "teocalli",
    "lengthM": 431,
    "mixedAspect": false,
+   "canopyPct": 11,
+   "shelterPct": 19,
    "geometry": "line",
    "lines": [
     [
@@ -16579,6 +16819,8 @@
    "zone": "teocalli",
    "lengthM": 393,
    "mixedAspect": false,
+   "canopyPct": 37,
+   "shelterPct": 36,
    "geometry": "line",
    "lines": [
     [
@@ -16686,6 +16928,8 @@
    "zone": "red-lady",
    "lengthM": 358,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 5,
    "geometry": "line",
    "lines": [
     [
@@ -16793,6 +17037,8 @@
    "zone": "painter-boy",
    "lengthM": 623,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 25,
    "geometry": "line",
    "lines": [
     [
@@ -16952,6 +17198,8 @@
    "zone": "red-lady",
    "lengthM": 413,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 25,
    "geometry": "line",
    "lines": [
     [
@@ -17071,6 +17319,8 @@
    "zone": "red-lady",
    "lengthM": 373,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 21,
    "geometry": "line",
    "lines": [
     [
@@ -17194,6 +17444,8 @@
    "zone": "paradise",
    "lengthM": 220,
    "mixedAspect": false,
+   "canopyPct": 17,
+   "shelterPct": 30,
    "geometry": "line",
    "lines": [
     [
@@ -17269,6 +17521,8 @@
    "zone": "east-river",
    "lengthM": 95,
    "mixedAspect": false,
+   "canopyPct": 35,
+   "shelterPct": 41,
    "geometry": "line",
    "lines": [
     [
@@ -17316,6 +17570,8 @@
    "zone": "silver-queen",
    "lengthM": 693,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 28,
    "geometry": "line",
    "lines": [
     [
@@ -17497,6 +17753,8 @@
    "zone": "teocalli",
    "lengthM": 336,
    "mixedAspect": false,
+   "canopyPct": 25,
+   "shelterPct": 32,
    "geometry": "line",
    "lines": [
     [
@@ -17596,6 +17854,8 @@
    "zone": "east-river",
    "lengthM": 720,
    "mixedAspect": true,
+   "canopyPct": 47,
+   "shelterPct": 46,
    "parts": [
     {
      "aspectDeg": 48,
@@ -17766,6 +18026,8 @@
    "zone": "red-lady",
    "lengthM": 351,
    "mixedAspect": false,
+   "canopyPct": 21,
+   "shelterPct": 30,
    "geometry": "line",
    "lines": [
     [
@@ -17861,6 +18123,8 @@
    "zone": "east-river",
    "lengthM": 1404,
    "mixedAspect": false,
+   "canopyPct": 19,
+   "shelterPct": 36,
    "geometry": "line",
    "lines": [
     [
@@ -18176,6 +18440,8 @@
    "zone": "red-lady",
    "lengthM": 565,
    "mixedAspect": false,
+   "canopyPct": 16,
+   "shelterPct": 22,
    "geometry": "line",
    "lines": [
     [
@@ -18331,6 +18597,8 @@
    "zone": "teocalli",
    "lengthM": 1011,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 27,
    "geometry": "line",
    "lines": [
     [
@@ -18566,6 +18834,8 @@
    "zone": "prospect-gold-link",
    "lengthM": 642,
    "mixedAspect": false,
+   "canopyPct": 19,
+   "shelterPct": 27,
    "geometry": "line",
    "lines": [
     [
@@ -18721,6 +18991,8 @@
    "zone": "east-river",
    "lengthM": 828,
    "mixedAspect": true,
+   "canopyPct": 16,
+   "shelterPct": 34,
    "parts": [
     {
      "aspectDeg": 278,
@@ -18942,6 +19214,8 @@
    "zone": "prospect-gold-link",
    "lengthM": 389,
    "mixedAspect": false,
+   "canopyPct": 35,
+   "shelterPct": 29,
    "geometry": "line",
    "lines": [
     [
@@ -19057,6 +19331,8 @@
    "zone": "east-river",
    "lengthM": 602,
    "mixedAspect": false,
+   "canopyPct": 29,
+   "shelterPct": 40,
    "geometry": "line",
    "lines": [
     [
@@ -19212,6 +19488,8 @@
    "zone": "prospect-gold-link",
    "lengthM": 939,
    "mixedAspect": false,
+   "canopyPct": 22,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -19443,6 +19721,8 @@
    "zone": "paradise",
    "lengthM": 356,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 27,
    "geometry": "line",
    "lines": [
     [
@@ -19534,6 +19814,8 @@
    "zone": "east-river",
    "lengthM": 435,
    "mixedAspect": false,
+   "canopyPct": 25,
+   "shelterPct": 39,
    "geometry": "line",
    "lines": [
     [
@@ -19657,6 +19939,8 @@
    "zone": "paradise",
    "lengthM": 735,
    "mixedAspect": false,
+   "canopyPct": 2,
+   "shelterPct": 10,
    "geometry": "line",
    "lines": [
     [
@@ -19812,6 +20096,8 @@
    "zone": "east-river",
    "lengthM": 353,
    "mixedAspect": false,
+   "canopyPct": 29,
+   "shelterPct": 41,
    "geometry": "line",
    "lines": [
     [
@@ -19911,6 +20197,8 @@
    "zone": "east-river",
    "lengthM": 460,
    "mixedAspect": false,
+   "canopyPct": 33,
+   "shelterPct": 36,
    "geometry": "line",
    "lines": [
     [
@@ -20030,6 +20318,8 @@
    "zone": "east-river",
    "lengthM": 409,
    "mixedAspect": false,
+   "canopyPct": 50,
+   "shelterPct": 46,
    "geometry": "line",
    "lines": [
     [
@@ -20133,6 +20423,8 @@
    "zone": "teocalli",
    "lengthM": 712,
    "mixedAspect": false,
+   "canopyPct": 30,
+   "shelterPct": 37,
    "geometry": "line",
    "lines": [
     [
@@ -20312,6 +20604,8 @@
    "zone": "teocalli",
    "lengthM": 308,
    "mixedAspect": true,
+   "canopyPct": 2,
+   "shelterPct": 16,
    "parts": [
     {
      "aspectDeg": 1,
@@ -20429,6 +20723,8 @@
    "zone": "silver-queen",
    "lengthM": 301,
    "mixedAspect": false,
+   "canopyPct": 24,
+   "shelterPct": 35,
    "geometry": "line",
    "lines": [
     [
@@ -20512,6 +20808,8 @@
    "zone": "red-lady",
    "lengthM": 864,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 23,
    "geometry": "line",
    "lines": [
     [
@@ -20711,6 +21009,8 @@
    "zone": "red-lady",
    "lengthM": 531,
    "mixedAspect": false,
+   "canopyPct": 28,
+   "shelterPct": 31,
    "geometry": "line",
    "lines": [
     [
@@ -20850,6 +21150,8 @@
    "zone": "prospect-gold-link",
    "lengthM": 259,
    "mixedAspect": false,
+   "canopyPct": 31,
+   "shelterPct": 42,
    "geometry": "line",
    "lines": [
     [
@@ -20925,6 +21227,8 @@
    "zone": "east-river",
    "lengthM": 1028,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 30,
    "geometry": "line",
    "lines": [
     [
@@ -21156,6 +21460,8 @@
    "zone": "red-lady",
    "lengthM": 1261,
    "mixedAspect": false,
+   "canopyPct": 17,
+   "shelterPct": 27,
    "geometry": "line",
    "lines": [
     [
@@ -21439,6 +21745,8 @@
    "zone": "red-lady",
    "lengthM": 272,
    "mixedAspect": false,
+   "canopyPct": 26,
+   "shelterPct": 35,
    "geometry": "line",
    "lines": [
     [
@@ -21530,6 +21838,8 @@
    "zone": "red-lady",
    "lengthM": 681,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 29,
    "geometry": "line",
    "lines": [
     [
@@ -21701,6 +22011,8 @@
    "zone": "prospect-gold-link",
    "lengthM": 880,
    "mixedAspect": false,
+   "canopyPct": 28,
+   "shelterPct": 31,
    "geometry": "line",
    "lines": [
     [
@@ -21900,6 +22212,8 @@
    "zone": "prospect-gold-link",
    "lengthM": 568,
    "mixedAspect": false,
+   "canopyPct": 27,
+   "shelterPct": 34,
    "geometry": "line",
    "lines": [
     [
@@ -22047,6 +22361,8 @@
    "zone": "paradise",
    "lengthM": 636,
    "mixedAspect": true,
+   "canopyPct": 3,
+   "shelterPct": 4,
    "parts": [
     {
      "aspectDeg": 320,
@@ -22236,6 +22552,8 @@
    "zone": "red-lady",
    "lengthM": 646,
    "mixedAspect": false,
+   "canopyPct": 19,
+   "shelterPct": 28,
    "geometry": "line",
    "lines": [
     [
@@ -22391,6 +22709,8 @@
    "zone": "paradise",
    "lengthM": 316,
    "mixedAspect": false,
+   "canopyPct": 36,
+   "shelterPct": 40,
    "geometry": "line",
    "lines": [
     [
@@ -22490,6 +22810,8 @@
    "zone": "teocalli",
    "lengthM": 619,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 25,
    "geometry": "line",
    "lines": [
     [
@@ -22641,6 +22963,8 @@
    "zone": "prospect-gold-link",
    "lengthM": 683,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 25,
    "geometry": "line",
    "lines": [
     [
@@ -22800,6 +23124,8 @@
    "zone": "paradise",
    "lengthM": 312,
    "mixedAspect": false,
+   "canopyPct": 40,
+   "shelterPct": 43,
    "geometry": "line",
    "lines": [
     [
@@ -22887,6 +23213,8 @@
    "zone": "east-river",
    "lengthM": 731,
    "mixedAspect": false,
+   "canopyPct": 13,
+   "shelterPct": 33,
    "geometry": "line",
    "lines": [
     [
@@ -23070,6 +23398,8 @@
    "zone": "red-lady",
    "lengthM": 582,
    "mixedAspect": false,
+   "canopyPct": 17,
+   "shelterPct": 28,
    "geometry": "line",
    "lines": [
     [
@@ -23217,6 +23547,8 @@
    "zone": "paradise",
    "lengthM": 494,
    "mixedAspect": false,
+   "canopyPct": 2,
+   "shelterPct": 12,
    "geometry": "line",
    "lines": [
     [
@@ -23336,6 +23668,8 @@
    "zone": "red-lady",
    "lengthM": 585,
    "mixedAspect": false,
+   "canopyPct": 11,
+   "shelterPct": 23,
    "geometry": "line",
    "lines": [
     [
@@ -23475,6 +23809,8 @@
    "zone": "red-lady",
    "lengthM": 767,
    "mixedAspect": true,
+   "canopyPct": 44,
+   "shelterPct": 48,
    "parts": [
     {
      "aspectDeg": 309,
@@ -23671,6 +24007,8 @@
    "zone": "prospect-gold-link",
    "lengthM": 944,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 14,
    "geometry": "line",
    "lines": [
     [
@@ -23898,6 +24236,8 @@
    "zone": "east-river",
    "lengthM": 446,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 32,
    "geometry": "line",
    "lines": [
     [
@@ -24009,6 +24349,8 @@
    "zone": "silver-queen",
    "lengthM": 860,
    "mixedAspect": false,
+   "canopyPct": 7,
+   "shelterPct": 17,
    "geometry": "line",
    "lines": [
     [
@@ -24236,6 +24578,8 @@
    "zone": "paradise",
    "lengthM": 1652,
    "mixedAspect": true,
+   "canopyPct": 26,
+   "shelterPct": 28,
    "parts": [
     {
      "aspectDeg": 272,
@@ -24645,6 +24989,8 @@
    "zone": "red-lady",
    "lengthM": 1864,
    "mixedAspect": false,
+   "canopyPct": 26,
+   "shelterPct": 36,
    "geometry": "line",
    "lines": [
     [
@@ -25108,6 +25454,8 @@
    "zone": "high-lift",
    "lengthM": 226,
    "mixedAspect": false,
+   "canopyPct": 47,
+   "shelterPct": 38,
    "geometry": "line",
    "lines": [
     [
@@ -25187,6 +25535,8 @@
    "zone": "high-lift",
    "lengthM": 220,
    "mixedAspect": false,
+   "canopyPct": 16,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -25266,6 +25616,8 @@
    "zone": "north-face",
    "lengthM": 219,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 19,
    "geometry": "line",
    "lines": [
     [
@@ -25337,6 +25689,8 @@
    "zone": "north-face",
    "lengthM": 250,
    "mixedAspect": false,
+   "canopyPct": 19,
+   "shelterPct": 21,
    "geometry": "line",
    "lines": [
     [
@@ -25412,6 +25766,8 @@
    "zone": "north-face",
    "lengthM": 211,
    "mixedAspect": false,
+   "canopyPct": 26,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -25475,6 +25831,8 @@
    "zone": "silver-queen",
    "lengthM": 490,
    "mixedAspect": false,
+   "canopyPct": 23,
+   "shelterPct": 33,
    "geometry": "line",
    "lines": [
     [
@@ -25606,6 +25964,8 @@
    "zone": "silver-queen",
    "lengthM": 532,
    "mixedAspect": false,
+   "canopyPct": 28,
+   "shelterPct": 32,
    "geometry": "line",
    "lines": [
     [
@@ -25737,6 +26097,8 @@
    "zone": "silver-queen",
    "lengthM": 778,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 25,
    "geometry": "line",
    "lines": [
     [
@@ -25924,6 +26286,8 @@
    "zone": "north-face",
    "lengthM": 353,
    "mixedAspect": true,
+   "canopyPct": 22,
+   "shelterPct": 24,
    "parts": [
     {
      "aspectDeg": 48,
@@ -26023,6 +26387,8 @@
    "zone": "banana-peel",
    "lengthM": 583,
    "mixedAspect": false,
+   "canopyPct": 28,
+   "shelterPct": 32,
    "geometry": "line",
    "lines": [
     [
@@ -26166,6 +26532,8 @@
    "zone": "banana-peel",
    "lengthM": 355,
    "mixedAspect": false,
+   "canopyPct": 31,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -26257,6 +26625,8 @@
    "zone": "banana-peel",
    "lengthM": 208,
    "mixedAspect": false,
+   "canopyPct": 26,
+   "shelterPct": 28,
    "geometry": "line",
    "lines": [
     [
@@ -26324,6 +26694,8 @@
    "zone": "banana-peel",
    "lengthM": 204,
    "mixedAspect": false,
+   "canopyPct": 36,
+   "shelterPct": 40,
    "geometry": "line",
    "lines": [
     [
@@ -26391,6 +26763,8 @@
    "zone": "east-river",
    "lengthM": 422,
    "mixedAspect": false,
+   "canopyPct": 48,
+   "shelterPct": 42,
    "geometry": "line",
    "lines": [
     [
@@ -26506,6 +26880,8 @@
    "zone": "paradise",
    "lengthM": 395,
    "mixedAspect": false,
+   "canopyPct": 27,
+   "shelterPct": 28,
    "geometry": "line",
    "lines": [
     [
@@ -26617,6 +26993,8 @@
    "zone": "high-lift",
    "lengthM": 205,
    "mixedAspect": false,
+   "canopyPct": 24,
+   "shelterPct": 33,
    "geometry": "line",
    "lines": [
     [
@@ -26684,6 +27062,8 @@
    "zone": "painter-boy",
    "lengthM": 513,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 18,
    "geometry": "line",
    "lines": [
     [
@@ -26807,6 +27187,8 @@
    "zone": "silver-queen",
    "lengthM": 421,
    "mixedAspect": false,
+   "canopyPct": 20,
+   "shelterPct": 25,
    "geometry": "line",
    "lines": [
     [
@@ -26918,6 +27300,8 @@
    "zone": "red-lady",
    "lengthM": 162,
    "mixedAspect": false,
+   "canopyPct": 20,
+   "shelterPct": 27,
    "geometry": "line",
    "lines": [
     [
@@ -26977,6 +27361,8 @@
    "zone": "red-lady",
    "lengthM": 333,
    "mixedAspect": false,
+   "canopyPct": 2,
+   "shelterPct": 6,
    "geometry": "line",
    "lines": [
     [
@@ -27072,6 +27458,8 @@
    "zone": "north-face",
    "lengthM": 236,
    "mixedAspect": true,
+   "canopyPct": 28,
+   "shelterPct": 28,
    "parts": [
     {
      "aspectDeg": 325,
@@ -27164,6 +27552,8 @@
    "zone": "north-face",
    "lengthM": 157,
    "mixedAspect": false,
+   "canopyPct": 39,
+   "shelterPct": 33,
    "geometry": "line",
    "lines": [
     [
@@ -27223,6 +27613,8 @@
    "zone": "paradise",
    "lengthM": 188,
    "mixedAspect": false,
+   "canopyPct": 22,
+   "shelterPct": 31,
    "geometry": "line",
    "lines": [
     [
@@ -27290,6 +27682,8 @@
    "zone": "paradise",
    "lengthM": 281,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 28,
    "geometry": "line",
    "lines": [
     [
@@ -27381,6 +27775,8 @@
    "zone": "high-lift",
    "lengthM": 140,
    "mixedAspect": false,
+   "canopyPct": 33,
+   "shelterPct": 28,
    "geometry": "line",
    "lines": [
     [
@@ -27444,6 +27840,8 @@
    "zone": "north-face",
    "lengthM": 299,
    "mixedAspect": false,
+   "canopyPct": 21,
+   "shelterPct": 19,
    "geometry": "line",
    "lines": [
     [
@@ -27531,6 +27929,8 @@
    "zone": "north-face",
    "lengthM": 145,
    "mixedAspect": false,
+   "canopyPct": 25,
+   "shelterPct": 16,
    "geometry": "line",
    "lines": [
     [
@@ -27586,6 +27986,8 @@
    "zone": "red-lady",
    "lengthM": 271,
    "mixedAspect": false,
+   "canopyPct": 1,
+   "shelterPct": 5,
    "geometry": "line",
    "lines": [
     [
@@ -27665,6 +28067,8 @@
    "zone": "red-lady",
    "lengthM": 526,
    "mixedAspect": false,
+   "canopyPct": 21,
+   "shelterPct": 20,
    "geometry": "line",
    "lines": [
     [
@@ -27800,6 +28204,8 @@
    "zone": "prospect-gold-link",
    "lengthM": 920,
    "mixedAspect": true,
+   "canopyPct": 28,
+   "shelterPct": 31,
    "parts": [
     {
      "aspectDeg": 320,
@@ -28028,6 +28434,8 @@
    "zone": "painter-boy",
    "lengthM": 354,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 18,
    "geometry": "line",
    "lines": [
     [
@@ -28123,6 +28531,8 @@
    "zone": "teocalli",
    "lengthM": 253,
    "mixedAspect": false,
+   "canopyPct": 28,
+   "shelterPct": 30,
    "geometry": "line",
    "lines": [
     [
@@ -28214,6 +28624,8 @@
    "zone": "east-river",
    "lengthM": 345,
    "mixedAspect": true,
+   "canopyPct": 40,
+   "shelterPct": 42,
    "parts": [
     {
      "aspectDeg": 37,
@@ -28343,6 +28755,8 @@
    "zone": "east-river",
    "lengthM": 665,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 27,
    "geometry": "line",
    "lines": [
     [
@@ -28514,6 +28928,8 @@
    "zone": "paradise",
    "lengthM": 389,
    "mixedAspect": false,
+   "canopyPct": 22,
+   "shelterPct": 19,
    "geometry": "line",
    "lines": [
     [
@@ -28613,6 +29029,8 @@
    "zone": "teocalli",
    "lengthM": 890,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 30,
    "geometry": "line",
    "lines": [
     [
@@ -28808,6 +29226,8 @@
    "zone": "teocalli",
    "lengthM": 560,
    "mixedAspect": false,
+   "canopyPct": 14,
+   "shelterPct": 29,
    "geometry": "line",
    "lines": [
     [
@@ -28947,6 +29367,8 @@
    "zone": "paradise",
    "lengthM": 319,
    "mixedAspect": false,
+   "canopyPct": 0,
+   "shelterPct": 11,
    "geometry": "line",
    "lines": [
     [
@@ -29042,6 +29464,8 @@
    "zone": "red-lady",
    "lengthM": 160,
    "mixedAspect": false,
+   "canopyPct": 23,
+   "shelterPct": 35,
    "geometry": "line",
    "lines": [
     [
@@ -29105,6 +29529,8 @@
    "zone": "red-lady",
    "lengthM": 815,
    "mixedAspect": false,
+   "canopyPct": 25,
+   "shelterPct": 38,
    "geometry": "line",
    "lines": [
     [
@@ -29284,6 +29710,8 @@
    "zone": "red-lady",
    "lengthM": 352,
    "mixedAspect": false,
+   "canopyPct": 20,
+   "shelterPct": 27,
    "geometry": "line",
    "lines": [
     [
@@ -29371,6 +29799,8 @@
    "zone": "red-lady",
    "lengthM": 2030,
    "mixedAspect": false,
+   "canopyPct": 15,
+   "shelterPct": 24,
    "geometry": "line",
    "lines": [
     [
@@ -29798,6 +30228,8 @@
    "zone": "teocalli",
    "lengthM": 211,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 22,
    "geometry": "line",
    "lines": [
     [
@@ -29865,6 +30297,8 @@
    "zone": "banana-peel",
    "lengthM": 463,
    "mixedAspect": false,
+   "canopyPct": 53,
+   "shelterPct": 51,
    "geometry": "line",
    "lines": [
     [
@@ -29996,6 +30430,8 @@
    "zone": "north-face",
    "lengthM": 702,
    "mixedAspect": true,
+   "canopyPct": 32,
+   "shelterPct": 34,
    "parts": [
     {
      "aspectDeg": 357,
@@ -30187,6 +30623,8 @@
    "zone": "north-face",
    "lengthM": 92,
    "mixedAspect": false,
+   "canopyPct": 10,
+   "shelterPct": 7,
    "geometry": "line",
    "lines": [
     [
@@ -30238,6 +30676,8 @@
    "zone": "north-face",
    "lengthM": 565,
    "mixedAspect": false,
+   "canopyPct": 18,
+   "shelterPct": 23,
    "geometry": "line",
    "lines": [
     [
@@ -30399,6 +30839,8 @@
    "zone": "high-lift",
    "lengthM": 730,
    "mixedAspect": true,
+   "canopyPct": 4,
+   "shelterPct": 10,
    "parts": [
     {
      "aspectDeg": 83,
@@ -30630,6 +31072,8 @@
    "zone": "north-face",
    "lengthM": 429,
    "mixedAspect": false,
+   "canopyPct": 7,
+   "shelterPct": 7,
    "geometry": "line",
    "lines": [
     [
@@ -30763,6 +31207,8 @@
    "zone": "north-face",
    "lengthM": 443,
    "mixedAspect": false,
+   "canopyPct": 2,
+   "shelterPct": 7,
    "geometry": "line",
    "lines": [
     [
@@ -30890,6 +31336,8 @@
    "zone": "north-face",
    "lengthM": 425,
    "mixedAspect": true,
+   "canopyPct": 25,
+   "shelterPct": 34,
    "parts": [
     {
      "aspectDeg": 60,
@@ -31051,6 +31499,8 @@
    "zone": "banana-peel",
    "lengthM": 823,
    "mixedAspect": false,
+   "canopyPct": 38,
+   "shelterPct": 44,
    "geometry": "line",
    "lines": [
     [
@@ -31246,6 +31696,8 @@
    "zone": "north-face",
    "lengthM": 195,
    "mixedAspect": true,
+   "canopyPct": 15,
+   "shelterPct": 20,
    "parts": [
     {
      "aspectDeg": 42,
@@ -31358,6 +31810,8 @@
    "zone": "north-face",
    "lengthM": 971,
    "mixedAspect": true,
+   "canopyPct": 27,
+   "shelterPct": 32,
    "parts": [
     {
      "aspectDeg": 42,
@@ -31603,6 +32057,8 @@
    "zone": "high-lift",
    "lengthM": 322,
    "mixedAspect": false,
+   "canopyPct": 34,
+   "shelterPct": 36,
    "geometry": "line",
    "lines": [
     [
@@ -31698,6 +32154,8 @@
    "zone": "north-face",
    "lengthM": 438,
    "mixedAspect": false,
+   "canopyPct": 21,
+   "shelterPct": 19,
    "geometry": "line",
    "lines": [
     [
@@ -31821,6 +32279,8 @@
    "zone": "high-lift",
    "lengthM": 793,
    "mixedAspect": true,
+   "canopyPct": 9,
+   "shelterPct": 12,
    "parts": [
     {
      "aspectDeg": 89,
@@ -32076,6 +32536,8 @@
    "zone": "north-face",
    "lengthM": 428,
    "mixedAspect": false,
+   "canopyPct": 13,
+   "shelterPct": 17,
    "geometry": "line",
    "lines": [
     [
@@ -32195,6 +32657,8 @@
    "zone": "painter-boy",
    "lengthM": 603,
    "mixedAspect": false,
+   "canopyPct": 22,
+   "shelterPct": 24,
    "geometry": "line",
    "lines": [
     [
@@ -32350,6 +32814,8 @@
    "zone": "red-lady",
    "lengthM": 326,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 14,
    "geometry": "line",
    "lines": [
     [
@@ -32441,6 +32907,8 @@
    "zone": "north-face",
    "lengthM": 951,
    "mixedAspect": true,
+   "canopyPct": 29,
+   "shelterPct": 31,
    "parts": [
     {
      "aspectDeg": 4,
@@ -32726,6 +33194,8 @@
    "zone": "banana-peel",
    "lengthM": 477,
    "mixedAspect": false,
+   "canopyPct": 26,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -32837,6 +33307,8 @@
    "zone": "paradise",
    "lengthM": 421,
    "mixedAspect": true,
+   "canopyPct": 26,
+   "shelterPct": 26,
    "parts": [
     {
      "aspectDeg": 320,
@@ -32982,6 +33454,8 @@
    "zone": "north-face",
    "lengthM": 446,
    "mixedAspect": false,
+   "canopyPct": 7,
+   "shelterPct": 9,
    "geometry": "line",
    "lines": [
     [
@@ -33105,6 +33579,8 @@
    "zone": "high-lift",
    "lengthM": 175,
    "mixedAspect": false,
+   "canopyPct": 29,
+   "shelterPct": 36,
    "geometry": "line",
    "lines": [
     [
@@ -33184,6 +33660,8 @@
    "zone": "north-face",
    "lengthM": 611,
    "mixedAspect": true,
+   "canopyPct": 36,
+   "shelterPct": 34,
    "parts": [
     {
      "aspectDeg": 236,
@@ -33387,6 +33865,8 @@
    "zone": "north-face",
    "lengthM": 328,
    "mixedAspect": false,
+   "canopyPct": 11,
+   "shelterPct": 24,
    "geometry": "line",
    "lines": [
     [
@@ -33486,6 +33966,8 @@
    "zone": "north-face",
    "lengthM": 212,
    "mixedAspect": false,
+   "canopyPct": 8,
+   "shelterPct": 26,
    "geometry": "line",
    "lines": [
     [
@@ -33557,6 +34039,8 @@
    "zone": "paradise",
    "lengthM": 628,
    "mixedAspect": false,
+   "canopyPct": 23,
+   "shelterPct": 22,
    "geometry": "line",
    "lines": [
     [
@@ -33722,6 +34206,8 @@
    "zone": "north-face",
    "lengthM": 734,
    "mixedAspect": false,
+   "canopyPct": 12,
+   "shelterPct": 16,
    "geometry": "line",
    "lines": [
     [
@@ -33897,6 +34383,8 @@
    "zone": "paradise",
    "lengthM": 340,
    "mixedAspect": true,
+   "canopyPct": 8,
+   "shelterPct": 15,
    "parts": [
     {
      "aspectDeg": 45,
@@ -34013,6 +34501,8 @@
    "zone": "paradise",
    "lengthM": 121,
    "mixedAspect": false,
+   "canopyPct": 20,
+   "shelterPct": 24,
    "geometry": "line",
    "lines": [
     [
@@ -34072,6 +34562,8 @@
    "zone": "painter-boy",
    "lengthM": 1327,
    "mixedAspect": false,
+   "canopyPct": 25,
+   "shelterPct": 30,
    "geometry": "line",
    "lines": [
     [
@@ -34383,6 +34875,8 @@
    "zone": "banana-peel",
    "lengthM": 796,
    "mixedAspect": false,
+   "canopyPct": 28,
+   "shelterPct": 34,
    "geometry": "line",
    "lines": [
     [
@@ -34562,6 +35056,8 @@
    "zone": "north-face",
    "lengthM": 212,
    "mixedAspect": true,
+   "canopyPct": 23,
+   "shelterPct": 30,
    "parts": [
     {
      "aspectDeg": 41,
@@ -34666,6 +35162,8 @@
    "zone": "paradise",
    "lengthM": 582,
    "mixedAspect": false,
+   "canopyPct": 19,
+   "shelterPct": 30,
    "geometry": "line",
    "lines": [
     [
@@ -34805,6 +35303,8 @@
    "zone": "banana-peel",
    "lengthM": 572,
    "mixedAspect": false,
+   "canopyPct": 11,
+   "shelterPct": 8,
    "geometry": "line",
    "lines": [
     [
@@ -34976,6 +35476,8 @@
    "zone": "red-lady",
    "lengthM": 482,
    "mixedAspect": false,
+   "canopyPct": 29,
+   "shelterPct": 28,
    "geometry": "line",
    "lines": [
     [
@@ -35099,6 +35601,8 @@
    "zone": "high-lift",
    "lengthM": 193,
    "mixedAspect": false,
+   "canopyPct": 9,
+   "shelterPct": 21,
    "geometry": "line",
    "lines": [
     [
@@ -35170,6 +35674,8 @@
    "zone": "banana-peel",
    "lengthM": 339,
    "mixedAspect": false,
+   "canopyPct": 48,
+   "shelterPct": 50,
    "geometry": "line",
    "lines": [
     [

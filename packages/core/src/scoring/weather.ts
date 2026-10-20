@@ -41,6 +41,8 @@ export interface DayWeather {
   newSnowBaseIn?: number;
   /** Snow in the 72 hours to 8am at the summit: older storm snow still soft off-piste. */
   stormTotalIn?: number;
+  /** Strongest summit gust overnight (4pm to 8am), mph: a windy night scours and hardens open slopes. */
+  overnightMaxGustMph?: number;
   source: string;
 }
 

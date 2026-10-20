@@ -79,6 +79,10 @@ export interface Segment {
   aspectDeg: number;
   /** Direction of travel along the mapped line, for debugging only. */
   lineBearingDeg: number;
+  /** Tree canopy on this spot (NLCD, 30 m), percent. Absent when canopy data was unavailable. */
+  canopyPct?: number;
+  /** Mean canopy within ~75 m: the trees around the run, which block wind and give definition. */
+  shelterPct?: number;
 }
 
 export interface Run {
@@ -99,6 +103,9 @@ export interface Run {
   aspectDeg: number;
   aspectSpreadDeg: number;
   mixedAspect: boolean;
+  /** Length-weighted canopy on the run and around it, percent (see Segment). */
+  canopyPct?: number;
+  shelterPct?: number;
   zone: string | null;
   segments: Segment[];
   demSource: "3dep" | "open-meteo";

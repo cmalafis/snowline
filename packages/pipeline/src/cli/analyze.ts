@@ -5,6 +5,27 @@ import { analyzeRun, buildRawRuns, normName } from "../terrain.ts";
 import { classifyRun } from "../runType.ts";
 import { assignLift, buildZones, zoneIdForLift, zoneLifts } from "../zones.ts";
 import { analysisConfig, dataPath, loadResort, readJson, writeJson } from "../resort.ts";
+import { loadCanopy, type CanopyGrid } from "../sources/canopy.ts";
+
+/** Trees within this distance shelter a run from wind and give it definition in flat light. */
+const SHELTER_RADIUS_M = 75;
+
+/** Length-weighted canopy on and around a run, or nothing when canopy data is unavailable. */
+function canopyMeans(segments: { at: LonLat; lengthM: number }[], canopy: CanopyGrid | null): { canopyPct?: number; shelterPct?: number } {
+  if (!canopy) return {};
+  let on = 0;
+  let around = 0;
+  let len = 0;
+  for (const s of segments) {
+    const a = canopy.at(s.at);
+    const b = canopy.around(s.at, SHELTER_RADIUS_M);
+    if (a === null || b === null) continue;
+    on += a * s.lengthM;
+    around += b * s.lengthM;
+    len += s.lengthM;
+  }
+  return len ? { canopyPct: Math.round(on / len), shelterPct: Math.round(around / len) } : {};
+}
 
 /** Projected bbox covering the ski-area boundary (or the config bbox) plus a buffer. */
 function demBbox(cfg: ResortConfig, osm: OsmDump, proj: Projection): [number, number, number, number] {
@@ -55,6 +76,11 @@ export async function analyze(resortId: string) {
   const raw = await loadDem({ bbox: demBbox(cfg, osm, proj), epsg, cellSize: 10, cacheFile: dataPath(cfg.id, "dem.tif") }, proj);
   console.log(`  ${raw.width}x${raw.height} cells at ${raw.cellSize} m from ${raw.source}`);
   const dem = raw.smoothed(acfg.smoothingRadiusM);
+  const [minX, minY, maxX, maxY] = demBbox(cfg, osm, proj);
+  const sw = proj.toLonLat([minX, minY]);
+  const ne = proj.toLonLat([maxX, maxY]);
+  const canopy = await loadCanopy([sw[0] - 0.002, sw[1] - 0.002, ne[0] + 0.002, ne[1] + 0.002], dataPath(cfg.id, "canopy.tif"));
+  if (canopy) console.log(`  tree canopy: ${canopy.width}x${canopy.height} cells at 30 m (NLCD 2021)`);
 
   const lifts = buildLifts(osm, raw, proj);
   const candidates = zoneLifts(lifts, cfg);
@@ -89,6 +115,7 @@ export async function analyze(resortId: string) {
       topFt: Math.round(t.topFt),
       bottomFt: Math.round(t.bottomFt),
       pitchDeg: +t.pitchDeg.toFixed(1),
+      ...canopyMeans(t.segments, canopy),
       aspectDeg: Math.round(ov?.aspect ?? t.aspectDeg),
       aspectSpreadDeg: Math.round(t.aspectSpreadDeg),
       mixedAspect: t.mixedAspect,
@@ -101,6 +128,7 @@ export async function analyze(resortId: string) {
         pitchDeg: +s.pitchDeg.toFixed(1),
         aspectDeg: Math.round(s.aspectDeg),
         lineBearingDeg: Math.round(s.lineBearingDeg),
+        ...(canopy ? { canopyPct: Math.round(canopy.at(s.at) ?? 0), shelterPct: Math.round(canopy.around(s.at, SHELTER_RADIUS_M) ?? 0) } : {}),
       })),
       demSource: raw.source,
       tags: r.tags,

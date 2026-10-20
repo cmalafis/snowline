@@ -5,6 +5,7 @@ apps/web/test-results
 apps/web/playwright-report
 apps/web/public/maplibre
 data/*/dem.tif
+data/*/canopy.tif
 data/*/cache
 data/*/osm.json
 reference/trailmaps

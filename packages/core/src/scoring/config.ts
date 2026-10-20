@@ -55,7 +55,16 @@ export interface ScoringConfig {
   /** Penalty while rain is falling on a run, and the rate (in/hr) that counts. */
   rain: { minInPerHour: number; penalty: number };
   flatLightCloud: number;
-  wind: { breezyGustMph: number; holdGustMph: number };
+  /**
+   * Wind, scaled by each run's exposure. `scourGustMph`: overnight gusts that strip and harden open snow.
+   * `blowingSnowGustMph`: gusts that, with snow falling or fresh on the ground, wipe out visibility in the open.
+   */
+  wind: { breezyGustMph: number; holdGustMph: number; scourGustMph: number; blowingSnowGustMph: number };
+  /**
+   * Tree cover: a run is fully open at or below `openBelowPct` canopy (on or around it) and fully sheltered at
+   * `shelteredAbovePct`. Canopy on the run blocks up to `sunShade` of the sun.
+   */
+  trees: { openBelowPct: number; shelteredAbovePct: number; sunShade: number };
   coldF: number;
 
   /** Relative skier traffic, 0..1.5, by difficulty and run type. */
@@ -95,7 +104,8 @@ export const DEFAULT_SCORING: ScoringConfig = {
   snowReportHour: 8,
   rain: { minInPerHour: 0.01, penalty: 22 },
   flatLightCloud: 80,
-  wind: { breezyGustMph: 25, holdGustMph: 35 },
+  wind: { breezyGustMph: 25, holdGustMph: 35, scourGustMph: 40, blowingSnowGustMph: 28 },
+  trees: { openBelowPct: 10, shelteredAbovePct: 40, sunShade: 0.6 },
   coldF: 10,
 
   traffic: {

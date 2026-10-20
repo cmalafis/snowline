@@ -82,6 +82,14 @@ function snowTotal(loc: OpenMeteoLocation, date: string, days: number): number {
   return times.reduce((s, t, i) => (t > from && t <= to ? s + num(loc.hourly.snowfall[i]) : s), 0);
 }
 
+/** Strongest gust from 4pm the day before to 8am on `date`. */
+function overnightMaxGust(loc: OpenMeteoLocation, date: string): number {
+  const times = loc.hourly.time as string[];
+  const from = `${addDays(date, -1)}T16:00`;
+  const to = `${date}T08:00`;
+  return times.reduce((m, t, i) => (t >= from && t <= to ? Math.max(m, num(loc.hourly.wind_gusts_10m[i])) : m), 0);
+}
+
 /** Weather for `date` (default: today at the resort), or null if it's outside the forecast window. */
 export async function dayWeather(resort: AppResort, date?: string): Promise<DayWeather | null> {
   const today = todayIn(resort.tz);
@@ -96,6 +104,7 @@ export async function dayWeather(resort: AppResort, date?: string): Promise<DayW
     newSnowIn: round1(snowTotal(summit, d, 1)),
     newSnowBaseIn: round1(snowTotal(base, d, 1)),
     stormTotalIn: round1(snowTotal(summit, d, 3)),
+    overnightMaxGustMph: Math.round(overnightMaxGust(summit, d)),
     source: "open-meteo",
   };
 }
