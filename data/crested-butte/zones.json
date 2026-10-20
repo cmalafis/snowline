@@ -1,0 +1,123 @@
+[
+ {
+  "id": "banana-peel",
+  "name": "Banana, Peel & Forest (Extreme Limits)",
+  "lifts": [],
+  "aspectDeg": 279.01637536048827,
+  "topFt": 11639,
+  "bottomFt": 9656,
+  "windExposed": true,
+  "runCount": 28
+ },
+ {
+  "id": "east-river",
+  "name": "East River",
+  "lifts": [
+   "East River Express Lift"
+  ],
+  "aspectDeg": 32.31480644571002,
+  "topFt": 10230,
+  "bottomFt": 9129,
+  "windExposed": false,
+  "runCount": 15
+ },
+ {
+  "id": "high-lift",
+  "name": "Headwall, Teo Bowls & Peak (High Lift)",
+  "lifts": [
+   "The High Lift"
+  ],
+  "aspectDeg": 39.236193756276975,
+  "topFt": 12087,
+  "bottomFt": 11005,
+  "windExposed": true,
+  "runCount": 43
+ },
+ {
+  "id": "north-face",
+  "name": "North Face, Spellbound & Phoenix (Extreme Limits)",
+  "lifts": [
+   "North Face Lift"
+  ],
+  "aspectDeg": 31.41350676077292,
+  "topFt": 11450,
+  "bottomFt": 9765,
+  "windExposed": true,
+  "runCount": 66
+ },
+ {
+  "id": "painter-boy",
+  "name": "Painter Boy",
+  "lifts": [
+   "Painter Boy Lift"
+  ],
+  "aspectDeg": 212.44004466737437,
+  "topFt": 10142,
+  "bottomFt": 9504,
+  "windExposed": false,
+  "runCount": 5
+ },
+ {
+  "id": "paradise",
+  "name": "Paradise Bowl",
+  "lifts": [
+   "Paradise Express Lift"
+  ],
+  "aspectDeg": 358.1763641657329,
+  "topFt": 11122,
+  "bottomFt": 9897,
+  "windExposed": false,
+  "runCount": 36
+ },
+ {
+  "id": "prospect-gold-link",
+  "name": "Prospect & Gold Link",
+  "lifts": [
+   "Gold Link LIft",
+   "Prospect Lift"
+  ],
+  "aspectDeg": 3.8839145375025055,
+  "topFt": 10147,
+  "bottomFt": 9620,
+  "windExposed": false,
+  "runCount": 10
+ },
+ {
+  "id": "red-lady",
+  "name": "Red Lady & Base Area",
+  "lifts": [
+   "Red Lady Express Lift",
+   "Peachtree Lift",
+   "West Wall Lift"
+  ],
+  "aspectDeg": 293.25815032297663,
+  "topFt": 10352,
+  "bottomFt": 9279,
+  "windExposed": false,
+  "runCount": 30
+ },
+ {
+  "id": "silver-queen",
+  "name": "Silver Queen",
+  "lifts": [
+   "Silver Queen Express Lift"
+  ],
+  "aspectDeg": 324.43249174759643,
+  "topFt": 11438,
+  "bottomFt": 10153,
+  "windExposed": true,
+  "runCount": 13
+ },
+ {
+  "id": "teocalli",
+  "name": "Teocalli (lower mountain)",
+  "lifts": [
+   "Teocalli Lift"
+  ],
+  "aspectDeg": 42.09942242003456,
+  "topFt": 10327,
+  "bottomFt": 9683,
+  "windExposed": false,
+  "runCount": 12
+ }
+]

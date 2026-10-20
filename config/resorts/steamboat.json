@@ -1,6 +1,8 @@
 {
   "id": "steamboat",
   "name": "Steamboat",
+  "region": "Routt County, Colorado",
+  "pass": "Ikon",
   "tz": "America/Denver",
   "osm": {
     "skiArea": {

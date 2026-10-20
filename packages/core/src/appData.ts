@@ -5,6 +5,8 @@ import type { ScoringRun } from "./scoring/score.ts";
 export interface AppResort {
   id: string;
   name: string;
+  region: string | null;
+  pass: string | null;
   tz: string;
   openHour: number;
   closeHour: number;
@@ -53,4 +55,17 @@ export interface AppResortData {
   zones: AppZone[];
   lifts: AppLift[];
   runs: AppRun[];
+}
+
+/** One entry in the resort picker. */
+export interface ResortSummary {
+  id: string;
+  name: string;
+  region: string | null;
+  pass: string | null;
+  base: { lat: number; lon: number; elevationFt: number };
+  summit: { lat: number; lon: number; elevationFt: number };
+  runCount: number;
+  /** Live snapshot, when requested and available. */
+  conditions?: { newSnowIn: number; stormTotalIn: number | null; summitTempF: number; cloudCover: number; gustMph: number } | null;
 }

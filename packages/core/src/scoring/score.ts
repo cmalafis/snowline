@@ -6,8 +6,11 @@ import { sunPosition, type SunPosition } from "./solar.ts";
 import { localToUTC, fmtTime } from "./time.ts";
 import {
   cloudAt,
+  newSnowAt,
   overnightLowAt,
+  precipRateAt,
   sampleHourly,
+  snowSince,
   stationFor,
   temperatureAt,
   windAt,
@@ -164,16 +167,34 @@ function scorePart(
   const absorbed = tl.absorbed[i]!;
   const inSun = absorbed >= cfg.inSunThreshold;
   const sunSince = tl.sunSince[i]!;
-  const snow = weather.newSnowIn;
+  const lapse = cfg.lapseFPer1000Ft;
+  const kind = run.type === "groomer" ? (groomedToday ? "groom" : "packed") : run.type;
+  // New snow on this run: the overnight total at its elevation plus whatever has fallen on it since the report.
+  const overnight = newSnowAt(weather, midFt);
+  const today = snowSince(weather, cfg.snowReportHour, hour, midFt, lapse);
+  const fresh = overnight + today;
+  // Off-piste, older storm snow stays soft for days.
+  const older = kind === "groom" ? 0 : cfg.powder.settledShare * Math.max(0, (weather.stormTotalIn ?? 0) - weather.newSnowIn);
+  const snow = fresh + older;
   const powder = snow >= cfg.powder.minIn;
   const refrozen =
-    yesterdayHighAt(weather, midFt, cfg.lapseFPer1000Ft) > cfg.refreeze.yesterdayHighAboveF &&
-    overnightLowAt(weather, midFt, cfg.lapseFPer1000Ft) < cfg.refreeze.overnightLowBelowF &&
-    snow < cfg.refreeze.cancelledBySnowIn &&
+    yesterdayHighAt(weather, midFt, lapse) > cfg.refreeze.yesterdayHighAboveF &&
+    overnightLowAt(weather, midFt, lapse) < cfg.refreeze.overnightLowBelowF &&
+    overnight < cfg.refreeze.cancelledBySnowIn &&
     tl.dailyEnergy >= cfg.refreeze.minDailyEnergy;
   const hrs = Math.max(0, hour - resort.openHour);
+  // Snow falling during the day fills tracks back in.
+  const hrsTracked = Math.max(0, hrs - today * cfg.powder.refillHoursPerIn);
   const traffic = trafficFor(run, cfg);
-  const kind = run.type === "groomer" ? (groomedToday ? "groom" : "packed") : run.type;
+  const inches = (x: number) => (x < 3 ? x.toFixed(1).replace(/\.0$/, "") : String(Math.round(x)));
+  const snowNote =
+    today >= 1
+      ? overnight >= 1
+        ? `${inches(fresh)}" new, ${inches(today)}" of it since ${fmtTime(cfg.snowReportHour)}`
+        : `${inches(today)}" fallen since ${fmtTime(cfg.snowReportHour)}`
+      : fresh >= cfg.powder.minIn || older < 1
+        ? `${inches(fresh)}" of new snow`
+        : `${inches(weather.stormTotalIn ?? 0)}" storm total, still soft off-piste`;
   const dir = DIRECTION[compassPoint(aspectDeg)]!;
   const sunNote = sunSince !== null ? `${dir}-facing, in the sun since ${fmtTime(sunSince)}` : `${dir}-facing, still in the shade`;
   const s = cfg.surface;
@@ -201,7 +222,7 @@ function scorePart(
 
   if (kind === "groom") {
     sc = 86;
-    const wear = Math.min(30, traffic * 3.5 * hrs * (powder ? 0.6 : 1));
+    const wear = Math.min(30, traffic * 3.5 * hrsTracked * (powder ? 0.6 : 1));
     sc -= wear;
     if (hrs < 1.25) add(6, "Fresh corduroy");
     else if (wear > 14) add(-wear, "Busy groomer, getting skied off");
@@ -211,28 +232,28 @@ function scorePart(
     else if (state === "heavy") (sc -= 10), add(-10, "Getting soft and pushy");
     else if (state === "slush") (sc -= 28), add(-28, "Slushy now");
     else if (!powder) add(2, T < 22 ? "Cold, chalky winter groomer" : T > 40 ? "Warm, soft groomer" : "Packed winter groomer");
-    if (powder) (sc += 4), add(5, `${snow}" of new snow groomed in`);
+    if (powder) (sc += 4), add(5, today >= 1 ? `${snowNote}, fresh on the corduroy` : `${snowNote} groomed in`);
   } else if (kind === "packed") {
-    sc = 62 - Math.min(20, traffic * 2 * hrs);
+    sc = 62 - Math.min(20, traffic * 2 * hrsTracked);
     add(-8, "Not groomed today, likely chopped up");
     if (state === "frozen") (sc -= 26), add(-26, "Refrozen chunder, rough");
     else if (state === "prime") (sc += 8), add(8, `${sunNote}, chop softening`);
     else if (state === "heavy" || state === "slush") (sc -= 14), add(-14, "Heavy and slushy");
     if (powder) {
-      const fresh = (Math.min(snow, cfg.powder.fullIn) / cfg.powder.fullIn) * cfg.powder.maxBonus * 0.8;
-      const decay = Math.min(cfg.powder.maxDecay, traffic * cfg.powder.trackRateGroomer * hrs);
-      sc += fresh * (1 - decay);
-      add(fresh * (1 - decay), decay < 0.4 ? `${snow}" of new snow on an ungroomed run` : "New snow, getting tracked");
+      const bonus = (Math.min(snow, cfg.powder.fullIn) / cfg.powder.fullIn) * cfg.powder.maxBonus * 0.8;
+      const decay = Math.min(cfg.powder.maxDecay, traffic * cfg.powder.trackRateGroomer * hrsTracked);
+      sc += bonus * (1 - decay);
+      add(bonus * (1 - decay), decay < 0.4 ? `${snowNote} on an ungroomed run` : "New snow, getting tracked");
     }
   } else {
     sc = kind === "bump" ? 62 : kind === "tree" ? 60 : 64;
     if (powder) {
-      const fresh = (Math.min(snow, cfg.powder.fullIn) / cfg.powder.fullIn) * cfg.powder.maxBonus;
+      const bonus = (Math.min(snow, cfg.powder.fullIn) / cfg.powder.fullIn) * cfg.powder.maxBonus;
       const rate = kind === "tree" ? cfg.powder.trackRateTree : cfg.powder.trackRateOpen;
-      const decay = Math.min(cfg.powder.maxDecay, traffic * rate * hrs);
-      const now = fresh * (1 - decay);
+      const decay = Math.min(cfg.powder.maxDecay, traffic * rate * hrsTracked);
+      const now = bonus * (1 - decay);
       sc += now;
-      if (decay < 0.35) add(now, `${snow}" of new snow, still fresh`);
+      if (decay < 0.35) add(now, `${snowNote}, still fresh`);
       else if (decay < 0.65) add(now, "Some fresh left between tracks");
       else add(-6, "Mostly tracked out");
     } else if (state === "frozen") (sc -= 38), add(-38, kind === "bump" ? "Refrozen, bulletproof bumps" : "Refrozen and crusty");
@@ -251,7 +272,8 @@ function scorePart(
   }
 
   const aboveTreeline = run.topFt > resort.treelineFt;
-  const snowingNow = (sampleHourly(stationFor(weather, midFt).hourly, hour, (p) => p.snowfallIn) ?? 0) > 0.2;
+  const falling = precipRateAt(weather, hour, midFt, lapse);
+  const snowingNow = falling.snowIn > 0.2;
   if (cloudAt(weather, hour, midFt) >= cfg.flatLightCloud || snowingNow) {
     if (kind === "bowl") {
       const p = aboveTreeline ? 14 : 10;
@@ -262,6 +284,11 @@ function scorePart(
       (sc -= p), add(-p, "Hard to read bumps in flat light");
     }
   }
+
+  if (falling.rainIn >= cfg.rain.minInPerHour) {
+    (sc -= cfg.rain.penalty), add(-cfg.rain.penalty, "Raining at this elevation");
+    warnings.push(`Rain below the snow line (${Math.round(T)}°F here)`);
+  } else if (snowingNow && !powder) add(3, "Snowing now, fresh coat building");
 
   const { gustMph } = windAt(weather, hour, run.topFt);
   if (gustMph >= cfg.wind.holdGustMph) {

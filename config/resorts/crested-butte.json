@@ -1,0 +1,225 @@
+{
+  "id": "crested-butte",
+  "name": "Crested Butte",
+  "tz": "America/Denver",
+  "region": "Gunnison County, Colorado",
+  "pass": "Epic",
+  "osm": {
+    "skiArea": {
+      "type": "way",
+      "id": 530521512
+    },
+    "bbox": [
+      38.876,
+      -106.97,
+      38.917,
+      -106.917
+    ]
+  },
+  "hours": {
+    "open": 9,
+    "close": 16
+  },
+  "base": {
+    "lat": 38.899,
+    "lon": -106.965,
+    "elevationFt": 9375
+  },
+  "summit": {
+    "lat": 38.8832,
+    "lon": -106.94,
+    "elevationFt": 11880
+  },
+  "treelineFt": 11600,
+  "ridgeProximityFt": 450,
+  "ignoreLifts": [
+    "Aspen Carpet",
+    "Pine Carpet",
+    "Spruce Conveyor"
+  ],
+  "zoneOverrides": {
+    "Red Lady Express Lift": "red-lady",
+    "Peachtree Lift": "red-lady",
+    "West Wall Lift": "red-lady",
+    "Teocalli Lift": "teocalli",
+    "Silver Queen Express Lift": "silver-queen",
+    "Paradise Express Lift": "paradise",
+    "East River Express Lift": "east-river",
+    "North Face Lift": "north-face",
+    "The High Lift": "high-lift",
+    "Prospect Lift": "prospect-gold-link",
+    "Gold Link LIft": "prospect-gold-link",
+    "Painter Boy Lift": "painter-boy"
+  },
+  "zoneNames": {
+    "red-lady": "Red Lady & Base Area",
+    "teocalli": "Teocalli (lower mountain)",
+    "silver-queen": "Silver Queen",
+    "banana-peel": "Banana, Peel & Forest (Extreme Limits)",
+    "paradise": "Paradise Bowl",
+    "east-river": "East River",
+    "north-face": "North Face, Spellbound & Phoenix (Extreme Limits)",
+    "high-lift": "Headwall, Teo Bowls & Peak (High Lift)",
+    "prospect-gold-link": "Prospect & Gold Link",
+    "painter-boy": "Painter Boy"
+  },
+  "runOverrides": {
+    "Flatiron": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Chiquita": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Banana": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Peel": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Upper Forest": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Orange Peel": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Flatiron Glades": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "House Rock": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Sunset Ridge": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Hidden Chutes": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Funnel": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Tropicana": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Big Hole": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Lower Forest": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Little Holes": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Predator": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Lower Peel": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Banana Glades": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Total Recall": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Deep Throat": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Forest": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Luge": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Hockey Rink": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Pygmy Spear Garden": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Blood Forest": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Banana Exit": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Hall of Fame": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Upper Banana Entrance": {
+      "zone": "banana-peel",
+      "groomed": false
+    },
+    "Phoenix Last Steep": {
+      "zone": "north-face",
+      "groomed": false
+    },
+    "Sock-It-To-Me Ridge Cat Track Exit": {
+      "zone": "north-face",
+      "groomed": false
+    },
+    "Rambo": {
+      "zone": "paradise",
+      "type": "bump",
+      "groomed": false
+    },
+    "The North Face": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Twister": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Middle Twister": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Upper International": {
+      "groomed": true
+    },
+    "Lower International": {
+      "groomed": true
+    }
+  },
+  "nameAliases": {
+    "Hawks Nest": "Hawk's Nest",
+    "Bushwhacker": "Bushwacker",
+    "Forest Queen": "Upper Forest Queen",
+    "Forrest Queen": "Upper Forest Queen",
+    "Ruby Chief": "Upper Ruby Chief",
+    "Treasury": "Upper Treasury",
+    "International": "Upper International",
+    "Canaan": "Upper Canaan",
+    "Cannon": "Upper Canaan",
+    "Peak": "The Peak",
+    "North Face": "The North Face",
+    "Teo 2": "Teo 2 Traverse"
+  }
+}

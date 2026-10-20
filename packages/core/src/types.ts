@@ -9,6 +9,10 @@ export type RunType = "groomer" | "bump" | "tree" | "bowl";
 export interface ResortConfig {
   id: string;
   name: string;
+  /** Shown in the resort picker, e.g. "Routt County, Colorado". */
+  region?: string;
+  /** Season pass the resort is on, e.g. "Ikon" or "Epic". */
+  pass?: string;
   tz: string;
   osm: {
     /** OSM element holding the ski area boundary (landuse=winter_sports). */
@@ -29,7 +33,7 @@ export interface ResortConfig {
   zoneNames?: Record<string, string>;
   /** Lift names to ignore when assigning zones (e.g. surface lifts, gondola access only). */
   ignoreLifts?: string[];
-  /** Run name -> fixes. */
+  /** Run name (or "osm:<way id>" when two runs share a name) -> fixes. */
   runOverrides?: Record<
     string,
     { zone?: string; type?: RunType; exclude?: boolean; aspect?: number; difficulty?: Difficulty; groomed?: boolean }

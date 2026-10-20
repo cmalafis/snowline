@@ -47,12 +47,56 @@ Shadows hold powder for days", "Storm Peak goes on wind hold above X mph"):
 
 | Run | Zone / lift | Aspect | Skis best when | Notes |
 |---|---|---|---|---|
-|  |  |  |  |  |
-|  |  |  |  |  |
-|  |  |  |  |  |
-|  |  |  |  |  |
-|  |  |  |  |  |
+| The Burn | Falcon SuperChair |  | powder days; trees hold powder a bit longer | Peak 10 tree skiing, expert only. Reached via Crystal and exits on Upper Lehman back to Falcon. Never groomed in 10 archived reports (research: breckenridge.com Getting Around Breck; theavantski.com; evo; official terrain feed) |
+| Windows | E-Chair |  | powder days | tree run to the right of E-Chair, among the most popular tree runs (research: theavantski.com; evo "less traveled powder stashes") |
+| Devils Crotch | E-Chair |  | powder days | trees to the left of E-Chair (research: theavantski.com) |
+| The Back 9 | E-Chair + 10–15 min hike |  | after a storm, when the gates are open; snow gets fresher the farther out you go | hike-to terrain off the top of E-Chair, open only when conditions allow (research: theavantski.com) |
+| Imperial Bowl | Imperial SuperChair |  | windy powder days; wind keeps it powdery | A forum source calls it "south facing", but the DEM says ~132° SE (Δ 48°), so aspect is left blank. The fall line is "fairly intermediate" for a double black. Imperial opens later and closes earlier (~2:45) than other lifts (research: firsttracksonline 4/4/2011; breckenridge.com; official lift feed) |
+| Horseshoe Bowl | Horseshoe Bowl T-Bar | E | powder days; stayed wintry all morning in early April | "steep and can be deep on powder days". The T-Bar has a strong crosswind and goes on wind hold (research: firsttracksonline 4/4 and 4/7/2011; evo; Summit Daily Feb 2020) |
+| Boundary Chutes | Horseshoe Bowl T-Bar | N | holds winter snow longer than the sunnier bowls | "a north facing pitch through scattered trees" (research: firsttracksonline 4/7/2011) |
+| Whale's Tail | Imperial SuperChair (traverse) |  | spring: the lip softens to near-corn by the second lap | cornice entry. The traverse is exposed to wind (research: firsttracksonline 4/4 and 4/7/2011) |
+| Peak 7 Bowl | Peak 7 Alpine (Imperial + hike/traverse) | E | days after a storm; Peak 7 chutes hold powder longer | Don't ski it in low visibility: whiteouts are common above treeline (research: evo; firsttracksonline 4/4/2011 "east facing … peak 7") |
+| Psychopath | Peak 8 (OSM has only Lower Psychopath; upper Psychopath is off 6-Chair) |  | storm days with poor visibility when the upper mountain is closed | 6-Chair trees and gullies, "famous for soft snow and great trees". Not groomed in 10 archived reports (research: evo; Vail Resorts release Dec 2008; skimag via search; official terrain feed) |
+| Mach 1 | FIVE SuperChair |  | once softened | one of the steepest mogul runs around, a mogul-competition venue. A spring visitor thought it faces south. DEM ~113° SE (research: Colorado Springs Gazette via search; firsttracksonline 4/7/2011) |
+| Dark Rider | Falcon SuperChair |  | spring afternoons, after the lower mountain softens | "spring snow of pleasing consistency". Mustang was heavier the same afternoon (research: firsttracksonline 4/7/2011) |
+| Cimarron | Falcon SuperChair |  | groomer days, early | steep, fun groomer, groomed in 7/7 archived reports (research: firsttracksonline 4/4/2011; PeakRankings "steep groomers off Falcon"; official terrain feed) |
+| Ore Bucket | Freedom SuperChair |  | days after a storm | trees and glades that "can hold some surprisingly fun powder stashes". Never groomed (research: evo; official terrain feed) |
+| Monte Cristo | Freedom SuperChair |  | groomer days | long, cruisy blue, groomed in 9/10 archived reports (research: breckenridge.com Getting Around Breck; official terrain feed) |
 
 General patterns:
 
--
+- Breck's main exposure is east. The DEM agrees: every zone except the north-facing E-Chair face averages NE–SE (research: firsttracksonline 4/4/2011; Wikipedia slope aspects N 20%, S 20%, E 60%, W 0%).
+- In spring, east-facing Breckenridge slopes get soft around noon ("on top by 10, down by 2" as a general rule). Above ~11,500 ft, melt-freeze happened only with some south exposure, and high east faces stayed as wintry as north ones. The lower mountain softened after lunch, and the base was firming again by 3pm (research: Denver Gazette Apr 2024; firsttracksonline 4/7/2011).
+- Wind holds hit the upper lifts first: T-Bar, Imperial, Kensho and Zendo (lower lifts stayed open, Feb 24 2020). Wind can blow in tracks within hours and make powder slabby. The T-Bar has a "vicious crosswind" (research: Summit Daily Feb 2020; firsttracksonline 4/4/2011; PeakRankings).
+- Wind can also keep the south-facing Imperial Bowl, the east-facing Horseshoe Bowl and Peak 7 powdery (research: firsttracksonline 4/4/2011).
+- On storm or flat-light days, ski the trees off 6-Chair, E-Chair or Peak 10. Whiteouts are common above treeline, and the high-alpine bowls are hard to read in flat light (research: evo; PeakRankings).
+- Imperial and the T-Bar bowls stay closed for much of the early season. Imperial opens later and closes earlier than other lifts (research: PeakRankings; breckenridge.com Getting Around Breck).
+- Peak 10 is usually the least crowded area. Its steep groomers (Centennial, Crystal, Doublejack, Cimarron) are groomed almost daily, while its double blacks are ungroomed moguls and trees (research: evo; official terrain feed; snowmagazine).
+- Peaks 7 and 8 are the two areas still open at the end of spring (research: PeakRankings).
+
+## Crested Butte
+
+| Run | Zone / lift | Aspect | Skis best when | Notes |
+|---|---|---|---|---|
+| Banana | Banana, Peel & Forest (Silver Queen / High Lift) | W | sunny afternoons once softened (~noon on); spring corn | "least reliable", rarely covered before Feb (research: FirstTracks 2003; firsttracks 2008 thread; skicb spring tips) |
+| Funnel | Banana, Peel & Forest (Silver Queen / High Lift) | W | afternoon corn in spring | drops west 2,000+ ft (research: FirstTracks 2003; skicb spring tips) |
+| Peel | Banana, Peel & Forest (Silver Queen / High Lift) | W | afternoon corn in spring | west side Extreme Limits (research: FirstTracks 2003; skicb spring tips) |
+| Headwall | The High Lift |  | powder; packed powder holds into April | north exposure per FirstTracks; entered via Halfpipe gully (research: FirstTracks 2003; skicb top-5 steepest) |
+| Big Chute | The High Lift |  | powder; holds snow into April | north exposure per FirstTracks 2003 (research: FirstTracks 2003; OpenSnow guide) |
+| The North Face | North Face Lift |  | powder days (after avalanche control) | wind-scoured; coverage thin in wind-exposed spots (research: OpenSnow guide; CB News 2018) |
+| The Glades | North Face Lift |  | windy or stormy days | more wind-protected than the North Face (research: CB News 2018) |
+| Third Bowl | North Face Lift |  | spring mornings (early sun) | hike in and out; often open only late Feb–Mar (research: skicb spring tips; PeakRankings) |
+| Upper Treasury | East River Express |  | spring mornings | East River softens early (research: skicb spring tips; Freeskier) |
+| Upper Forest Queen | Paradise Express |  | midday on spring days | groomed corduroy (research: skicb spring tips; OpenSnow guide) |
+| Paradise Bowl | Paradise Express |  | midday on spring days | upper Paradise wind-affected (research: skicb spring tips; firsttracks 2008 thread) |
+| Upper International | Silver Queen Express |  | late morning on spring days | winch-cat groomed regularly (research: skicb spring tips) |
+| Rambo | Paradise Express (cat track) |  |  | massive moguls; steepest cut run (research: Denver Gazette 2026; skicb top-5 steepest) |
+| Buckley | West Wall Lift |  | afternoon corn | West Wall groomed intermediate terrain (research: skicb spring tips) |
+
+General patterns:
+
+- Spring order (official): Red Lady and Painter Boy, plus East River/Treasury, first. Then Silver Queen, High Lift and North Face from about 11 am. Paradise Bowl, Canaan and Forest Queen at midday. The west-facing front side (Peel, Flatiron, Funnel, Banana, West Wall) from about 2 pm (https://www.skicb.com/blog/tips-for-spring-skiing-in-crested-butte.aspx).
+- Expert terrain is mostly north-facing and holds packed powder into April. The front side faces west (https://www.firsttracksonline.com/2003/01/02/crested-butte-the-anti-colorado-resort/).
+- Wind: Silver Queen (the only route to the High Lift) and Red Lady have both closed for wind. North Face coverage suffers from wind, and The Glades are the sheltered alternative (CB News 2018/2019).
+- The Extreme Limits T-bars usually open in early-to-mid January and need a deep natural base. In thin years they open in late February. The Peak and Third Bowl are open for only a few weeks (Vail 2019; CB News 2018/2023; PeakRankings).
+- The T-bars may open late on powder mornings because of avalanche control (OpenSnow guide).

@@ -13,6 +13,7 @@ import {
   yesterdayHighAt,
   type AppResortData,
   type DayWeather,
+  type ResortSummary,
   type LonLat,
 } from "@snowline/core";
 import { distanceToRun, nearby, rankAt, scoreDay, zoneScoreAt, type Ranked } from "@/lib/model";
@@ -21,8 +22,10 @@ import { Dial } from "./Dial";
 import { DiffSymbol } from "./DiffSymbol";
 import { HourlyPlan } from "./HourlyPlan";
 import { RunRow } from "./RunList";
+import { ResortPicker } from "./ResortPicker";
 import { RunSheet } from "./RunSheet";
 import { SettingsSheet } from "./SettingsSheet";
+import { WeatherStrip } from "./WeatherStrip";
 
 const MapView = dynamic(() => import("./MapView"), { ssr: false, loading: () => <div className="panel muted">Loading map…</div> });
 
@@ -39,8 +42,10 @@ function skyWords(cloud: number): string {
 }
 
 export function App() {
-  const [resorts, setResorts] = useState<{ id: string; name: string }[]>([]);
+  const [resorts, setResorts] = useState<ResortSummary[]>([]);
   const [resortId, setResortId] = useState<string | null>(null);
+  /** "first": no resort chosen yet, so the picker can't be dismissed. */
+  const [picker, setPicker] = useState<null | "first" | "switch">(null);
   const [dayOffset, setDayOffset] = useState(0);
   /** A demo scenario id instead of the live forecast (useful off-season and for testers). */
   const [demo, setDemo] = useState<string | null>(null);
@@ -64,11 +69,16 @@ export function App() {
   // Boot: prefs, resort list, service worker, queued feedback.
   useEffect(() => {
     setPrefsState(store.prefs());
-    getJson<{ id: string; name: string }[]>("/api/resorts")
+    getJson<ResortSummary[]>("/api/resorts?conditions=1")
       .then(({ value }) => {
         setResorts(value);
-        const saved = store.resort();
-        setResortId(value.find((r) => r.id === saved)?.id ?? value[0]?.id ?? null);
+        // A shared link (?resort=…) wins, then the last resort used on this device.
+        const wanted = new URLSearchParams(window.location.search).get("resort") ?? store.resort();
+        const match = value.find((r) => r.id === wanted);
+        if (match) setResortId(match.id);
+        else if (value.length === 1) setResortId(value[0]!.id);
+        else if (value.length > 1) setPicker("first");
+        else setData({ state: "error", message: "No resorts available" });
       })
       .catch((e: Error) => setData({ state: "error", message: e.message }));
     if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") navigator.serviceWorker.register("/sw.js").catch(() => {});
@@ -86,6 +96,9 @@ export function App() {
   useEffect(() => {
     if (!resortId) return;
     store.setResort(resortId);
+    const url = new URL(window.location.href);
+    url.searchParams.set("resort", resortId);
+    window.history.replaceState(null, "", url);
     setData({ state: "loading" });
     setZoneFilter(null);
     setOpenRun(null);
@@ -157,7 +170,25 @@ export function App() {
   }, [resort, day, hour, prefs]);
 
   if (data.state === "error") return <Centered title="Couldn't load Snowline" detail={data.message} />;
-  if (!resort) return <Centered title="Loading…" />;
+  const pickerEl = picker && (
+    <ResortPicker
+      resorts={resorts}
+      current={resortId}
+      firstVisit={picker === "first"}
+      onPick={(id) => {
+        setPicker(null);
+        setResortId(id);
+      }}
+      onClose={() => setPicker(null)}
+    />
+  );
+  if (!resort)
+    return (
+      <>
+        <Centered title={picker ? "Snowline" : "Loading…"} detail={picker ? "Where the best snow is, hour by hour." : undefined} />
+        {pickerEl}
+      </>
+    );
 
   const { resort: r, zones } = resort;
   const zoneById = new Map(zones.map((z) => [z.id, z]));
@@ -187,22 +218,28 @@ export function App() {
   return (
     <main className="mx-auto grid max-w-[1180px] gap-4">
       <header className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="text-[clamp(28px,6vw,40px)] font-black leading-none tracking-tight" style={{ fontFamily: "var(--font-display)" }}>
-            Snowline
-          </h1>
-          <p className="muted mt-1 text-[14px]">Where the best snow is, hour by hour.</p>
+        <div className="min-w-0">
+          <span className="label">Snowline</span>
+          <button
+            type="button"
+            onClick={() => setPicker("switch")}
+            disabled={resorts.length < 2}
+            className="flex items-center gap-2 text-left"
+            aria-label={`${r.name}. Change resort`}
+            data-testid="resort-button"
+          >
+            <h1 className="text-[clamp(30px,7vw,42px)] font-black leading-none tracking-tight" style={{ fontFamily: "var(--font-display)" }}>
+              {r.name}
+            </h1>
+            {resorts.length > 1 && (
+              <span className="rounded-full border border-[var(--line)] px-3 py-1 text-[14px] font-bold" aria-hidden>
+                Change ▾
+              </span>
+            )}
+          </button>
+          <p className="muted mt-1 text-[14px]">{r.region ? `${r.region} · ` : ""}Where the best snow is, hour by hour.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          {resorts.length > 1 && (
-            <div className="seg" role="group" aria-label="Resort">
-              {resorts.map((x) => (
-                <button key={x.id} type="button" aria-pressed={x.id === resortId} onClick={() => setResortId(x.id)}>
-                  {x.name}
-                </button>
-              ))}
-            </div>
-          )}
           <div className="seg" role="group" aria-label="Day">
             {["Today", "Tomorrow"].map((label, i) => (
               <button
@@ -230,9 +267,9 @@ export function App() {
       {scenario && (
         <section className="panel grid gap-2" style={{ borderColor: "var(--accent)" }} aria-label="Demo day">
           <p className="text-[14px] font-bold">Demo day — made-up weather on the real {resort.resort.name} runs, not today&apos;s forecast.</p>
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Demo weather">
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1" role="group" aria-label="Demo weather">
             {SCENARIOS.map((x) => (
-              <button key={x.id} type="button" className="chip" aria-pressed={demo === x.id} onClick={() => setDemo(x.id)}>
+              <button key={x.id} type="button" className="chip shrink-0" aria-pressed={demo === x.id} onClick={() => setDemo(x.id)}>
                 {x.title}
               </button>
             ))}
@@ -290,10 +327,13 @@ export function App() {
             </div>
             {cond && (
               <p className="mono text-[13.5px]">
-                {skyWords(cond.cloud)} · {cond.baseT}°F base{cond.summitT !== null ? ` / ${cond.summitT}°F top` : ""} · {wx!.newSnowIn}&quot; new · gusts {cond.gust} mph
+                {skyWords(cond.cloud)} · {cond.baseT}°F base{cond.summitT !== null ? ` / ${cond.summitT}°F top` : ""} · {wx!.newSnowIn}&quot; new
+                {wx!.newSnowBaseIn !== undefined && wx!.newSnowBaseIn < wx!.newSnowIn - 0.5 ? ` (${wx!.newSnowBaseIn}" at base)` : ""}
+                {wx!.stormTotalIn && wx!.stormTotalIn > wx!.newSnowIn + 0.5 ? ` · ${wx!.stormTotalIn}" in 3 days` : ""} · gusts {cond.gust} mph
                 {cond.refreeze ? " · overnight refreeze" : ""}
               </p>
             )}
+            {wx && <WeatherStrip resort={r} weather={wx} hour={hour} onHour={setHour} />}
           </section>
 
           {/* Dial + best pick */}
@@ -436,6 +476,7 @@ export function App() {
           onAspect={(deg) => setAspect(store.setAspectFix(r.id, open.id, deg))}
         />
       )}
+      {pickerEl}
       {settings && <SettingsSheet prefs={prefs} resortId={r.id} onPrefs={setPrefs} onClose={() => setSettings(false)} />}
     </main>
   );

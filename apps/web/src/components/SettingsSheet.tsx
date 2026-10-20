@@ -97,9 +97,11 @@ export function SettingsSheet({ prefs, resortId, onPrefs, onClose }: { prefs: Pr
 
         <h3 className="label mt-5">About these scores</h3>
         <p className="muted text-[14px] leading-relaxed">
-          Scores come from the sun on each slope (its aspect and pitch from 10 m terrain data), temperature at the run&apos;s elevation, last night&apos;s refreeze, new
-          snow, grooming, traffic, wind and light, using the Open-Meteo forecast. They&apos;re estimates. Always check the resort&apos;s grooming report, open terrain and
-          avalanche conditions. Run data © OpenStreetMap contributors.
+          Every run is scored every 15 minutes from the Open-Meteo hourly forecast: how much sun its slope is getting (aspect and pitch from 10 m terrain data,
+          cloud cover and forecast sunlight), the temperature at its elevation, last night&apos;s refreeze, new snow overnight and during the day (split into snow or
+          rain by the temperature on that run, so low runs can get rain while the top gets snow), the last three days of storm snow off-piste, grooming, traffic,
+          wind and flat light. They&apos;re estimates. Always check the resort&apos;s grooming report, open terrain and avalanche conditions. Run data ©
+          OpenStreetMap contributors.
         </p>
       </section>
     </>

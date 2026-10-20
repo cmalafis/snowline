@@ -178,3 +178,58 @@ describe("mixed aspect and helpers", () => {
     expect(day).toHaveLength(31);
   });
 });
+
+describe("scenario: storm day, snowing all day", () => {
+  const ctx = buildDayContext(RESORT, scenario("storm"));
+  const trees = scoreRunDay(run("trees", "tree", 0), undefined, ctx);
+  const bumps = scoreRunDay(run("bumps", "bump", 300), undefined, ctx);
+
+  it("adds snow that falls during the day and says so", () => {
+    const late = scoreAt(trees, 14);
+    expect(late.state).toBe("powder");
+    expect(late.reasons.join(" ")).toMatch(/of it since 8:00am/);
+  });
+
+  it("keeps refilling tracks, so open terrain holds up better than on a bluebird powder day", () => {
+    const stormDrop = scoreAt(bumps, 9).score - scoreAt(bumps, 15).score;
+    const powderCtx = buildDayContext(RESORT, scenario("powder"));
+    const pow = scoreRunDay(run("bumps", "bump", 300), undefined, powderCtx);
+    expect(stormDrop).toBeLessThan(scoreAt(pow, 9).score - scoreAt(pow, 15).score);
+  });
+
+  it("favours trees in the storm's flat light", () => {
+    expect(scoreAt(trees, 11).score).toBeGreaterThan(scoreAt(scoreRunDay(run("bowl", "bowl", 0), undefined, ctx), 11).score);
+  });
+});
+
+describe("scenario: warm storm with a snow line", () => {
+  const ctx = buildDayContext(RESORT, scenario("rainline"));
+  const low = scoreRunDay(run("low groomer", "groomer", 300, { topFt: 7800, bottomFt: 7000 }), undefined, ctx);
+  const high = scoreRunDay(run("high groomer", "groomer", 300, { topFt: 10500, bottomFt: 10000 }), undefined, ctx);
+
+  it("rains on low runs and snows on high ones", () => {
+    const l = scoreAt(low, 13);
+    const h = scoreAt(high, 13);
+    expect(l.warnings.join(" ")).toMatch(/Rain below the snow line/);
+    expect(l.reasons).toContain("Raining at this elevation");
+    expect(h.warnings.join(" ")).not.toMatch(/Rain/);
+    expect(h.score).toBeGreaterThan(l.score + 15);
+  });
+});
+
+describe("snow by elevation", () => {
+  it("splits precipitation into snow and rain by the run's temperature", async () => {
+    const { precipAt, newSnowAt } = await import("../src/scoring/weather.ts");
+    const w = scenario("rainline");
+    const p = { ...w.base.hourly[12]!, precipIn: 0.1 };
+    const lowSplit = precipAt(w, p, 6900, 3.5);
+    const highSplit = precipAt(w, p, 10568, 3.5);
+    expect(lowSplit.rainIn).toBeCloseTo(0.1, 6);
+    expect(lowSplit.snowIn).toBe(0);
+    expect(highSplit.rainIn).toBe(0);
+    expect(highSplit.snowIn).toBeGreaterThanOrEqual(1); // 0.1" of water at ~28°F is ~1" of snow
+    expect(newSnowAt(w, 6900)).toBe(0);
+    expect(newSnowAt(w, 10568)).toBe(1);
+    expect(newSnowAt(w, (6900 + 10568) / 2)).toBeCloseTo(0.5, 6);
+  });
+});

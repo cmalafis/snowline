@@ -1,9 +1,11 @@
 {
- "version": "2026-10-19",
- "generatedAt": "2026-10-19T23:26:07.716Z",
+ "version": "2026-10-20",
+ "generatedAt": "2026-10-20T00:04:25.509Z",
  "resort": {
   "id": "steamboat",
   "name": "Steamboat",
+  "region": "Routt County, Colorado",
+  "pass": "Ikon",
   "tz": "America/Denver",
   "openHour": 8.5,
   "closeHour": 16,

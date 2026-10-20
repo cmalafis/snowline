@@ -62,7 +62,8 @@ export async function analyze(resortId: string) {
 
   const runs: Run[] = [];
   for (const r of buildRawRuns(osm.pistes)) {
-    const ov = r.name ? overrides.get(normName(r.name)) : undefined;
+    // "osm:<way id>" targets one way when two runs share a name; otherwise match by run name.
+    const ov = r.osmIds.map((id) => cfg.runOverrides?.[`osm:${id}`]).find(Boolean) ?? (r.name ? overrides.get(normName(r.name)) : undefined);
     if (ov?.exclude) continue;
     const t = analyzeRun(r, dem, proj, acfg);
     if (!t) {

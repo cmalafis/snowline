@@ -28,7 +28,25 @@ export interface ScoringConfig {
   /** Without a refreeze: heavy when warmer than this and energy above `heavy`. */
   winterHeavyF: number;
 
-  powder: { minIn: number; fullIn: number; maxBonus: number; trackRateGroomer: number; trackRateOpen: number; trackRateTree: number; maxDecay: number };
+  /**
+   * Powder: bonus scales with new snow up to `fullIn`, decays with tracking. Snow falling during the day refills
+   * tracks (`refillHoursPerIn` hours of tracking erased per inch), and off-piste keeps `settledShare` of older storm snow.
+   */
+  powder: {
+    minIn: number;
+    fullIn: number;
+    maxBonus: number;
+    trackRateGroomer: number;
+    trackRateOpen: number;
+    trackRateTree: number;
+    maxDecay: number;
+    refillHoursPerIn: number;
+    settledShare: number;
+  };
+  /** New snow is counted from this hour (the overnight report); snow after it accumulates during the day. */
+  snowReportHour: number;
+  /** Penalty while rain is falling on a run, and the rate (in/hr) that counts. */
+  rain: { minInPerHour: number; penalty: number };
   flatLightCloud: number;
   wind: { breezyGustMph: number; holdGustMph: number };
   coldF: number;
@@ -55,7 +73,19 @@ export const DEFAULT_SCORING: ScoringConfig = {
   surface: { softening: 0.65, prime: 1.3, heavy: 2.9, slush: 4.2 },
   winterHeavyF: 34,
 
-  powder: { minIn: 4, fullIn: 14, maxBonus: 40, trackRateGroomer: 0.2, trackRateOpen: 0.12, trackRateTree: 0.06, maxDecay: 0.85 },
+  powder: {
+    minIn: 4,
+    fullIn: 14,
+    maxBonus: 40,
+    trackRateGroomer: 0.2,
+    trackRateOpen: 0.12,
+    trackRateTree: 0.06,
+    maxDecay: 0.85,
+    refillHoursPerIn: 0.5,
+    settledShare: 0.35,
+  },
+  snowReportHour: 8,
+  rain: { minInPerHour: 0.01, penalty: 22 },
   flatLightCloud: 80,
   wind: { breezyGustMph: 25, holdGustMph: 35 },
   coldF: 10,

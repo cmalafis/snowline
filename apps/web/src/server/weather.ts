@@ -1,7 +1,16 @@
 import "server-only";
 import { addDays, todayIn, type AppResort, type DayWeather, type HourlyPoint, type StationWeather } from "@snowline/core";
 
-const HOURLY = ["temperature_2m", "cloud_cover", "wind_speed_10m", "wind_gusts_10m", "snowfall", "direct_normal_irradiance", "diffuse_radiation"] as const;
+const HOURLY = [
+  "temperature_2m",
+  "cloud_cover",
+  "wind_speed_10m",
+  "wind_gusts_10m",
+  "snowfall",
+  "precipitation",
+  "direct_normal_irradiance",
+  "diffuse_radiation",
+] as const;
 const TTL_MS = 30 * 60 * 1000;
 const M_PER_FT = 0.3048;
 
@@ -12,7 +21,7 @@ interface OpenMeteoLocation {
 
 const cache = new Map<string, { at: number; value: Promise<OpenMeteoLocation[]> }>();
 
-/** Hourly forecast for base and summit (yesterday through tomorrow), downscaled by Open-Meteo to each elevation. */
+/** Hourly forecast for base and summit (three days back through tomorrow), downscaled by Open-Meteo to each elevation. */
 async function fetchForecast(resort: AppResort): Promise<OpenMeteoLocation[]> {
   const key = resort.id;
   const hit = cache.get(key);
@@ -26,7 +35,7 @@ async function fetchForecast(resort: AppResort): Promise<OpenMeteoLocation[]> {
     wind_speed_unit: "mph",
     precipitation_unit: "inch",
     timezone: resort.tz,
-    past_days: "1",
+    past_days: "3",
     forecast_days: "3",
   });
   const value = fetch(`https://api.open-meteo.com/v1/forecast?${params}`, { cache: "no-store", signal: AbortSignal.timeout(15_000) }).then(async (res) => {
@@ -38,6 +47,7 @@ async function fetchForecast(resort: AppResort): Promise<OpenMeteoLocation[]> {
   return value;
 }
 
+const round1 = (x: number) => Math.round(x * 10) / 10;
 const num = (v: string | number | null | undefined, fallback = 0) => (typeof v === "number" && Number.isFinite(v) ? v : fallback);
 
 function station(loc: OpenMeteoLocation, date: string, elevationFt: number): StationWeather {
@@ -53,6 +63,7 @@ function station(loc: OpenMeteoLocation, date: string, elevationFt: number): Sta
     windMph: value("wind_speed_10m", i),
     gustMph: value("wind_gusts_10m", i),
     snowfallIn: value("snowfall", i),
+    precipIn: value("precipitation", i),
     directNormal: value("direct_normal_irradiance", i),
     diffuse: value("diffuse_radiation", i),
   }));
@@ -63,10 +74,10 @@ function station(loc: OpenMeteoLocation, date: string, elevationFt: number): Sta
   return { elevationFt, hourly, yesterdayHighF: yHigh, overnightLowF: Math.min(...night) };
 }
 
-/** Snow in the 24 hours up to 8am on `date`, at the summit. */
-function newSnow(loc: OpenMeteoLocation, date: string): number {
+/** Snow in the `days` × 24 hours up to 8am on `date`. */
+function snowTotal(loc: OpenMeteoLocation, date: string, days: number): number {
   const times = loc.hourly.time as string[];
-  const from = `${addDays(date, -1)}T08:00`;
+  const from = `${addDays(date, -days)}T08:00`;
   const to = `${date}T08:00`;
   return times.reduce((s, t, i) => (t > from && t <= to ? s + num(loc.hourly.snowfall[i]) : s), 0);
 }
@@ -82,7 +93,9 @@ export async function dayWeather(resort: AppResort, date?: string): Promise<DayW
     date: d,
     base: station(base, d, resort.base.elevationFt),
     summit: station(summit, d, resort.summit.elevationFt),
-    newSnowIn: Math.round(newSnow(summit, d) * 10) / 10,
+    newSnowIn: round1(snowTotal(summit, d, 1)),
+    newSnowBaseIn: round1(snowTotal(base, d, 1)),
+    stormTotalIn: round1(snowTotal(summit, d, 3)),
     source: "open-meteo",
   };
 }

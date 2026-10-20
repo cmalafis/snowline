@@ -1,6 +1,6 @@
 # Snowline
 
-Where the best snow is, hour by hour, at a given resort. See `SNOWLINE_BUILD.md` for the full brief.
+Where the best snow is, hour by hour, at a given resort. Resorts so far: Steamboat, Breckenridge and Crested Butte. See `SNOWLINE_BUILD.md` for the full brief.
 
 ## Layout
 
@@ -49,7 +49,9 @@ The validation script also runs an independent DEM sanity check. Lifts climb rou
 
 1. Find the ski area's OSM element (`landuse=winter_sports`) and create `config/resorts/<id>.json` (copy `steamboat.json`).
 2. Run `npm run pipeline -- <id>`. Read the zone table, then set `zoneOverrides`, `zoneNames` and `ignoreLifts` (transport gondolas) until the zones match how people talk about the mountain.
-3. Add the owner's notes to `reference/local-knowledge.md` and run `npm run validate -- <id>`.
+3. Research the resort (official map and site, guides) and set `runOverrides` for zones, run types (`groomer|bump|tree|bowl`), `groomed` defaults, difficulty fixes and terrain-park exclusions. When two runs share a name, target one with `"osm:<way id>"` as the key. Write the sources up in `reference/research/<id>.md`.
+4. Add notes to `reference/local-knowledge.md` and run `npm run validate -- <id>`.
+5. Set `region` and `pass` for the resort picker, then redeploy. The app lists every resort in `data/` that has an `app.json`.
 
 No code changes should be needed. If one is, it's a bug in the pipeline.
 

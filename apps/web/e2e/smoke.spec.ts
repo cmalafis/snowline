@@ -1,8 +1,20 @@
 import { expect, test } from "@playwright/test";
 
 test("ranks runs, scrubs time, opens a run, and works offline", async ({ page, context }) => {
+  // First visit: choose a resort.
   await page.goto("/");
+  const cards = page.getByTestId("resort-card");
+  await expect(cards.first()).toBeVisible({ timeout: 30_000 });
+  expect(await cards.count()).toBeGreaterThanOrEqual(3);
+  await cards.filter({ hasText: "Steamboat" }).click();
   const rows = page.getByTestId("run-row");
+  await expect(rows.first()).toBeVisible({ timeout: 30_000 });
+  await expect(page).toHaveURL(/resort=steamboat/);
+
+  // Switch resorts from the header.
+  await page.getByTestId("resort-button").click();
+  await cards.filter({ hasText: "Breckenridge" }).click();
+  await expect(page.getByRole("heading", { name: "Breckenridge" })).toBeVisible();
   await expect(rows.first()).toBeVisible({ timeout: 30_000 });
 
   // A demo spring day: what's best at 9am isn't what's best at 3pm.

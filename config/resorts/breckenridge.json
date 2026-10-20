@@ -1,0 +1,567 @@
+{
+  "id": "breckenridge",
+  "name": "Breckenridge",
+  "region": "Summit County, Colorado",
+  "pass": "Epic",
+  "tz": "America/Denver",
+  "osm": {
+    "skiArea": {
+      "type": "way",
+      "id": 531005985
+    },
+    "bbox": [
+      39.445,
+      -106.12,
+      39.505,
+      -106.04
+    ]
+  },
+  "base": {
+    "lat": 39.4754,
+    "lon": -106.0479,
+    "elevationFt": 9600
+  },
+  "summit": {
+    "lat": 39.4727,
+    "lon": -106.1013,
+    "elevationFt": 12840
+  },
+  "treelineFt": 11600,
+  "ridgeProximityFt": 400,
+  "hours": {
+    "open": 8.5,
+    "close": 16
+  },
+  "ignoreLifts": [
+    "BreckConnect Gondola"
+  ],
+  "zoneOverrides": {
+    "Kensho SuperChair": "peak-6",
+    "Zendo Chair": "peak-6",
+    "Independence SuperChair": "peak-7",
+    "Freedom Superchair": "peak-7",
+    "Colorado SuperChair": "peak-8",
+    "Rocky Mountain SuperChair": "peak-8",
+    "Rip's Ride": "peak-8",
+    "FIVE SuperChair": "peak-8",
+    "Peak 8 SuperConnect Lower": "peak-8",
+    "Peak 8 SuperConnect Upper": "peak-8",
+    "Snowflake": "peak-8",
+    "Trygve's Platter": "peak-8",
+    "6-Chair": "back-bowls",
+    "Horseshoe Bowl T-Bar": "t-bar",
+    "Imperial SuperChair": "imperial",
+    "QuickSilver SuperChair": "peak-9",
+    "Beaver Run SuperChair": "peak-9",
+    "Mercury SuperChair": "peak-9",
+    "C-Chair": "peak-9",
+    "A-Chair": "peak-9",
+    "Camelback Platter": "peak-9",
+    "El Dorado Platter": "peak-9",
+    "E-Chair": "north-face",
+    "Falcon SuperChair": "peak-10"
+  },
+  "zoneNames": {
+    "peak-6": "Peak 6",
+    "peak-7": "Peak 7",
+    "peak-7-alpine": "Peak 7 Alpine",
+    "peak-8": "Peak 8",
+    "back-bowls": "Back Bowls (6-Chair)",
+    "t-bar": "T-Bar Bowls",
+    "imperial": "Imperial",
+    "peak-9": "Peak 9",
+    "north-face": "Peak 9 North Face (E-Chair)",
+    "peak-10": "Peak 10"
+  },
+  "runOverrides": {
+    "Freeway Terrain Park & Pipe": {
+      "exclude": true
+    },
+    "Park Lane Terrain Park": {
+      "exclude": true
+    },
+    "Xanadu": {
+      "zone": "peak-6"
+    },
+    "Wanderlust": {
+      "zone": "peak-6"
+    },
+    "Delirium": {
+      "zone": "peak-6"
+    },
+    "Whiskey River": {
+      "zone": "peak-6"
+    },
+    "Peak 6 Parkway": {
+      "zone": "peak-7"
+    },
+    "Art's Bowl": {
+      "zone": "peak-7-alpine",
+      "type": "bowl",
+      "groomed": false
+    },
+    "c.j.'s": {
+      "zone": "peak-7-alpine",
+      "type": "bowl",
+      "groomed": false
+    },
+    "Debbie's Alley": {
+      "zone": "peak-7-alpine",
+      "type": "bowl",
+      "groomed": false
+    },
+    "magic carpet": {
+      "zone": "peak-7-alpine",
+      "type": "bowl",
+      "groomed": false
+    },
+    "Peak 7 Bowl": {
+      "zone": "peak-7-alpine",
+      "type": "bowl",
+      "groomed": false
+    },
+    "The Dunes": {
+      "zone": "peak-7-alpine",
+      "type": "bowl",
+      "groomed": false
+    },
+    "vertigo": {
+      "zone": "peak-7-alpine",
+      "type": "bowl",
+      "groomed": false
+    },
+    "y chute": {
+      "zone": "peak-7-alpine",
+      "type": "bowl",
+      "groomed": false
+    },
+    "joker": {
+      "zone": "t-bar",
+      "type": "bowl",
+      "groomed": false
+    },
+    "king": {
+      "zone": "t-bar",
+      "type": "bowl",
+      "groomed": false
+    },
+    "queen": {
+      "zone": "t-bar",
+      "type": "bowl",
+      "groomed": false
+    },
+    "Alpine Alley": {
+      "zone": "t-bar"
+    },
+    "Double Barrel": {
+      "zone": "back-bowls",
+      "groomed": false
+    },
+    "Columbine": {
+      "zone": "peak-8"
+    },
+    "Lower Boneyard": {
+      "zone": "peak-8"
+    },
+    "needles eye": {
+      "zone": "north-face",
+      "groomed": false
+    },
+    "Sundown Access": {
+      "zone": "peak-9",
+      "groomed": false
+    },
+    "Flapjack": {
+      "zone": "peak-10",
+      "groomed": true
+    },
+    "awakening": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "behold": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "breathless": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "chi": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "contact": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "e.s.p": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "echo": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "epiphany": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "felicity": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "foresight": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Irie": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "liberation": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "rapture": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "respite": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "sanctuary": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "savor": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "subline": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "unbound": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "whiff": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "yugen": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "wonderland": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Beyond Bowl": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Serenity Bowl": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Six Senses": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "South col.": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Elysian Fields": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "9 Lives": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "Easy Street": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "George's Thumb": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Imperial Bowl": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "lake chutes": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Snow White": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Wacky's Chute": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "Whale's Tail": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Zoot Chute": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "crazy Ivan 1": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "crazy Ivan 2": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "dwarves": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "vertical cornice": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "zero chute": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Imperial Ridge": {
+      "groomed": true
+    },
+    "Horseshoe Bowl": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "cucumber #1": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "cucumber #2": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Brill's thrill": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Eagles nest": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "lulu": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "mule": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "outlaw": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "rustler": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "stampede": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Boundary Chutes": {
+      "type": "tree",
+      "groomed": false
+    },
+    "Pika": {
+      "groomed": true
+    },
+    "Ptarmigan": {
+      "groomed": false
+    },
+    "White Crown": {
+      "groomed": false
+    },
+    "Forget Me Not": {
+      "groomed": false
+    },
+    "Devils Crotch": {
+      "type": "tree",
+      "groomed": false
+    },
+    "Windows": {
+      "type": "tree",
+      "groomed": false
+    },
+    "Ore Bucket": {
+      "type": "tree",
+      "groomed": false
+    },
+    "The Burn": {
+      "type": "tree",
+      "groomed": false
+    },
+    "Mach 1": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Little Johnny": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Peerless": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Blackhawk": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Bronc": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Corsair": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Dark Rider": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Elan": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Grits": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Mustang": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Quiver": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Trinity": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Spitfire": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Centennial": {
+      "groomed": true
+    },
+    "Cimarron": {
+      "groomed": true
+    },
+    "Crystal": {
+      "groomed": true
+    },
+    "Doublejack": {
+      "groomed": true
+    },
+    "Duke's Run": {
+      "groomed": true
+    },
+    "Frosty's Freeway": {
+      "groomed": true
+    },
+    "Lower Forget-Me-Not": {
+      "groomed": true,
+      "difficulty": "advanced"
+    },
+    "Volunteer": {
+      "groomed": true
+    },
+    "Pathfinder": {
+      "groomed": false
+    },
+    "Swan City": {
+      "groomed": false
+    },
+    "Upper Lehman": {
+      "groomed": false
+    },
+    "Briar Rose": {
+      "groomed": false
+    },
+    "Lower Cashier": {
+      "groomed": false,
+      "difficulty": "intermediate"
+    },
+    "Peak 8 Transfer": {
+      "groomed": false
+    },
+    "Daydream": {
+      "groomed": false
+    },
+    "Nirvana": {
+      "groomed": false
+    },
+    "Euphoria": {
+      "groomed": false
+    },
+    "Lower Lehman": {
+      "groomed": false
+    },
+    "Springmeier": {
+      "difficulty": "intermediate"
+    },
+    "Columbia": {
+      "difficulty": "intermediate"
+    },
+    "Upper 4 O'Clock": {
+      "difficulty": "intermediate"
+    },
+    "osm:128941978": {
+      "exclude": true
+    }
+  },
+  "nameAliases": {
+    "Snowbirds": "Middle Snowbird",
+    "Snowbird": "Middle Snowbird",
+    "Deja Vu": "D\u00e9j\u00e0 Vu",
+    "Sublime": "subline",
+    "Cucumber Bowl": "cucumber #1",
+    "Powerline": "Power line",
+    "Four O'Clock": "4 O'Clock",
+    "Lower Four O'Clock": "Lower 4 O'Clock",
+    "Upper Four O'Clock": "Upper 4 O'Clock",
+    "Y-Chute": "y chute",
+    "Back 9": "The Back 9",
+    "Needle's Eye": "needles eye",
+    "Devil's Crotch": "Devils Crotch"
+  }
+}

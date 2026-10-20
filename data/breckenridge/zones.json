@@ -1,0 +1,140 @@
+[
+ {
+  "id": "back-bowls",
+  "name": "Back Bowls (6-Chair)",
+  "lifts": [
+   "6-Chair"
+  ],
+  "aspectDeg": 120.87355441259263,
+  "topFt": 12064,
+  "bottomFt": 11005,
+  "windExposed": true,
+  "runCount": 15
+ },
+ {
+  "id": "imperial",
+  "name": "Imperial",
+  "lifts": [
+   "Imperial SuperChair"
+  ],
+  "aspectDeg": 92.86819004583708,
+  "topFt": 12841,
+  "bottomFt": 11855,
+  "windExposed": true,
+  "runCount": 16
+ },
+ {
+  "id": "peak-10",
+  "name": "Peak 10",
+  "lifts": [
+   "Falcon SuperChair",
+   "Falcon SuperChair"
+  ],
+  "aspectDeg": 51.234521368362834,
+  "topFt": 11597,
+  "bottomFt": 10228,
+  "windExposed": false,
+  "runCount": 18
+ },
+ {
+  "id": "peak-6",
+  "name": "Peak 6",
+  "lifts": [
+   "Zendo Chair",
+   "Kensho SuperChair"
+  ],
+  "aspectDeg": 66.11642681934734,
+  "topFt": 12579,
+  "bottomFt": 10009,
+  "windExposed": true,
+  "runCount": 41
+ },
+ {
+  "id": "peak-7",
+  "name": "Peak 7",
+  "lifts": [
+   "Independence SuperChair",
+   "Freedom Superchair"
+  ],
+  "aspectDeg": 64.51849984752664,
+  "topFt": 11395,
+  "bottomFt": 10008,
+  "windExposed": false,
+  "runCount": 10
+ },
+ {
+  "id": "peak-7-alpine",
+  "name": "Peak 7 Alpine",
+  "lifts": [],
+  "aspectDeg": 53.20160958828666,
+  "topFt": 12648,
+  "bottomFt": 11244,
+  "windExposed": true,
+  "runCount": 8
+ },
+ {
+  "id": "peak-8",
+  "name": "Peak 8",
+  "lifts": [
+   "Colorado SuperChair",
+   "Peak 8 SuperConnect Lower",
+   "Snowflake",
+   "Rip's Ride",
+   "Rocky Mountain SuperChair",
+   "Snowflake",
+   "Trygve's Platter",
+   "FIVE SuperChair",
+   "Peak 8 SuperConnect Upper"
+  ],
+  "aspectDeg": 72.68053142824965,
+  "topFt": 11272,
+  "bottomFt": 9572,
+  "windExposed": false,
+  "runCount": 38
+ },
+ {
+  "id": "peak-9",
+  "name": "Peak 9",
+  "lifts": [
+   "Mercury SuperChair",
+   "C-Chair",
+   "Beaver Run SuperChair",
+   "QuickSilver SuperChair",
+   "A-Chair",
+   "Beaver Run SuperChair",
+   "QuickSilver SuperChair",
+   "El Dorado Platter",
+   "Camelback Platter"
+  ],
+  "aspectDeg": 64.17121051208824,
+  "topFt": 11542,
+  "bottomFt": 9577,
+  "windExposed": false,
+  "runCount": 34
+ },
+ {
+  "id": "north-face",
+  "name": "Peak 9 North Face (E-Chair)",
+  "lifts": [
+   "E-Chair"
+  ],
+  "aspectDeg": 349.1088705469413,
+  "topFt": 11541,
+  "bottomFt": 10385,
+  "windExposed": false,
+  "runCount": 13
+ },
+ {
+  "id": "t-bar",
+  "name": "T-Bar Bowls",
+  "lifts": [
+   "Horseshoe Bowl T-Bar",
+   "Horseshoe Bowl T-Bar"
+  ],
+  "aspectDeg": 69.68049425848773,
+  "topFt": 12153,
+  "bottomFt": 11222,
+  "windExposed": true,
+  "runCount": 19
+ }
+]
