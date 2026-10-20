@@ -25,6 +25,7 @@ export interface AppZone {
   bottomFt: number;
   windExposed: boolean;
   lifts: string[];
+  springHeadStartHours?: number;
 }
 
 export interface AppLift {

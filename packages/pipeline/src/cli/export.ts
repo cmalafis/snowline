@@ -105,7 +105,16 @@ export async function exportApp(resortId: string) {
       summit: cfg.summit,
       bounds: [Math.min(...lons), Math.min(...lats), Math.max(...lons), Math.max(...lats)].map((n) => round(n, 4)) as [number, number, number, number],
     },
-    zones: zones.map((z) => ({ id: z.id, name: z.name, aspectDeg: Math.round(z.aspectDeg), topFt: z.topFt, bottomFt: z.bottomFt, windExposed: z.windExposed, lifts: z.lifts })),
+    zones: zones.map((z) => ({
+      id: z.id,
+      name: z.name,
+      aspectDeg: Math.round(z.aspectDeg),
+      topFt: z.topFt,
+      bottomFt: z.bottomFt,
+      windExposed: z.windExposed,
+      lifts: z.lifts,
+      ...(z.springHeadStartHours ? { springHeadStartHours: z.springHeadStartHours } : {}),
+    })),
     lifts: lifts.filter((l) => l.kind !== "station").map((l) => ({ name: l.name, kind: l.kind, line: l.coordinates.map(roundLL) })),
     runs: appRuns,
   };

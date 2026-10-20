@@ -221,5 +221,55 @@
     "Peak": "The Peak",
     "North Face": "The North Face",
     "Teo 2": "Teo 2 Traverse"
+  },
+  "zoneTuning": {
+    "red-lady": {
+      "springHeadStartHours": 1.0,
+      "source": "https://www.skicb.com/blog/tips-for-spring-skiing-in-crested-butte.aspx (\"Morning: Red Lady and Painter Boy warm first\"); the low base area warms before its west aspect gets sun"
+    },
+    "painter-boy": {
+      "springHeadStartHours": 0.5,
+      "source": "https://www.skicb.com/blog/tips-for-spring-skiing-in-crested-butte.aspx (\"Morning: Red Lady and Painter Boy warm first\")"
+    }
+  },
+  "validation": {
+    "springOrder": [
+      {
+        "label": "Morning (warm first)",
+        "zones": [
+          "red-lady",
+          "painter-boy",
+          "east-river"
+        ],
+        "hour": 10.5,
+        "source": "https://www.skicb.com/blog/tips-for-spring-skiing-in-crested-butte.aspx"
+      },
+      {
+        "label": "About 11am",
+        "zones": [
+          "silver-queen",
+          "high-lift",
+          "north-face"
+        ],
+        "hour": 11,
+        "source": "https://www.skicb.com/blog/tips-for-spring-skiing-in-crested-butte.aspx"
+      },
+      {
+        "label": "Midday",
+        "zones": [
+          "paradise"
+        ],
+        "hour": 12,
+        "source": "https://www.skicb.com/blog/tips-for-spring-skiing-in-crested-butte.aspx"
+      },
+      {
+        "label": "Afternoon (west-facing front side, from ~2pm)",
+        "zones": [
+          "banana-peel"
+        ],
+        "hour": 14,
+        "source": "https://www.skicb.com/blog/tips-for-spring-skiing-in-crested-butte.aspx"
+      }
+    ]
   }
 }

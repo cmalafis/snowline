@@ -40,8 +40,15 @@ export interface ResortConfig {
   >;
   /** Alternative name -> canonical OSM run name, used when matching user notes. */
   nameAliases?: Record<string, string>;
+  /** Zone id -> calibration from local knowledge, each with its source. */
+  zoneTuning?: Record<string, { springHeadStartHours?: number; source?: string }>;
   /** Reference values the validation script compares against, alongside reference/local-knowledge.md. */
   validation?: {
+    /**
+     * Published spring softening order: on the bluebird-spring scenario, each group's zones should go prime
+     * (median run) within `toleranceHours` of `hour`, and groups in this order.
+     */
+    springOrder?: { label: string; zones: string[]; hour: number; source?: string }[];
     /** Zone id -> expected mean aspect in degrees. */
     referenceZoneAspects?: Record<string, number>;
     referenceZoneSource?: string;
@@ -119,4 +126,5 @@ export interface Zone {
   bottomFt: number;
   windExposed: boolean;
   runCount: number;
+  springHeadStartHours?: number;
 }

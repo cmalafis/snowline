@@ -166,3 +166,18 @@ General patterns:
 - Wind: Silver Queen (the only route to the High Lift) and Red Lady have both closed for wind. North Face coverage suffers from wind, and The Glades are the sheltered alternative (CB News 2018/2019).
 - The Extreme Limits T-bars usually open in early-to-mid January and need a deep natural base. In thin years they open in late February. The Peak and Third Bowl are open for only a few weeks (Vail 2019; CB News 2018/2023; PeakRankings).
 - The T-bars may open late on powder mornings because of avalanche control (OpenSnow guide).
+
+## Spring calibration (scoring model)
+
+`npm run validate -- crested-butte` replays the bluebird-spring scenario on CB's runs and compares with the official order in `validation.springOrder`:
+
+| Published (skicb.com) | Zone | Model goes prime |
+|---|---|---|
+| Morning, "warm first" | Red Lady, Painter Boy, East River | 10:30 for all three ✓ |
+| About 11am | High Lift, North Face | 11:00 ✓ |
+| About 11am | Silver Queen | ~12:15 ✗ |
+| Midday | Paradise | ~11:30 ✓ |
+| Afternoon, from ~2pm | Banana / Peel | ~12:45 ✗ (still the last zone) |
+
+- **Red Lady and Painter Boy** face west-northwest and south-southwest and are low-angle. Sun and forecast temperature alone have them softening 30–75 minutes after the east- and north-facing upper terrain. A sweep of physically plausible levers (warm-air heating, the sun's temperature gate, refreeze depth by elevation) couldn't change that without breaking the aspect order elsewhere. So `zoneTuning` gives them a sourced head start (1.0 h and 0.5 h): the warm base area is microclimate the forecast can't see.
+- **Silver Queen and Banana/Peel** miss under every global setting tried, so they're left as known gaps rather than tuned away. For Banana the likely fix is horizon shading (build phase 2): the peak should block its late-morning sun.

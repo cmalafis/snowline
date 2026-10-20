@@ -8,13 +8,15 @@ export interface ScoringConfig {
   dayEndHour: number;
   lapseFPer1000Ft: number;
 
-  // Softening energy: radiation counts fully above `sunFullF`, not at all below `sunMinF`;
-  // air above `meltF` softens snow even in shade, reaching `shadeRate` per hour at `meltF + meltRangeF`.
+  // Softening energy: radiation counts fully above `sunFullF`, not at all below `sunMinF`.
   sunMinF: number;
   sunFullF: number;
+  /**
+   * Heat exchanged with the air, per °F away from `meltF`, per hour: warm air softens snow even in the shade
+   * (why low base-area terrain goes first in spring), cold air takes energy back. Energy never drops below zero.
+   */
   meltF: number;
-  meltRangeF: number;
-  shadeRate: number;
+  airRatePerF: number;
   /** Absorbed radiation above this counts as "in the sun". */
   inSunThreshold: number;
 
@@ -22,7 +24,12 @@ export interface ScoringConfig {
    * A slope refreezes only if it melted yesterday: yesterday's high and last night's low at its elevation, plus
    * enough sun over a full day (today's total energy stands in for yesterday's) that its surface went wet.
    */
-  refreeze: { yesterdayHighAboveF: number; overnightLowBelowF: number; cancelledBySnowIn: number; minDailyEnergy: number };
+  refreeze: {
+    yesterdayHighAboveF: number;
+    overnightLowBelowF: number;
+    cancelledBySnowIn: number;
+    minDailyEnergy: number;
+  };
   /** Energy (normalised kWh/m²) at which each surface stage begins after a refreeze. */
   surface: { softening: number; prime: number; heavy: number; slush: number };
   /** Without a refreeze: heavy when warmer than this and energy above `heavy`. */
@@ -65,12 +72,13 @@ export const DEFAULT_SCORING: ScoringConfig = {
   sunMinF: 15,
   sunFullF: 26,
   meltF: 32,
-  meltRangeF: 8,
-  shadeRate: 0.05,
+  airRatePerF: 0.02,
   inSunThreshold: 0.25,
 
-  refreeze: { yesterdayHighAboveF: 34, overnightLowBelowF: 28, cancelledBySnowIn: 3, minDailyEnergy: 2.9 },
-  surface: { softening: 0.65, prime: 1.3, heavy: 2.9, slush: 4.2 },
+  // Calibrated against Steamboat's aspect order and Crested Butte's published spring timing
+  // (packages/pipeline/test/calibration.test.ts).
+  refreeze: { yesterdayHighAboveF: 34, overnightLowBelowF: 28, cancelledBySnowIn: 3, minDailyEnergy: 2.3 },
+  surface: { softening: 0.52, prime: 1.04, heavy: 2.32, slush: 3.36 },
   winterHeavyF: 34,
 
   powder: {

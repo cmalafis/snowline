@@ -50,7 +50,7 @@ The validation script also runs an independent DEM sanity check. Lifts climb rou
 1. Find the ski area's OSM element (`landuse=winter_sports`) and create `config/resorts/<id>.json` (copy `steamboat.json`).
 2. Run `npm run pipeline -- <id>`. Read the zone table, then set `zoneOverrides`, `zoneNames` and `ignoreLifts` (transport gondolas) until the zones match how people talk about the mountain.
 3. Research the resort (official map and site, guides) and set `runOverrides` for zones, run types (`groomer|bump|tree|bowl`), `groomed` defaults, difficulty fixes and terrain-park exclusions. When two runs share a name, target one with `"osm:<way id>"` as the key. Write the sources up in `reference/research/<id>.md`.
-4. Add notes to `reference/local-knowledge.md` and run `npm run validate -- <id>`.
+4. Add notes to `reference/local-knowledge.md` and run `npm run validate -- <id>`. If the resort publishes a spring softening order, add it as `validation.springOrder`; validate replays the spring scenario against it. When local knowledge says a zone softens earlier than sun and temperature explain (e.g. a warm base area), set `zoneTuning.<zone>.springHeadStartHours` with its source.
 5. Set `region` and `pass` for the resort picker, then redeploy. The app lists every resort in `data/` that has an `app.json`.
 
 No code changes should be needed. If one is, it's a bug in the pipeline.

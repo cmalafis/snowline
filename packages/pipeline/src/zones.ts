@@ -84,6 +84,7 @@ export function buildZones(runs: ZoneMember[], lifts: Lift[], cfg: ResortConfig)
       bottomFt: Math.min(...members.map((r) => r.bottomFt)),
       windExposed: topFt >= cfg.treelineFt || cfg.summit.elevationFt - topFt <= cfg.ridgeProximityFt,
       runCount: members.length,
+      ...(cfg.zoneTuning?.[id]?.springHeadStartHours ? { springHeadStartHours: cfg.zoneTuning[id].springHeadStartHours } : {}),
     });
   }
   return zones.sort((a, b) => a.name.localeCompare(b.name));

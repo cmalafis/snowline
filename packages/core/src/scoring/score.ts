@@ -37,6 +37,11 @@ export interface ScoringRun {
 export interface ScoringZone {
   id: string;
   windExposed: boolean;
+  /**
+   * Hours earlier this zone softens than sun and forecast temperature alone predict: microclimate the forecast
+   * can't see (e.g. a warm base area), set from local knowledge in resort config.
+   */
+  springHeadStartHours?: number;
 }
 
 export interface ResortClock {
@@ -129,8 +134,8 @@ function timeline(ctx: DayContext, midFt: number, aspectDeg: number, pitchDeg: n
     if (since === null && a >= cfg.inSunThreshold && sun.elevationDeg > 0) since = hour;
     sunSince.push(since);
     const sunFactor = clamp((t - cfg.sunMinF) / (cfg.sunFullF - cfg.sunMinF));
-    const shade = clamp((t - cfg.meltF) / cfg.meltRangeF) * cfg.shadeRate;
-    e += (a * sunFactor + shade) * cfg.stepHours;
+    const air = (t - cfg.meltF) * cfg.airRatePerF;
+    e = Math.max(0, e + (a * sunFactor + air) * cfg.stepHours);
   }
   return { absorbed, energy, sunSince, dailyEnergy: e };
 }
@@ -163,7 +168,9 @@ function scorePart(
   const hour = ctx.steps[i]!.hour;
   const midFt = (run.topFt + run.bottomFt) / 2;
   const T = temperatureAt(weather, hour, midFt, cfg.lapseFPer1000Ft);
-  const E = tl.energy[i]!;
+  // A zone that local knowledge says softens early runs ahead on the energy timeline (sun and temperature stay real).
+  const ahead = Math.round((zone?.springHeadStartHours ?? 0) / cfg.stepHours);
+  const E = tl.energy[Math.min(tl.energy.length - 1, i + ahead)]!;
   const absorbed = tl.absorbed[i]!;
   const inSun = absorbed >= cfg.inSunThreshold;
   const sunSince = tl.sunSince[i]!;

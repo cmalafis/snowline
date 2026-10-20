@@ -55,7 +55,8 @@
   "topFt": 10142,
   "bottomFt": 9504,
   "windExposed": false,
-  "runCount": 5
+  "runCount": 5,
+  "springHeadStartHours": 0.5
  },
  {
   "id": "paradise",
@@ -94,7 +95,8 @@
   "topFt": 10352,
   "bottomFt": 9279,
   "windExposed": false,
-  "runCount": 30
+  "runCount": 30,
+  "springHeadStartHours": 1
  },
  {
   "id": "silver-queen",

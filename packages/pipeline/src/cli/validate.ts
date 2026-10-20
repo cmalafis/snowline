@@ -1,7 +1,8 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { angleDiff, bearingDeg, circularMean, compassPoint, pointSegmentDist, type Lift, type LonLat, type Run, type Zone } from "@snowline/core";
+import { angleDiff, bearingDeg, circularMean, compassPoint, fmtTime, pointSegmentDist, type AppResortData, type Lift, type LonLat, type Run, type Zone } from "@snowline/core";
 import { compare, parseLocalKnowledge } from "../localKnowledge.ts";
+import { springOrderCheck } from "../calibration.ts";
 import { textTable } from "./print-table.ts";
 import { ROOT, dataPath, loadResort, readJson } from "../resort.ts";
 
@@ -88,9 +89,29 @@ export async function validate(resortId: string) {
   const checked = liftRows.filter((r) => r.diff !== null);
   console.log(`  ${checked.filter((r) => r.diff! <= 30).length}/${checked.length} lifts within 30°`);
 
+  const springDisagreements: string[] = [];
+  const order = cfg.validation?.springOrder;
+  if (order?.length) {
+    const app = await readJson<AppResortData>(dataPath(cfg.id, "app.json"));
+    const { groups, ordered } = springOrderCheck(app, order);
+    console.log("\nSpring softening order (bluebird-spring scenario) vs published guidance\n");
+    console.log(
+      textTable(
+        ["Published", "Expected", "Zone", "Model: goes prime", "Verdict"],
+        groups.flatMap((g) =>
+          g.zones.map((z) => [g.label, fmtTime(g.expectedHour), zones.find((x) => x.id === z.id)?.name ?? z.id, z.onset === null ? "never" : fmtTime(z.onset), z.ok ? "ok" : "OFF"]),
+        ),
+      ),
+    );
+    console.log(`  groups in published order: ${ordered ? "yes" : "NO"}`);
+    for (const g of groups) for (const z of g.zones) if (!z.ok) springDisagreements.push(`spring: ${z.id} goes prime ${z.onset === null ? "never" : fmtTime(z.onset)}, published ${g.label} (${fmtTime(g.expectedHour)})`);
+    if (!ordered) springDisagreements.push("spring: zones out of published order");
+  }
+
   const all = [
     ...results.filter((c) => c.disagreements.length).map((c) => `${c.row.run}: ${c.disagreements.join("; ")}`),
     ...zoneDisagreements.map((d) => `zone ${d}`),
+    ...springDisagreements,
   ];
   console.log(`\nDisagreements (${all.length}):`);
   for (const d of all) console.log(`  - ${d}`);
