@@ -78,6 +78,8 @@ export interface RunScore {
   label: Label;
   state: SurfaceState;
   reasons: string[];
+  /** Whether each reason pushed the score up or down (for colouring). */
+  tones: ("up" | "down" | "flat")[];
   warnings: string[];
   inSun: boolean;
   /** Hour the slope came into the sun today, if it has. */
@@ -375,13 +377,16 @@ export function scoreRunDay(run: ScoringRun, zone: ScoringZone | undefined, ctx:
     const results = parts.map((p, k) => scorePart(run, zone, ctx, i, p.aspectDeg, timelines[k]!, groomedToday));
     const lead = results[main]!;
     const score = Math.round(results.reduce((t, r, k) => t + r.score * parts[k]!.weight, 0) / total);
-    const reasons = [...lead.why].sort((a, b) => Math.abs(b.w) - Math.abs(a.w)).slice(0, 2).map((w) => w.txt);
+    const top = [...lead.why].sort((a, b) => Math.abs(b.w) - Math.abs(a.w)).slice(0, 2);
+    const reasons = top.map((w) => w.txt);
+    const tones = top.map((w) => (w.w >= 1 ? "up" : w.w <= -1 ? "down" : "flat") as RunScore["tones"][number]);
     out.push({
       hour,
       score,
       label: labelFor(score, ctx.cfg),
       state: lead.state,
       reasons,
+      tones,
       warnings: lead.warnings,
       inSun: lead.inSun,
       sunSince: lead.sunSince,

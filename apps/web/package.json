@@ -11,8 +11,9 @@
     "e2e": "playwright test"
   },
   "dependencies": {
-    "@fontsource/overpass": "^5.3.0",
-    "@fontsource/overpass-mono": "^5.3.0",
+    "@fontsource/red-hat-display": "^5.3.0",
+    "@fontsource/red-hat-mono": "^5.3.0",
+    "@fontsource/red-hat-text": "^5.3.0",
     "@snowline/core": "*",
     "maplibre-gl": "^6.15.0",
     "next": "^16.4.2",

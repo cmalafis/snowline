@@ -6,7 +6,7 @@ import type { Prefs } from "@/lib/storage";
 const HOURS = [9, 10, 11, 12, 13, 14, 15];
 const HEAT = [8.5, 9.5, 10.5, 11.5, 12.5, 13.5, 14.5, 15.5];
 
-/** Best zone each hour, its best run and why, with a small heat strip for that zone across the day. */
+/** Best zone each hour, its best run and why, with a heat strip for that zone across the day. */
 export function HourlyPlan({
   data,
   day,
@@ -32,45 +32,68 @@ export function HourlyPlan({
     return { h, zone, s: best.s, top };
   }).filter((r) => r !== null);
 
-  if (!rows.length) return <p className="muted">No runs match your terrain and difficulty picks.</p>;
-
   return (
-    <ol className="grid">
-      {rows.map(({ h, zone, s, top }) => {
-        const current = hour >= h && hour < h + 1;
-        return (
-          <li key={h}>
-            <button
-              type="button"
-              onClick={() => onPick(h, zone.id)}
-              className="grid w-full items-center gap-3 border-t border-[var(--line)] py-3 text-left first:border-t-0"
-              style={{
-                gridTemplateColumns: "58px minmax(0,1fr) 88px",
-                background: current ? "linear-gradient(90deg, color-mix(in srgb, var(--accent) 14%, transparent), transparent)" : undefined,
-              }}
-              aria-label={`${fmtTime(h)}: ${zone.name}, ${top?.run.name ?? ""}`}
-            >
-              <span className="mono font-semibold">{fmtTime(h).replace(":00", "")}</span>
-              <span className="min-w-0">
-                <span className="block font-extrabold leading-tight" style={{ fontFamily: "var(--font-display)" }}>
-                  {zone.name} <span className={`tag t-${tier(s)}`}>{s}</span>
-                </span>
-                {top && (
-                  <span className="muted block text-[13.5px] leading-snug">
-                    {top.run.name}: {top.s.reasons[0] ?? ""}
+    <section className="card" aria-label="Hour by hour">
+      <h2 className="card-title">Your day, hour by hour</h2>
+      <div className="card-sub" style={{ marginBottom: 8 }}>
+        Best zone each hour, and how it holds up across the day
+      </div>
+      {!rows.length ? (
+        <p className="subtle" style={{ margin: 0 }}>
+          No runs match your terrain and difficulty settings.
+        </p>
+      ) : (
+        <ol style={{ margin: "0 -16px", padding: 0, listStyle: "none" }}>
+          {rows.map(({ h, zone, s, top }) => {
+            const current = hour >= h && hour < h + 1;
+            return (
+              <li key={h} style={{ borderTop: "1px solid var(--pf-border)" }}>
+                <button
+                  type="button"
+                  onClick={() => onPick(h, zone.id)}
+                  aria-current={current ? "time" : undefined}
+                  aria-label={`${fmtTime(h)}: ${zone.name}, score ${s}${top ? `, ${top.run.name}` : ""}`}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "56px minmax(0,1fr) 84px",
+                    gap: 10,
+                    alignItems: "center",
+                    width: "100%",
+                    padding: "10px 16px",
+                    border: 0,
+                    background: current ? "var(--pf-now)" : "transparent",
+                    textAlign: "left",
+                    cursor: "pointer",
+                  }}
+                >
+                  <span className="mono" style={{ fontWeight: 500 }}>
+                    {fmtTime(h).replace(":00", "")}
                   </span>
-                )}
-              </span>
-              <span className="grid gap-[2px]" style={{ gridTemplateColumns: `repeat(${HEAT.length}, 1fr)` }} aria-hidden>
-                {HEAT.map((hh) => {
-                  const v = zoneScoreAt(data, day, zone.id, hh, prefs) ?? 0;
-                  return <i key={hh} className="block h-5 rounded-[3px]" style={{ background: TIER_COLOR[tier(v)], opacity: 0.25 + 0.75 * Math.max(0, Math.min(1, (v - 35) / 55)) }} title={`${fmtTime(hh)}: ${v}`} />;
-                })}
-              </span>
-            </button>
-          </li>
-        );
-      })}
-    </ol>
+                  <span style={{ minWidth: 0 }}>
+                    <span style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                      <span style={{ fontWeight: 700, lineHeight: 1.25 }}>{zone.name}</span>
+                      <span className={`label label-sm label-${tier(s)}`} style={{ fontWeight: 700 }}>
+                        {s}
+                      </span>
+                    </span>
+                    {top && (
+                      <span className="subtle" style={{ display: "block", fontSize: 13, lineHeight: 1.35 }}>
+                        {top.run.name}: {top.s.reasons[0] ?? ""}
+                      </span>
+                    )}
+                  </span>
+                  <span style={{ display: "grid", gridTemplateColumns: `repeat(${HEAT.length}, minmax(0,1fr))`, gap: 2 }} aria-hidden="true">
+                    {HEAT.map((hh) => {
+                      const v = zoneScoreAt(data, day, zone.id, hh, prefs) ?? 0;
+                      return <i key={hh} style={{ height: 22, borderRadius: 3, background: TIER_COLOR[tier(v)], opacity: 0.3 + 0.7 * Math.max(0, Math.min(1, (v - 35) / 55)) }} />;
+                    })}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      )}
+    </section>
   );
 }

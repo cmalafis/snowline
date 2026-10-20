@@ -1,59 +1,75 @@
 "use client";
 import { useEffect, useState } from "react";
-import { compassPoint, fmtTime, scoreAt, type AppRun, type AppZone, type RunScore } from "@snowline/core";
-import { TIER_COLOR, coverLabel, tier } from "@/lib/model";
+import { compassPoint, exposureOf, fmtTime, scoreAt, type AppRun, type AppZone, type RunScore } from "@snowline/core";
+import { tier } from "@/lib/model";
 import { sendFeedback, store } from "@/lib/storage";
 import { DiffSymbol } from "./DiffSymbol";
+import { CoverLabel } from "./RunList";
+import { Alert, Icon, ScoreLabel } from "./ui";
 
 const POINTS = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"] as const;
+const DIRECTION: Record<string, string> = { N: "North", NE: "Northeast", E: "East", SE: "Southeast", S: "South", SW: "Southwest", W: "West", NW: "Northwest" };
+const TONE_ICON = { up: { name: "check", color: "var(--pf-prime)" }, down: { name: "warning", color: "var(--pf-skip)" }, flat: { name: "info", color: "var(--pf-subtle)" } } as const;
 
-function ProfileChart({ profile }: { profile: [number, number][] }) {
-  if (profile.length < 2) return <p className="muted text-sm">No elevation profile for area runs (glades and bowls).</p>;
-  const W = 320;
-  const H = 110;
-  const xs = profile.map((p) => p[0]);
-  const ys = profile.map((p) => p[1]);
-  const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
-  const sx = (x: number) => 4 + ((x - x0) / (x1 - x0 || 1)) * (W - 8);
-  const sy = (y: number) => 10 + (1 - (y - y0) / (y1 - y0 || 1)) * (H - 26);
-  const line = profile.map(([x, y], i) => `${i ? "L" : "M"}${sx(x).toFixed(1)} ${sy(y).toFixed(1)}`).join(" ");
+function ScoreChart({ day, hour }: { day: RunScore[]; hour: number }) {
+  const W = 326;
+  const H = 150;
+  const h0 = day[0]!.hour;
+  const h1 = day[day.length - 1]!.hour;
+  const lo = Math.max(0, Math.min(50, Math.floor((Math.min(...day.map((s) => s.score)) - 5) / 10) * 10));
+  const sx = (h: number) => 16 + ((h - h0) / (h1 - h0)) * (W - 32);
+  const sy = (s: number) => 120 - ((s - lo) / (100 - lo)) * 110;
+  const line = day.map((s, i) => `${i ? "L" : "M"}${sx(s.hour).toFixed(1)} ${sy(s.score).toFixed(1)}`).join(" ");
+  const now = scoreAt(day, hour);
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={`Elevation profile from ${Math.round(y1)} to ${Math.round(y0)} feet`}>
-      <path d={`${line} L${sx(x1)} ${H - 16} L${sx(x0)} ${H - 16}Z`} fill="var(--shade)" opacity=".18" />
-      <path d={line} fill="none" stroke="var(--shade)" strokeWidth="2.5" />
-      <text x="4" y="9" fontSize="10" fill="var(--muted)" className="mono">
-        {Math.round(y1).toLocaleString()} ft
-      </text>
-      <text x={W - 4} y={H - 3} fontSize="10" fill="var(--muted)" textAnchor="end" className="mono">
-        {Math.round(y0).toLocaleString()} ft · {(x1 / 1609).toFixed(2)} mi
-      </text>
+    <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "auto" }} role="img" aria-label={`Score through the day, from ${day[0]!.score} at opening to ${day[day.length - 1]!.score} at closing; ${now.score} at ${fmtTime(hour)}`}>
+      {[
+        [80, "Prime 80", "var(--l-prime-bd)", "var(--l-prime-fg)"],
+        [65, "Good 65", "var(--l-good-bd)", "var(--l-good-fg)"],
+      ]
+        .filter(([v]) => (v as number) > lo)
+        .map(([v, text, stroke, fill]) => (
+          <g key={v as number}>
+            <line x1="16" x2={W - 16} y1={sy(v as number)} y2={sy(v as number)} stroke={stroke as string} strokeDasharray="4 4" />
+            <text x={W - 16} y={sy(v as number) - 5} textAnchor="end" fontSize="11" fill={fill as string} fontFamily="var(--font-body)">
+              {text}
+            </text>
+          </g>
+        ))}
+      <path d={`${line} L${sx(h1)} 120 L${sx(h0)} 120 Z`} fill={`var(--pf-${tier(now.score)})`} opacity="0.12" />
+      <path d={line} fill="none" stroke={`var(--pf-${tier(now.score)})`} strokeWidth="2.5" strokeLinejoin="round" />
+      <line x1={sx(hour)} x2={sx(hour)} y1="8" y2="120" stroke="var(--pf-primary)" strokeWidth="2" />
+      <circle cx={sx(hour)} cy={sy(now.score)} r="5" fill="var(--pf-primary)" stroke="var(--pf-surface)" strokeWidth="2" />
+      <line x1="16" x2={W - 16} y1="120" y2="120" stroke="var(--pf-border-strong)" />
+      {[9, 11, 13, 15].map((h) => (
+        <text key={h} x={sx(h)} y="140" textAnchor="middle" fontSize="11" fill="var(--pf-subtle)" fontFamily="var(--font-mono)">
+          {fmtTime(h).replace(":00", "")}
+        </text>
+      ))}
     </svg>
   );
 }
 
-function ScoreChart({ day, hour }: { day: RunScore[]; hour: number }) {
-  const W = 320;
-  const H = 120;
-  const h0 = day[0]!.hour;
-  const h1 = day[day.length - 1]!.hour;
-  const sx = (h: number) => 6 + ((h - h0) / (h1 - h0)) * (W - 12);
-  const sy = (s: number) => 8 + (1 - s / 100) * (H - 28);
-  const line = day.map((s, i) => `${i ? "L" : "M"}${sx(s.hour).toFixed(1)} ${sy(s.score).toFixed(1)}`).join(" ");
+function ProfileChart({ profile }: { profile: [number, number][] }) {
+  if (profile.length < 2) return <p className="subtle" style={{ margin: 0, fontSize: 14 }}>No elevation profile for area runs (glades and bowls).</p>;
+  const W = 326;
+  const H = 130;
+  const xs = profile.map((p) => p[0]);
+  const ys = profile.map((p) => p[1]);
+  const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+  const sx = (x: number) => 16 + ((x - x0) / (x1 - x0 || 1)) * (W - 32);
+  const sy = (y: number) => 18 + (1 - (y - y0) / (y1 - y0 || 1)) * 86;
+  const line = profile.map(([x, y], i) => `${i ? "L" : "M"}${sx(x).toFixed(1)} ${sy(y).toFixed(1)}`).join(" ");
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Score through the day">
-      {[80, 65, 50].map((v) => (
-        <line key={v} x1="6" x2={W - 6} y1={sy(v)} y2={sy(v)} stroke="var(--line)" strokeDasharray="3 4" />
-      ))}
-      {day.map((s) => (
-        <rect key={s.hour} x={sx(s.hour) - 4} y={sy(s.score)} width="8" height={H - 20 - sy(s.score)} fill={TIER_COLOR[tier(s.score)]} opacity=".25" />
-      ))}
-      <path d={line} fill="none" stroke="var(--ink)" strokeWidth="2.5" />
-      <line x1={sx(hour)} x2={sx(hour)} y1="4" y2={H - 20} stroke="var(--accent)" strokeWidth="2" />
-      {[9, 11, 13, 15].map((h) => (
-        <text key={h} x={sx(h)} y={H - 4} fontSize="10" textAnchor="middle" fill="var(--muted)" className="mono">
-          {fmtTime(h).replace(":00", "")}
-        </text>
-      ))}
+    <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "auto" }} role="img" aria-label={`Drops from ${Math.round(y1).toLocaleString()} to ${Math.round(y0).toLocaleString()} feet over ${(x1 / 1609).toFixed(2)} miles`}>
+      <path d={`${line} L${sx(x1)} 110 L${sx(x0)} 110 Z`} fill="var(--pf-good)" opacity="0.12" />
+      <path d={line} fill="none" stroke="var(--pf-good)" strokeWidth="2.5" strokeLinejoin="round" />
+      <text x="20" y="12" fontSize="11" fill="var(--pf-subtle)" fontFamily="var(--font-mono)">
+        {Math.round(y1).toLocaleString()} ft
+      </text>
+      <text x={W - 16} y={H - 4} textAnchor="end" fontSize="11" fill="var(--pf-subtle)" fontFamily="var(--font-mono)">
+        {Math.round(y0).toLocaleString()} ft · {(x1 / 1609).toFixed(2)} mi
+      </text>
     </svg>
   );
 }
@@ -74,6 +90,7 @@ export function RunSheet({
   onFavorite,
   onGroomed,
   onAspect,
+  onShowMap,
 }: {
   resortId: string;
   date: string;
@@ -90,10 +107,13 @@ export function RunSheet({
   onFavorite: () => void;
   onGroomed: (v: boolean | null) => void;
   onAspect: (deg: number | null) => void;
+  onShowMap: () => void;
 }) {
   const s = scoreAt(day, hour);
   const best = day.reduce((m, x) => (x.score > m.score ? x : m));
-  const [rated, setRated] = useState<number | null>(() => store.ratings().find((r) => r.runId === run.id && r.date === date)?.rating ?? null);
+  const previous = store.ratings().find((r) => r.runId === run.id && r.date === date)?.rating ?? null;
+  const [rating, setRating] = useState<number | null>(previous);
+  const [sent, setSent] = useState<null | "sent" | "queued">(previous ? "sent" : null);
   const [editAspect, setEditAspect] = useState(false);
 
   useEffect(() => {
@@ -102,131 +122,201 @@ export function RunSheet({
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  const rate = (n: number) => {
-    setRated(n);
-    store.addRating({ resort: resortId, runId: run.id, runName: run.name, date, hour, predicted: s.score, rating: n, at: new Date().toISOString() });
-    void sendFeedback({ kind: "rating", resort: resortId, runId: run.id, runName: run.name, date, hour, predicted: s.score, rating: n });
+  const send = async () => {
+    if (!rating) return;
+    store.addRating({ resort: resortId, runId: run.id, runName: run.name, date, hour, predicted: s.score, rating, at: new Date().toISOString() });
+    const ok = await sendFeedback({ kind: "rating", resort: resortId, runId: run.id, runName: run.name, date, hour, predicted: s.score, rating });
+    setSent(ok ? "sent" : "queued");
   };
 
   const shownAspect = aspectFix ?? run.aspectDeg;
+  const facts: [string, string][] = [
+    ["Tree cover", run.canopyPct !== undefined ? `${run.canopyPct}% canopy on the run, ${run.shelterPct}% around it` : "No canopy data; estimated from the run type"],
+    [
+      "Faces",
+      `${DIRECTION[compassPoint(shownAspect)]} (${shownAspect}°)${aspectFix !== undefined ? ", your correction" : ""}${run.mixedAspect && run.parts ? `; mixed: ${run.parts.map((p) => `${compassPoint(p.aspectDeg)} ${Math.round(p.weight * 100)}%`).join(", ")}` : ""}`,
+    ],
+    ["Pitch", `${run.pitchDeg.toFixed(1)}°`],
+    ["Elevation", `${run.topFt.toLocaleString()} → ${run.bottomFt.toLocaleString()} ft`],
+    ["Temperature", `${s.tempF}°F at ${fmtTime(hour)}`],
+  ];
 
   return (
     <>
       <div className="sheet-backdrop" onClick={onClose} aria-hidden />
       <section className="sheet" role="dialog" aria-modal="true" aria-label={run.name}>
-        <div className="mx-auto mb-2 h-1.5 w-10 rounded-full bg-[var(--line)]" aria-hidden />
-        <header className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <h2 className="flex items-center gap-2 text-[24px] font-black leading-tight" style={{ fontFamily: "var(--font-display)" }}>
-              <DiffSymbol d={run.difficulty} size={22} />
-              {run.name}
-            </h2>
-            <p className="mono muted text-[13px]">
-              {zone?.name ?? "—"} · {run.topFt.toLocaleString()}→{run.bottomFt.toLocaleString()} ft · {run.pitchDeg.toFixed(0)}° pitch
-            </p>
+        <div className="sheet-head">
+          <div className="grabber" aria-hidden />
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+            <div style={{ minWidth: 0 }}>
+              <div className="subtle" style={{ fontSize: 14 }}>
+                {zone?.name ?? "—"}
+              </div>
+              <h2 className="display" style={{ margin: 0, display: "flex", alignItems: "center", gap: 10, fontSize: 28, lineHeight: 1.15 }}>
+                <DiffSymbol d={run.difficulty} size={22} />
+                {run.name}
+              </h2>
+            </div>
+            <button type="button" className="btn-icon" onClick={onClose} aria-label="Close">
+              <Icon name="close" />
+            </button>
           </div>
-          <button type="button" className="btn" onClick={onClose} aria-label="Close">
-            ✕
-          </button>
-        </header>
-
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          <span className={`tag t-${tier(s.score)}`} style={{ fontSize: 13 }}>
-            {s.label} {s.score}
-          </span>
-          <span className="muted text-sm">
-            at {fmtTime(hour)} · best around {fmtTime(best.hour)} ({best.score})
-          </span>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", marginTop: 8 }}>
+            <ScoreLabel score={s.score} label={s.label} />
+            <span className="label label-neutral">
+              Best around {fmtTime(best.hour)} ({best.score})
+            </span>
+            <CoverLabel run={run} treelineFt={treelineFt} />
+          </div>
+          <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+            <button type="button" className="btn btn-secondary" style={{ flex: 1 }} onClick={onFavorite} aria-pressed={favorite}>
+              <Icon name={favorite ? "starFilled" : "star"} size={18} />
+              {favorite ? "Favorite" : "Add favorite"}
+            </button>
+            <button type="button" className="btn btn-secondary" style={{ flex: 1 }} onClick={onShowMap}>
+              <Icon name="map" size={18} />
+              On the map
+            </button>
+          </div>
         </div>
-        <ul className="mt-2 grid gap-1">
-          {s.reasons.map((r) => (
-            <li key={r}>{r}</li>
-          ))}
+
+        <div className="sheet-body">
           {s.warnings.map((w) => (
-            <li key={w} className="font-bold" style={{ color: "var(--bad)" }}>
-              ⚠ {w}
-            </li>
+            <Alert key={w} variant="warning" title={w}>
+              {/lift holds/i.test(w) && exposureOf(run, treelineFt) < 0.5
+                ? "This run is in the trees, so it skis well once you're on it. Getting up may take a wait."
+                : undefined}
+            </Alert>
           ))}
-        </ul>
 
-        <h3 className="label mt-4">Score through the day</h3>
-        <ScoreChart day={day} hour={hour} />
+          <section className="card" aria-label={`Why it scores ${s.score}`}>
+            <h3 className="card-title" style={{ marginBottom: 8 }}>
+              Why it scores {s.score} at {fmtTime(hour)}
+            </h3>
+            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+              {s.reasons.map((r, i) => {
+                const tone = TONE_ICON[s.tones[i] ?? "flat"];
+                return (
+                  <li key={r} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                    <Icon name={tone.name} style={{ color: tone.color, marginTop: 2 }} />
+                    {r}
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
 
-        <h3 className="label mt-3">Elevation profile</h3>
-        <ProfileChart profile={run.profile} />
+          <section className="card" aria-label="Score through the day">
+            <h3 className="card-title">Score through the day</h3>
+            <div className="card-sub" style={{ marginBottom: 8 }}>
+              Best around {fmtTime(best.hour)}; the blue line is the time you&apos;re looking at
+            </div>
+            <ScoreChart day={day} hour={hour} />
+          </section>
 
-        <h3 className="label mt-3">Tree cover</h3>
-        <p className="text-[15px]">
-          <b>{coverLabel(run, treelineFt)}</b>
-          {run.canopyPct !== undefined
-            ? ` · ${run.canopyPct}% canopy on the run, ${run.shelterPct}% around it. Trees block wind, give definition in flat light, keep powder longer and shade the snow.`
-            : " · no canopy data; estimated from the run type."}
-        </p>
-
-        <h3 className="label mt-3">Slope</h3>
-        <p className="text-[15px]">
-          Faces <b>{compassPoint(shownAspect)}</b> ({shownAspect}°){aspectFix !== undefined ? " — your correction" : ""}
-          {run.mixedAspect && run.parts ? ` · mixed: ${run.parts.map((p) => `${compassPoint(p.aspectDeg)} ${Math.round(p.weight * 100)}%`).join(", ")}` : ""}
-        </p>
-
-        <div className="mt-4 grid gap-2 sm:grid-cols-2">
-          <button type="button" className="btn" onClick={onFavorite} aria-pressed={favorite}>
-            {favorite ? "★ Favourite" : "☆ Add to favourites"}
-          </button>
-          <button
-            type="button"
-            className="btn"
-            aria-pressed={groomedOverride}
-            onClick={() => {
-              const next = !groomedToday;
-              onGroomed(next);
-              void sendFeedback({ kind: "correction", resort: resortId, runId: run.id, runName: run.name, date, groomed: next });
-            }}
-          >
-            {groomedToday ? "Groomed today ✓ (tap if not)" : "Not groomed today (tap if it was)"}
-          </button>
-          <button type="button" className="btn" onClick={() => setEditAspect((v) => !v)} aria-expanded={editAspect}>
-            Faces a different way?
-          </button>
-          {groomedOverride && (
-            <button type="button" className="linkbtn" onClick={() => onGroomed(null)}>
-              Reset grooming to default
-            </button>
-          )}
-        </div>
-        {editAspect && (
-          <div className="mt-2 grid grid-cols-4 gap-2" role="group" aria-label="Which way does it face?">
-            {POINTS.map((p, i) => (
-              <button
-                key={p}
-                type="button"
-                className="chip"
-                aria-pressed={aspectFix !== undefined && compassPoint(aspectFix) === p}
-                onClick={() => {
-                  onAspect(i * 45);
-                  void sendFeedback({ kind: "correction", resort: resortId, runId: run.id, runName: run.name, aspect: i * 45 });
-                }}
-              >
-                {p}
+          <section className="card" aria-label="On this run">
+            <h3 className="card-title" style={{ marginBottom: 4 }}>
+              On this run
+            </h3>
+            <dl className="dl">
+              {facts.map(([term, value]) => (
+                <div key={term}>
+                  <dt>{term}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+              <div>
+                <dt>Groomed today</dt>
+                <dd>
+                  <label style={{ display: "inline-flex", alignItems: "center", gap: 10, minHeight: 44, cursor: "pointer" }}>
+                    <input
+                      type="checkbox"
+                      role="switch"
+                      checked={groomedToday}
+                      onChange={(e) => {
+                        onGroomed(e.target.checked);
+                        void sendFeedback({ kind: "correction", resort: resortId, runId: run.id, runName: run.name, date, groomed: e.target.checked });
+                      }}
+                      style={{ width: 44, height: 24, accentColor: "var(--pf-primary)", margin: 0 }}
+                    />
+                    {groomedToday ? "Yes" : "No"}
+                    {groomedOverride ? " (your report)" : ""}
+                  </label>
+                </dd>
+              </div>
+            </dl>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <button type="button" className="btn btn-link" onClick={() => setEditAspect((v) => !v)} aria-expanded={editAspect}>
+                Faces a different way? Correct it
               </button>
-            ))}
-            {aspectFix !== undefined && (
-              <button type="button" className="linkbtn col-span-4 justify-self-start" onClick={() => onAspect(null)}>
-                Use the computed aspect ({compassPoint(run.aspectDeg)})
-              </button>
+              {groomedOverride && (
+                <button type="button" className="btn btn-link" onClick={() => onGroomed(null)}>
+                  Reset grooming
+                </button>
+              )}
+            </div>
+            {editAspect && (
+              <div role="group" aria-label="Which way does it face?" style={{ display: "grid", gridTemplateColumns: "repeat(4, minmax(0,1fr))", gap: 8, marginTop: 4 }}>
+                {POINTS.map((p, i) => (
+                  <button
+                    key={p}
+                    type="button"
+                    className="filter-btn"
+                    style={{ justifyContent: "center" }}
+                    aria-pressed={aspectFix !== undefined && compassPoint(aspectFix) === p}
+                    onClick={() => {
+                      onAspect(i * 45);
+                      void sendFeedback({ kind: "correction", resort: resortId, runId: run.id, runName: run.name, aspect: i * 45 });
+                    }}
+                  >
+                    {p}
+                  </button>
+                ))}
+                {aspectFix !== undefined && (
+                  <button type="button" className="btn btn-link" style={{ gridColumn: "1 / -1", justifySelf: "start" }} onClick={() => onAspect(null)}>
+                    Use the computed aspect ({compassPoint(run.aspectDeg)})
+                  </button>
+                )}
+              </div>
             )}
-          </div>
-        )}
+          </section>
 
-        <h3 className="label mt-5">How did it ski?</h3>
-        <div className="mt-1 grid grid-cols-5 gap-2" role="group" aria-label="Rate this run from 1 to 5">
-          {[1, 2, 3, 4, 5].map((n) => (
-            <button key={n} type="button" className="chip" aria-pressed={rated === n} onClick={() => rate(n)}>
-              {n}
+          <section className="card" aria-label="Elevation profile">
+            <h3 className="card-title" style={{ marginBottom: 8 }}>
+              Elevation profile
+            </h3>
+            <ProfileChart profile={run.profile} />
+          </section>
+
+          <section className="card" aria-label="How did it ski?" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <h3 className="card-title">How did it ski?</h3>
+            <div className="card-sub">Rate it after your run. It&apos;s sent with the predicted score to calibrate the model.</div>
+            <div className="toggle-group" role="group" aria-label="Rating from 1 to 5">
+              {[1, 2, 3, 4, 5].map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  aria-pressed={rating === n}
+                  onClick={() => {
+                    setRating(n);
+                    setSent(null);
+                  }}
+                  style={{ fontWeight: 700, minHeight: 48 }}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
+            <div className="subtle" style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: -4 }}>
+              <span>Awful</span>
+              <span>Perfect</span>
+            </div>
+            <button type="button" className="btn btn-primary" disabled={!rating || sent === "sent"} onClick={send}>
+              {sent === "sent" ? "Thanks, rating sent" : "Send rating"}
             </button>
-          ))}
+            {sent === "queued" && <div className="card-sub">Saved. It&apos;ll send when you have signal.</div>}
+          </section>
         </div>
-        <p className="muted mt-1 text-[13px]">{rated ? "Thanks! Your rating helps calibrate the model." : "1 = awful, 5 = perfect. Sent with the predicted score."}</p>
       </section>
     </>
   );

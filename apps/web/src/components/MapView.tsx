@@ -6,7 +6,7 @@ import { scoreAt, type AppResortData } from "@snowline/core";
 import { tier, type ScoredDay } from "@/lib/model";
 
 const STYLE = "https://tiles.openfreemap.org/styles/liberty";
-const COLORS = { prime: "#1d8a52", good: "#1b63c0", fair: "#d29409", skip: "#b23a2e" } as const;
+const COLORS = { prime: "#3d7317", good: "#0066cc", fair: "#dca614", skip: "#b1380b" } as const;
 
 function runFeatures(data: AppResortData, day: ScoredDay, hour: number, visible: Set<string>) {
   return {
@@ -116,10 +116,10 @@ export default function MapView({
   }, [data, day, hour, visible]);
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-[var(--line)]" style={{ height: "62dvh", minHeight: 360 }}>
+    <div className="relative overflow-hidden" style={{ height: "62dvh", minHeight: 360, borderRadius: 16, border: "1px solid var(--pf-border)" }}>
       {/* Inline style: maplibre-gl.css sets position: relative on the container, which would beat a utility class. */}
       <div ref={el} style={{ position: "absolute", inset: 0 }} />
-      <div className="pointer-events-none absolute bottom-2 left-2 flex gap-2 rounded-lg bg-[var(--surface)] px-2 py-1 text-[12px] font-bold shadow">
+      <div className="pointer-events-none absolute bottom-2 left-2 flex gap-2 px-2 py-1 text-[12px] font-bold shadow" style={{ background: "var(--pf-surface)", borderRadius: 999 }}>
         {(["prime", "good", "fair", "skip"] as const).map((t) => (
           <span key={t} className="flex items-center gap-1">
             <i className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: COLORS[t] }} />

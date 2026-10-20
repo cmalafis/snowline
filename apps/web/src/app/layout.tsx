@@ -1,18 +1,19 @@
 import type { Metadata, Viewport } from "next";
 // Fonts are bundled from npm (@fontsource) so builds never need the network.
-import "@fontsource/overpass/latin-400.css";
-import "@fontsource/overpass/latin-600.css";
-import "@fontsource/overpass/latin-800.css";
-import "@fontsource/overpass/latin-900.css";
-import "@fontsource/overpass-mono/latin-400.css";
-import "@fontsource/overpass-mono/latin-600.css";
+import "@fontsource/red-hat-display/latin-500.css";
+import "@fontsource/red-hat-display/latin-700.css";
+import "@fontsource/red-hat-text/latin-400.css";
+import "@fontsource/red-hat-text/latin-500.css";
+import "@fontsource/red-hat-text/latin-700.css";
+import "@fontsource/red-hat-mono/latin-400.css";
+import "@fontsource/red-hat-mono/latin-500.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Snowline",
   description: "Where the best snow is, hour by hour: runs ranked by sun, slope aspect, temperature and grooming.",
   applicationName: "Snowline",
-  appleWebApp: { capable: true, title: "Snowline", statusBarStyle: "black-translucent" },
+  appleWebApp: { capable: true, title: "Snowline", statusBarStyle: "default" },
   formatDetection: { telephone: false },
 };
 
@@ -21,8 +22,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#EEF3F6" },
-    { media: "(prefers-color-scheme: dark)", color: "#0B161D" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#292929" },
   ],
 };
 

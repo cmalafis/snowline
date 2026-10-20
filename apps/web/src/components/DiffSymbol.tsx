@@ -17,30 +17,30 @@ export function DiffSymbol({ d, size = 20 }: { d: Difficulty; size?: number }) {
   if (d === "novice" || d === "easy")
     return (
       <svg {...common}>
-        <circle cx="9" cy="9" r="7" fill="var(--green)" />
+        <circle cx="9" cy="9" r="7" fill="var(--pf-prime)" />
       </svg>
     );
   if (d === "intermediate")
     return (
       <svg {...common}>
-        <rect x="2.5" y="2.5" width="13" height="13" fill="var(--blue)" />
+        <rect x="2.5" y="2.5" width="13" height="13" fill="var(--pf-good)" />
       </svg>
     );
   if (d === "advanced")
     return (
       <svg {...common}>
-        <path d="M9 1.5 16.5 9 9 16.5 1.5 9Z" fill="var(--sym-black)" />
+        <path d="M9 1.5 16.5 9 9 16.5 1.5 9Z" fill="var(--pf-text)" />
       </svg>
     );
   if (d === "unknown")
     return (
       <svg {...common}>
-        <circle cx="9" cy="9" r="6" fill="none" stroke="var(--muted)" strokeWidth="2" />
+        <circle cx="9" cy="9" r="6" fill="none" stroke="var(--pf-subtle)" strokeWidth="2" />
       </svg>
     );
   return (
     <svg {...common}>
-      <path d="M5 3 9.5 9 5 15 .5 9Z M13 3 17.5 9 13 15 8.5 9Z" fill="var(--sym-black)" />
+      <path d="M5 3 9.5 9 5 15 .5 9Z M13 3 17.5 9 13 15 8.5 9Z" fill="var(--pf-text)" />
     </svg>
   );
 }
