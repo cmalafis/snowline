@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Overpass, Overpass_Mono } from "next/font/google";
+// Fonts are bundled from npm (@fontsource) so builds never need the network.
+import "@fontsource/overpass/latin-400.css";
+import "@fontsource/overpass/latin-600.css";
+import "@fontsource/overpass/latin-800.css";
+import "@fontsource/overpass/latin-900.css";
+import "@fontsource/overpass-mono/latin-400.css";
+import "@fontsource/overpass-mono/latin-600.css";
 import "./globals.css";
-
-const overpass = Overpass({ subsets: ["latin"], weight: ["400", "600", "800", "900"], variable: "--font-overpass" });
-const overpassMono = Overpass_Mono({ subsets: ["latin"], weight: ["400", "600"], variable: "--font-overpass-mono" });
 
 export const metadata: Metadata = {
   title: "Snowline",
@@ -36,7 +39,7 @@ const SPLASH: [number, number, number][] = [
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${overpass.variable} ${overpassMono.variable}`} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         {SPLASH.map(([w, h, r]) => (
           <link

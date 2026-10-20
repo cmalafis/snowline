@@ -16,9 +16,9 @@
   --good: #1d8a52;
   --warn: #b97f08;
   --bad: #b23a2e;
-  --font-display: var(--font-overpass), "Arial Narrow", system-ui, sans-serif;
-  --font-body: var(--font-overpass), system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: var(--font-overpass-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-display: "Overpass", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Overpass", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Overpass Mono", ui-monospace, "SF Mono", Menlo, monospace;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
