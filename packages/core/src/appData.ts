@@ -8,6 +8,7 @@ export interface AppResort {
   region: string | null;
   pass: string | null;
   avalanche: { name: string; url: string } | null;
+  opensnowSlug: string | null;
   tz: string;
   openHour: number;
   closeHour: number;

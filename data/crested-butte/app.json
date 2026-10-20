@@ -1,6 +1,6 @@
 {
  "version": "2026-10-20",
- "generatedAt": "2026-10-20T02:10:36.716Z",
+ "generatedAt": "2026-10-20T13:31:49.265Z",
  "resort": {
   "id": "crested-butte",
   "name": "Crested Butte",
@@ -10,6 +10,7 @@
    "name": "Colorado Avalanche Information Center",
    "url": "https://avalanche.state.co.us"
   },
+  "opensnowSlug": "crestedbutte",
   "tz": "America/Denver",
   "openHour": 9,
   "closeHour": 16,

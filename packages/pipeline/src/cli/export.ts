@@ -130,6 +130,7 @@ export async function exportApp(resortId: string) {
       region: cfg.region ?? null,
       pass: cfg.pass ?? null,
       avalanche: cfg.avalanche ?? null,
+      opensnowSlug: cfg.opensnow?.slug ?? null,
       tz: cfg.tz,
       openHour: cfg.hours?.open ?? 8.5,
       closeHour: cfg.hours?.close ?? 16,

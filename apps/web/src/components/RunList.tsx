@@ -6,8 +6,9 @@ import { Icon, ScoreLabel } from "./ui";
 
 const TONE = { up: "var(--pf-prime)", down: "var(--pf-skip)", flat: "var(--pf-border-strong)" } as const;
 
-export function groomLabel(r: Pick<Ranked, "run">, groomedToday: boolean): string {
-  if (r.run.type === "groomer") return groomedToday ? "groomed" : "not groomed";
+/** Grooming as the app knows it: the run's usual pattern, unless someone reported today's. */
+export function groomLabel(r: Pick<Ranked, "run">, groomedToday: boolean, reported = false): string {
+  if (r.run.type === "groomer") return reported ? (groomedToday ? "groomed (your report)" : "not groomed (your report)") : groomedToday ? "usually groomed" : "not usually groomed";
   return { bump: "bumps", tree: "glades", bowl: "bowl/chute" }[r.run.type];
 }
 
@@ -41,6 +42,7 @@ export function RunRow({
   treelineFt,
   showZone,
   unmarked,
+  groomReported,
   onOpen,
 }: {
   r: Ranked;
@@ -53,12 +55,14 @@ export function RunRow({
   showZone: boolean;
   /** Set for unmarked tree areas: their size and how many hazards the data found. */
   unmarked?: { areaHa: number; hazards: number };
+  /** Whether "groomed today" came from a report rather than the run's usual pattern. */
+  groomReported?: boolean;
   onOpen: () => void;
 }) {
   const meta = [
     showZone ? zone?.name : null,
     `faces ${compassPoint(r.run.aspectDeg)}${r.run.mixedAspect ? " (mixed)" : ""}`,
-    unmarked ? `${Math.round(unmarked.areaHa * 2.47)} acres of trees` : groomLabel(r, groomedToday),
+    unmarked ? `${Math.round(unmarked.areaHa * 2.47)} acres of trees` : groomLabel(r, groomedToday, groomReported),
     `${r.s.tempF}°F`,
     edited ? "edited" : null,
     distanceM !== undefined ? (distanceM < 1000 ? `${Math.round(distanceM / 10) * 10} m away` : `${(distanceM / 1609).toFixed(1)} mi away`) : null,

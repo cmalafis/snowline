@@ -17,6 +17,7 @@ import {
   type AppResortData,
   type DayWeather,
   type LonLat,
+  type ResortStatus,
   type ResortSummary,
 } from "@snowline/core";
 import { distanceToRun, nearby, rankAt, rankTreeAreasAt, scoreDay, zoneScoreAt, type Ranked } from "@/lib/model";
@@ -61,6 +62,8 @@ export function App() {
   const [demo, setDemo] = useState<string | null>(null);
   const [data, setData] = useState<Load<AppResortData>>({ state: "loading" });
   const [weather, setWeather] = useState<Load<DayWeather>>({ state: "loading" });
+  /** The resort's own report via OpenSnow, when the server has a partner key. Today only. */
+  const [status, setStatus] = useState<ResortStatus | null>(null);
   const [hour, setHour] = useState(9);
   const [prefs, setPrefsState] = useState<Prefs>(DEFAULT_PREFS);
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -147,10 +150,15 @@ export function App() {
       return;
     }
     setWeather({ state: "loading" });
+    setStatus(null);
+    if (dayOffset === 0)
+      getJson<{ available: boolean; status?: ResortStatus }>(`/api/resorts/${resortId}/status`)
+        .then(({ value }) => setStatus(value.available ? (value.status ?? null) : null))
+        .catch(() => setStatus(null));
     getJson<DayWeather>(`/api/resorts/${resortId}/weather?date=${date}`)
       .then(({ value, offline }) => setWeather({ state: "ok", value, offline }))
       .catch((e: Error) => setWeather({ state: "error", message: e.message }));
-  }, [resortId, date, scenario, data]);
+  }, [resortId, date, scenario, data, dayOffset]);
 
   // Geolocation, only once the user asks for it.
   useEffect(() => {
@@ -415,12 +423,25 @@ export function App() {
             </div>
           </div>
         )}
-        {!scenario && tab === "overview" && offSeason(date) && (
+        {!scenario && tab === "overview" && !status && offSeason(date) && (
           <Alert variant="info" title="It's the off-season">
             Live scores aren&apos;t meaningful until the snow arrives.{" "}
             <button type="button" className="btn btn-link" style={{ minHeight: 0, padding: 0 }} onClick={() => setDemo(SCENARIOS[0]!.id)}>
               Try a demo day
             </button>
+          </Alert>
+        )}
+        {!scenario && tab === "overview" && status && status.state !== "open" && (
+          <Alert variant="info" title={status.state === "opening-soon" ? `${r.name} hasn't opened yet` : `${r.name} is closed today`}>
+            {status.statusDetail ?? status.statusText}. Live scores won&apos;t mean much until the lifts are turning.{" "}
+            <button type="button" className="btn btn-link" style={{ minHeight: 0, padding: 0 }} onClick={() => setDemo(SCENARIOS[0]!.id)}>
+              Try a demo day
+            </button>
+          </Alert>
+        )}
+        {!scenario && status?.state === "open" && status.percentOpen !== null && status.percentOpen < 95 && (
+          <Alert variant="warning" title={`Not all terrain is open: ${Math.round(status.percentOpen)}%${status.runsOpen !== null && status.runsTotal ? ` (${status.runsOpen} of ${status.runsTotal} runs)` : ""}`}>
+            Some runs here are probably closed, and Snowline can&apos;t tell which yet. Check {r.name}&apos;s terrain report before you commit to a run.
           </Alert>
         )}
         {((data.state === "ok" && data.offline) || (weather.state === "ok" && weather.offline)) && (
@@ -478,7 +499,8 @@ export function App() {
                   <span className="label label-outline">{cond.mid}°F mid-mountain</span>
                   <span className="label label-outline">{cond.top}°F up top</span>
                   <span className={`label ${wx.newSnowIn >= 4 ? "label-good" : "label-outline"}`}>
-                    {wx.newSnowIn}&quot; new{wx.newSnowBaseIn !== undefined && wx.newSnowBaseIn < wx.newSnowIn - 0.5 ? ` (${wx.newSnowBaseIn}" at base)` : ""}
+                    {wx.newSnowIn}&quot; new{wx.newSnowSource === "resort" ? " (resort report)" : ""}
+                    {wx.newSnowBaseIn !== undefined && wx.newSnowBaseIn < wx.newSnowIn - 0.5 ? ` (${wx.newSnowBaseIn}" at base)` : ""}
                   </span>
                   {wx.stormTotalIn !== undefined && wx.stormTotalIn > wx.newSnowIn + 0.5 && <span className="label label-outline">{wx.stormTotalIn}&quot; in 3 days</span>}
                   <span className={`label ${cond.gust >= DEFAULT_SCORING.wind.holdGustMph ? "label-fair" : "label-outline"}`}>Gusts {cond.gust} mph</span>
@@ -488,6 +510,8 @@ export function App() {
               )}
               {wx && <WeatherStrip resort={r} weather={wx} hour={hour} onHour={setHour} />}
             </section>
+
+            {status && !scenario && <ResortReport status={status} name={r.name} />}
 
             {!day ? (
               <div className="card subtle">{weather.state === "loading" ? "Getting the forecast…" : "Scores need a forecast."}</div>
@@ -506,7 +530,7 @@ export function App() {
                       <ScoreLabel score={best.s.score} label={best.s.label} />
                     </div>
                     <div className="subtle" style={{ fontSize: 14 }}>
-                      {zoneById.get(best.run.zone ?? "")?.name} · faces {compassPoint(best.run.aspectDeg)} · {groomLabel(best, groomed[best.run.id] ?? best.run.groomed)} · {best.s.tempF}°F
+                      {zoneById.get(best.run.zone ?? "")?.name} · faces {compassPoint(best.run.aspectDeg)} · {groomLabel(best, groomed[best.run.id] ?? best.run.groomed, best.run.id in groomed)} · {best.s.tempF}°F
                     </div>
                     <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 6 }}>
                       {best.s.reasons.map((why, i) => (
@@ -629,6 +653,7 @@ export function App() {
                     distanceM={nearMe && loc && atResort ? distanceToRun(x.run, loc.p) : undefined}
                     treelineFt={r.treelineFt}
                     showZone={!zoneFilter}
+                    groomReported={x.run.id in groomed}
                     onOpen={() => setOpenRun(x.run.id)}
                   />
                 ))}
@@ -760,6 +785,56 @@ export function App() {
         />
       )}
     </>
+  );
+}
+
+/** The resort's own morning report (via OpenSnow), with the attribution OpenSnow requires. */
+function ResortReport({ status, name }: { status: ResortStatus; name: string }) {
+  const a = status.attribution;
+  const facts = [
+    status.liftsOpen !== null && status.liftsTotal ? `${status.liftsOpen} of ${status.liftsTotal} lifts` : null,
+    status.runsOpen !== null && status.runsTotal ? `${status.runsOpen} of ${status.runsTotal} runs` : null,
+    status.newSnow24In !== null ? `${status.newSnow24In}" in 24 h` : null,
+    status.baseDepthIn !== null ? `${status.baseDepthIn}" base` : null,
+  ].filter(Boolean) as string[];
+  return (
+    <section className="card" aria-label={`From ${name} this morning`} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
+        <h2 className="card-title">From {name} this morning</h2>
+        <span className={`label label-sm ${status.state === "open" ? "label-prime" : "label-neutral"}`}>{status.statusText}</span>
+      </div>
+      {status.reportLabel && <div className="card-sub">Reported {status.reportLabel}</div>}
+      {(facts.length > 0 || status.conditions) && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          {status.conditions && <span className="label label-outline">{status.conditions}</span>}
+          {facts.map((f) => (
+            <span key={f} className="label label-outline">
+              {f}
+            </span>
+          ))}
+        </div>
+      )}
+      {status.notes && (
+        <p style={{ margin: 0, fontSize: 14, whiteSpace: "pre-line" }}>
+          {status.notes}
+        </p>
+      )}
+      <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", borderTop: "1px solid var(--pf-border)", paddingTop: 8, fontSize: 13 }}>
+        {a.description && <span className="subtle">{a.description}</span>}
+        {a.logoLight && (
+          <picture>
+            {a.logoDark && <source srcSet={a.logoDark} media="(prefers-color-scheme: dark)" />}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={a.logoLight} alt="OpenSnow" height={18} style={{ height: 18, width: "auto" }} />
+          </picture>
+        )}
+        {a.linkUrl && a.linkText && (
+          <a href={a.linkUrl} target="_blank" rel="noopener noreferrer">
+            {a.linkText}
+          </a>
+        )}
+      </div>
+    </section>
   );
 }
 

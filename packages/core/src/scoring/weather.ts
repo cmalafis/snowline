@@ -39,6 +39,8 @@ export interface DayWeather {
   newSnowIn: number;
   /** The same at the base, so low runs that got rain or less snow aren't credited with the summit's total. */
   newSnowBaseIn?: number;
+  /** Where newSnowIn came from: the forecast model, or the resort's own morning report. */
+  newSnowSource?: "forecast" | "resort";
   /** Snow in the 72 hours to 8am at the summit: older storm snow still soft off-piste. */
   stormTotalIn?: number;
   /** Strongest summit gust overnight (4pm to 8am), mph: a windy night scours and hardens open slopes. */

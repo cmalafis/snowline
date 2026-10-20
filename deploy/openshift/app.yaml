@@ -38,6 +38,13 @@ spec:
           env:
             - name: FEEDBACK_DIR
               value: /feedback
+            # OpenSnow partner key for the resorts' daily reports. Optional: without the secret the feature stays off.
+            - name: OPENSNOW_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: snowline-opensnow
+                  key: api-key
+                  optional: true
           resources:
             requests: { cpu: 100m, memory: 256Mi }
             limits: { cpu: "1", memory: 512Mi }

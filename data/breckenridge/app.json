@@ -1,6 +1,6 @@
 {
  "version": "2026-10-20",
- "generatedAt": "2026-10-20T02:10:36.335Z",
+ "generatedAt": "2026-10-20T13:31:49.053Z",
  "resort": {
   "id": "breckenridge",
   "name": "Breckenridge",
@@ -10,6 +10,7 @@
    "name": "Colorado Avalanche Information Center",
    "url": "https://avalanche.state.co.us"
   },
+  "opensnowSlug": "breckenridge",
   "tz": "America/Denver",
   "openHour": 8.5,
   "closeHour": 16,

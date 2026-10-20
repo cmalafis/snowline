@@ -13,6 +13,8 @@ export interface ResortConfig {
   region?: string;
   /** Season pass the resort is on, e.g. "Ikon" or "Epic". */
   pass?: string;
+  /** OpenSnow location slug for the resort's daily report (used when the server has an OpenSnow partner key). */
+  opensnow?: { slug: string };
   /** Regional avalanche center, linked from the unmarked-trees cautions. */
   avalanche?: { name: string; url: string };
   tz: string;

@@ -8,6 +8,9 @@
     "name": "Colorado Avalanche Information Center",
     "url": "https://avalanche.state.co.us"
   },
+  "opensnow": {
+    "slug": "crestedbutte"
+  },
   "osm": {
     "skiArea": {
       "type": "way",
