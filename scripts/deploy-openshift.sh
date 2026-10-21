@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Build Snowline in the cluster from the local working tree and roll it out.
 # Usage: scripts/deploy-openshift.sh [namespace]    (default: the current oc project)
+# Afterwards the built image is copied to $QUAY_REPO (default quay.io/cmalafis10/snowline) as :<git sha> and
+# :latest, for running elsewhere (e.g. AWS). Needs `podman login quay.io`; set QUAY_REPO= to skip.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -32,3 +34,17 @@ oc start-build -n "$NS" snowline --from-dir="$STAGE" --follow --wait
 
 oc rollout status -n "$NS" deploy/snowline --timeout=5m
 echo "Snowline is live at: https://$(oc get route -n "$NS" snowline -o jsonpath='{.spec.host}')"
+
+QUAY_REPO="${QUAY_REPO-quay.io/cmalafis10/snowline}"
+if [[ -n "$QUAY_REPO" ]] && podman login --get-login "${QUAY_REPO%%/*}" >/dev/null 2>&1; then
+  REG=$(oc registry info --public 2>/dev/null)
+  DIGEST=$(oc get istag -n "$NS" snowline:latest -o jsonpath='{.image.metadata.name}')
+  TAG=$(git rev-parse --short HEAD)$(git diff --quiet HEAD -- . || echo -dirty)
+  podman login -u "$(oc whoami)" -p "$(oc whoami -t)" "$REG" >/dev/null
+  podman pull -q --platform linux/amd64 "$REG/$NS/snowline@$DIGEST" >/dev/null
+  podman tag "$REG/$NS/snowline@$DIGEST" "$QUAY_REPO:$TAG" "$QUAY_REPO:latest"
+  podman push -q "$QUAY_REPO:$TAG" && podman push -q "$QUAY_REPO:latest"
+  echo "Pushed $QUAY_REPO:$TAG and :latest"
+elif [[ -n "$QUAY_REPO" ]]; then
+  echo "Not logged in to ${QUAY_REPO%%/*}; skipped the image push (podman login ${QUAY_REPO%%/*})"
+fi

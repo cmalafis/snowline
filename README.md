@@ -108,3 +108,13 @@ scripts/deploy-openshift.sh cmalafis-dev    # apply manifests, upload source, bu
 - Skiers' "groomed today" reports are shared with everyone for that day (`/api/resorts/<id>/reports`). Each device's latest report counts once; the majority wins and a tie goes to the most recent. A report changes the run for everyone only once two devices agree (`MIN_CONFIRMING_REPORTS`); a lone report shows as a hint. A device's own report always wins on that device. Reports are kept for three days in `/feedback/reports.jsonl`.
 - The Developer Sandbox scales idle deployments to zero. Bring it back with `oc scale deploy/snowline --replicas=1`, or rerun the script.
 - The same image runs anywhere that runs containers (e.g. AWS App Runner/ECS). Build step 6 covers AWS with CDK.
+
+### The image on quay.io
+
+After each rollout the script copies the built image (linux/amd64) to `quay.io/cmalafis10/snowline` as `:<git sha>` and `:latest` (needs `podman login quay.io`; `QUAY_REPO=other/repo` to change it, `QUAY_REPO=` to skip). To run it anywhere:
+
+```sh
+podman run -p 8080:8080 -e FEEDBACK_DIR=/feedback -v snowline-feedback:/feedback quay.io/cmalafis10/snowline:latest
+```
+
+It listens on 8080, its health check is `GET /api/health`, and it runs as any non-root user. `FEEDBACK_DIR` should be a persistent volume (feedback and shared grooming reports); without it they're kept in memory only. Run one replica: shared reports live in that process. `OPENSNOW_API_KEY` is optional. Serve it over HTTPS (needed for location, offline use and installing on phones).
