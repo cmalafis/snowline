@@ -1,0 +1,120 @@
+[
+ {
+  "id": "center-village",
+  "name": "Center Village (American Eagle & Flyer)",
+  "lifts": [
+   "American Flyer",
+   "American Eagle",
+   "Pitchfork",
+   "Gem"
+  ],
+  "aspectDeg": 7.225377997698388,
+  "topFt": 11651,
+  "bottomFt": 9726,
+  "windExposed": false,
+  "runCount": 27
+ },
+ {
+  "id": "copper-bowl",
+  "name": "Copper Bowl (Mountain Chief, Blackjack)",
+  "lifts": [
+   "Mountain Chief",
+   "Blackjack"
+  ],
+  "aspectDeg": 147.34714921926616,
+  "topFt": 12343,
+  "bottomFt": 11175,
+  "windExposed": true,
+  "runCount": 13
+ },
+ {
+  "id": "east-village",
+  "name": "East Village (Super Bee & Alpine)",
+  "lifts": [
+   "Alpine",
+   "Super Bee"
+  ],
+  "aspectDeg": 24.881445012261054,
+  "topFt": 12003,
+  "bottomFt": 9710,
+  "windExposed": true,
+  "runCount": 17
+ },
+ {
+  "id": "excelerator",
+  "name": "Excelerator & Enchanted Forest",
+  "lifts": [
+   "Excelerator"
+  ],
+  "aspectDeg": 320.78217878376137,
+  "topFt": 12003,
+  "bottomFt": 11023,
+  "windExposed": true,
+  "runCount": 13
+ },
+ {
+  "id": "spaulding-resolution",
+  "name": "Spaulding & Resolution Bowls (Storm King, Resolution)",
+  "lifts": [
+   "Storm King",
+   "Resolution"
+  ],
+  "aspectDeg": 58.28237275420054,
+  "topFt": 12311,
+  "bottomFt": 10545,
+  "windExposed": true,
+  "runCount": 23
+ },
+ {
+  "id": "timberline",
+  "name": "Timberline Express (West upper)",
+  "lifts": [
+   "Timberline Express"
+  ],
+  "aspectDeg": 11.183743236719181,
+  "topFt": 11667,
+  "bottomFt": 9844,
+  "windExposed": false,
+  "runCount": 9
+ },
+ {
+  "id": "tucker",
+  "name": "Tucker Mountain (Three Bears)",
+  "lifts": [
+   "Three Bears"
+  ],
+  "aspectDeg": 36.67301022096416,
+  "topFt": 12293,
+  "bottomFt": 11181,
+  "windExposed": true,
+  "runCount": 10
+ },
+ {
+  "id": "union-peak",
+  "name": "Union Peak & Union Bowl (Sierra, Rendezvous, Celebrity Ridge)",
+  "lifts": [
+   "Sierra",
+   "Rendezvous",
+   "Celebrity Ridge"
+  ],
+  "aspectDeg": 339.75035221010063,
+  "topFt": 12280,
+  "bottomFt": 11156,
+  "windExposed": true,
+  "runCount": 14
+ },
+ {
+  "id": "west-village",
+  "name": "West Village (Woodward, Kokomo, Lumberjack)",
+  "lifts": [
+   "Woodward Express",
+   "Kokomo Express",
+   "Lumberjack"
+  ],
+  "aspectDeg": 12.981539299995006,
+  "topFt": 10953,
+  "bottomFt": 9818,
+  "windExposed": false,
+  "runCount": 20
+ }
+]

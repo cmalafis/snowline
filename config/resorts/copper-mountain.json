@@ -1,0 +1,426 @@
+{
+  "id": "copper-mountain",
+  "name": "Copper Mountain",
+  "region": "Summit County, Colorado",
+  "pass": "Ikon",
+  "avalanche": {
+    "name": "Colorado Avalanche Information Center",
+    "url": "https://avalanche.state.co.us"
+  },
+  "opensnow": {
+    "slug": "copper"
+  },
+  "tz": "America/Denver",
+  "osm": {
+    "skiArea": {
+      "type": "way",
+      "id": 531005986
+    },
+    "bbox": [
+      39.445,
+      -106.2,
+      39.51,
+      -106.125
+    ]
+  },
+  "base": {
+    "lat": 39.4989,
+    "lon": -106.1462,
+    "elevationFt": 9712
+  },
+  "summit": {
+    "lat": 39.4718,
+    "lon": -106.1569,
+    "elevationFt": 12313
+  },
+  "treelineFt": 11800,
+  "ridgeProximityFt": 400,
+  "hours": {
+    "open": 9,
+    "close": 16
+  },
+  "ignoreLifts": [
+    "Easy Rider",
+    "Slingshot",
+    "Rug Rat",
+    "Stinger"
+  ],
+  "zoneOverrides": {
+    "Woodward Express": "west-village",
+    "Kokomo Express": "west-village",
+    "Lumberjack": "west-village",
+    "Timberline Express": "timberline",
+    "American Eagle": "center-village",
+    "American Flyer": "center-village",
+    "Pitchfork": "center-village",
+    "Gem": "center-village",
+    "Excelerator": "excelerator",
+    "Super Bee": "east-village",
+    "Alpine": "east-village",
+    "Sierra": "union-peak",
+    "Rendezvous": "union-peak",
+    "Celebrity Ridge": "union-peak",
+    "Storm King": "spaulding-resolution",
+    "Resolution": "spaulding-resolution",
+    "Mountain Chief": "copper-bowl",
+    "Blackjack": "copper-bowl",
+    "Three Bears": "tucker"
+  },
+  "zoneNames": {
+    "west-village": "West Village (Woodward, Kokomo, Lumberjack)",
+    "timberline": "Timberline Express (West upper)",
+    "center-village": "Center Village (American Eagle & Flyer)",
+    "excelerator": "Excelerator & Enchanted Forest",
+    "east-village": "East Village (Super Bee & Alpine)",
+    "union-peak": "Union Peak & Union Bowl (Sierra, Rendezvous, Celebrity Ridge)",
+    "spaulding-resolution": "Spaulding & Resolution Bowls (Storm King, Resolution)",
+    "copper-bowl": "Copper Bowl (Mountain Chief, Blackjack)",
+    "tucker": "Tucker Mountain (Three Bears)"
+  },
+  "runOverrides": {
+    "Central Park": {
+      "exclude": true
+    },
+    "Family Cross": {
+      "exclude": true
+    },
+    "Collage": {
+      "zone": "east-village"
+    },
+    "American Flyer": {
+      "zone": "center-village"
+    },
+    "Carefree": {
+      "zone": "center-village"
+    },
+    "Leap Frog": {
+      "zone": "center-village"
+    },
+    "Overlode": {
+      "zone": "east-village"
+    },
+    "Home Run": {
+      "zone": "east-village"
+    },
+    "Woodwinds": {
+      "zone": "west-village",
+      "groomed": false
+    },
+    "West Village Traverse": {
+      "zone": "west-village"
+    },
+    "Loverly Lane": {
+      "zone": "west-village"
+    },
+    "Colorado Boulevard": {
+      "zone": "copper-bowl"
+    },
+    "Buzzard's Alley": {
+      "zone": "union-peak",
+      "type": "bowl",
+      "groomed": false
+    },
+    "Atlantic Cornice": {
+      "zone": "spaulding-resolution",
+      "type": "bowl",
+      "groomed": false
+    },
+    "Pacific Cornice": {
+      "zone": "spaulding-resolution",
+      "type": "bowl",
+      "groomed": false
+    },
+    "Looking Glass": {
+      "zone": "excelerator"
+    },
+    "Slip Knot": {
+      "zone": "excelerator"
+    },
+    "Ute Overlook": {
+      "zone": "excelerator"
+    },
+    "Enchanted Forest": {
+      "zone": "excelerator"
+    },
+    "osm:229188259": {
+      "zone": "excelerator",
+      "type": "tree",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "osm:1047147175": {
+      "zone": "excelerator",
+      "type": "tree",
+      "groomed": false,
+      "difficulty": "expert"
+    },
+    "Matchless": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Six Shooter": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Julie's Vision": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Golden Crest": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Alicante": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Bradley's Plunge": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Schaefer's": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Iron Mask": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Lallarookn": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Bariloche": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Boardwalk": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Calendar Chute": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Cornice Chute": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Marvin Gardens": {
+      "type": "bowl",
+      "groomed": false,
+      "difficulty": "advanced"
+    },
+    "Park Place": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Patrol Chute": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "So Fine": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Drain Pipe": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Double Zero": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Triple Zero": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Union Peak": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Western Slope": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "The Taco / Curecanti": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Boulderado": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Falcon Alley": {
+      "type": "bowl",
+      "groomed": false
+    },
+    "Union Meadows": {
+      "type": "tree",
+      "groomed": false
+    },
+    "Denverite": {
+      "type": "tree",
+      "groomed": false
+    },
+    "Ram's Run": {
+      "type": "tree",
+      "groomed": false
+    },
+    "Buffalo Stampede": {
+      "type": "tree",
+      "groomed": false
+    },
+    "The Springs": {
+      "type": "tree",
+      "groomed": false
+    },
+    "Valentine's": {
+      "type": "tree",
+      "groomed": false
+    },
+    "Black Bear Glade": {
+      "difficulty": "expert"
+    },
+    "Freefall Glade": {
+      "difficulty": "expert"
+    },
+    "Far East": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Too Much": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Triple Treat": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Hallelujah": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Mine Dump": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Highline": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Revenge": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Endeavor": {
+      "type": "bump",
+      "groomed": false
+    },
+    "Rosi's Run": {
+      "groomed": true
+    },
+    "Spaulding Ridge": {
+      "groomed": true
+    },
+    "Rattler": {
+      "groomed": true
+    },
+    "Summit Stash": {
+      "groomed": true
+    },
+    "I-Dropper": {
+      "groomed": false
+    },
+    "Liberty": {
+      "groomed": false
+    },
+    "Foul Play": {
+      "groomed": false
+    },
+    "Upper Sluice": {
+      "groomed": false
+    },
+    "Sluice": {
+      "groomed": false
+    },
+    "Jacque's Pique": {
+      "groomed": false
+    },
+    "Tempo": {
+      "groomed": false
+    },
+    "Copperfield": {
+      "groomed": false
+    },
+    "The Moz": {
+      "groomed": false
+    },
+    "Log Chute": {
+      "groomed": false
+    },
+    "Union Gap": {
+      "groomed": false
+    },
+    "Union Park": {
+      "groomed": false
+    },
+    "Wheeler Creek": {
+      "groomed": false
+    },
+    "Timber Ridge": {
+      "groomed": false
+    },
+    "Oh No": {
+      "groomed": false
+    },
+    "Pine Cone Alley": {
+      "groomed": false
+    },
+    "West Ridge Traverse": {
+      "zone": "copper-bowl"
+    }
+  },
+  "nameAliases": {
+    "Marvin Garden": "Marvin Gardens",
+    "Free Fall Glade": "Freefall Glade",
+    "Free Fall": "Freefall Glade",
+    "Ore Deal": "Ore-Deal",
+    "Slip Not": "Slip Knot",
+    "Sail Away Glades": "Sail Away Glade",
+    "See and Ski": "See & Ski",
+    "Easy Road": "EZ Road",
+    "Snodeal": "Sno-Deal",
+    "Pinecone Alley": "Pine Cone Alley",
+    "The Taco": "The Taco / Curecanti",
+    "Curecanti": "The Taco / Curecanti",
+    "Schaeffer's": "Schaefer's",
+    "Triple Threat": "Triple Treat",
+    "Andy's Encore (U)": "Andy's Encore",
+    "Andy's Encore (L)": "Andy's Encore",
+    "Collage (U)": "Collage",
+    "Collage (L)": "Collage",
+    "Bouncer (U)": "Bouncer",
+    "Bouncer (L)": "Bouncer",
+    "Bittersweet (U)": "Bittersweet",
+    "Bittersweet (L)": "Bittersweet",
+    "Oh No (U)": "Oh No",
+    "Oh No (L)": "Oh No",
+    "Vein Glory (U)": "Vein Glory",
+    "Vein Glory (L)": "Vein Glory",
+    "Roundabout (U)": "Roundabout",
+    "Roundabout (L)": "Roundabout",
+    "Revenge (U)": "Revenge",
+    "Revenge (L)": "Revenge",
+    "Leap Frog (U)": "Leap Frog",
+    "Leap Frog (L)": "Leap Frog",
+    "Carefree (U)": "Carefree",
+    "Carefree (L)": "Lower Carefree",
+    "Lillie G (U)": "Lillie G",
+    "Lillie G (L)": "Lillie G",
+    "Lillie G Traverse": "Lillie G",
+    "Freemont #1": "Boulderado",
+    "Cross Cut": "Hodson's Cut",
+    "Rosi's": "Rosi's Run"
+  }
+}

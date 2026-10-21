@@ -100,3 +100,33 @@ General patterns:
 - Wind: Silver Queen (the only route to the High Lift) and Red Lady have both closed for wind. North Face coverage suffers from wind, and The Glades are the sheltered alternative (CB News 2018/2019).
 - The Extreme Limits T-bars usually open in early-to-mid January and need a deep natural base. In thin years they open in late February. The Peak and Third Bowl are open for only a few weeks (Vail 2019; CB News 2018/2023; PeakRankings).
 - The T-bars may open late on powder mornings because of avalanche control (OpenSnow guide).
+
+## Copper Mountain
+
+| Run | Zone / lift | Aspect | Skis best when | Notes |
+|---|---|---|---|---|
+| Six Shooter | Mountain Chief | S | spring days once the sun has softened it (first of Copper Bowl to soften) | "direct south facing"; partly softened even under intermittent sun in mid-March (research: firsttracksonline Copper 3/17–3/22/2025 thread) |
+| Schaefer's | Mountain Chief |  | sunny days, after the sun has worked on it | West Ridge hike-to; steepest of the ridge, starts under a small summit with a cornice. Guide says the West Ridge runs are "south facing", but DEM ~120° SE, so aspect left blank (research: exploringtherockies top-5 steep runs) |
+| Highline | Resolution | SE | powder days | Copper's best bump run: big steep moguls on top, then medium ones; "the trails beneath Resolution Lift are never groomed"; the final face is SE and can get thin (research: exploringtherockies top-5 mogul runs) |
+| Union Peak | Celebrity Ridge |  | early on powder days, before the crowds | the north side of Union Peak is "basically a big open bowl" with mild bumps; wind deposits snow in Union Bowl so coverage is usually excellent (research: exploringtherockies top-5 steep runs; firsttracksonline 3/2025 "Union Bowl consistently has Copper's best snow") |
+| Union Meadows | Celebrity Ridge |  | days after a storm; holds fresh lines longest at Copper | mellow trees and open glades, unofficial lettered lines; "the waterfall" ice sheet on the cat-track exit (research: exploringtherockies top-5 tree runs and powder stashes) |
+| Spaulding Glades | Storm King |  | powder days and the days after | big glades that "stay pretty fresh long after the snow has fallen"; trees tighten lower down; extra lift ride out via Resolution (research: exploringtherockies top-5 tree runs and powder stashes) |
+| Lower Enchanted Forest | Excelerator |  | big snow days | leeward of the winds off Union Bowl, "usually deep and consistent snow"; reached from the top of Storm King; drop too low and you miss the Sierra lift (research: exploringtherockies top-5 tree runs; cyberwest 2006) |
+| Freefall Glade | Alpine |  | first choice on a powder day | very steep, consistent, fairly open glade off Rosi's Run (research: exploringtherockies top-5 tree runs) |
+| Black Bear Glade | Alpine |  | a day or two after a storm | wider and more mellow than Freefall; hidden glades often still "fat late in the day" (research: exploringtherockies top-5 tree runs and powder stashes) |
+| Rosi's Run | Alpine |  | early morning, on fresh corduroy | steep groomer that gets icy as the day goes on; groomed in 6/6 archived official reports (research: exploringtherockies top-5 cruisers; api.coppercolorado.com trail feed via web.archive.org) |
+| Far East | Alpine |  | once softened | among the longest moguls in Colorado, steep (research: exploringtherockies top-5 mogul runs; cyberwest 2006) |
+| Triple Treat | Alpine |  | mid/late March: still holds winter snow | classic Alpine-lift mogul run (research: firsttracksonline 3/2025; cyberwest 2006 "Triple Threat") |
+| Hallelujah | Excelerator |  | once softened | fast, nicely pitched, medium moguls (research: cyberwest 2006) |
+| Boulderado | Three Bears |  | right after fresh snow | at the end of Tucker's ridge, "almost guaranteed to have the best snow"; often closed for avalanche danger; the far entrance had gouged bumps and rocks in March 2025 (research: exploringtherockies top-5 steep runs; firsttracksonline 3/2025) |
+
+General patterns:
+
+- Copper mostly faces north: slope aspects N 55%, E 25%, W 15%, S 5% (research: Wikipedia "Copper Mountain (Colorado)"). The DEM agrees: the front-side zones average N–NE (Excelerator NW); Copper Bowl is the one south/south-east zone and Spaulding/Resolution average east.
+- Copper Bowl faces south: the West Ridge runs get the sun and soften first (Six Shooter), but "much of the original Copper Bowl is rarely in good condition" and the Bradley's area was "bulletproof and partly mogulled" on a cloudy March day (research: exploringtherockies steep runs; firsttracksonline 3/2025).
+- Spaulding Bowl faces east (research: coloradotopia Upper Mountain Bowls). In mid-March 2025 Spaulding was "as good as Union Bowl" while the north-facing front side from Super Bee to West Village had "zero spring or melt/frozen snow" (research: firsttracksonline 3/2025).
+- Wind: the Three Bears top gusted 80–90 mph and the lift was shut (Mar 18 2025); Storm King was closed the same week. Wind strips the entries to many upper runs, and Tucker can be "windpacked into dense chunky sastrugi" (research: firsttracksonline 3/2025).
+- Wind also loads snow: it deposits snow in Union Bowl, and Lower Enchanted Forest sits in the lee of winds off Union Bowl (research: exploringtherockies top-5 steep runs and top-5 tree runs).
+- The trees hold powder longest after a storm: Union Meadows most of all, then Spaulding Glades and the Freefall/Black Bear glades (research: exploringtherockies top-5 powder stashes and tree runs).
+- The upper lifts close early: Three Bears at 2:30pm; Storm King, Resolution, Blackjack and Mountain Chief at 3pm; Timberline, Excelerator, Sierra, Lumberjack and Rendezvous at 3:30pm; base lifts 9am–4pm (research: coppercolorado.com/the-mountain/trail-lift-info/lift-hours/).
+- The Resolution runs are never groomed; Andy's Encore, Rosi's Run, Main Vein, Rhapsody, Ptarmigan, Windsong and the West Village greens are groomed nearly every day (research: exploringtherockies top-5 mogul runs; api.coppercolorado.com trail feed, 8 archived snapshots 2024–2026).

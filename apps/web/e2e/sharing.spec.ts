@@ -24,9 +24,12 @@ async function report(page: Page, name: string, groomed: boolean | null) {
 
 test("grooming reports change a run for everyone once two skiers agree", async ({ browser }) => {
   const a = await phone(browser);
-  const firstGroomed = a.getByTestId("run-row").filter({ hasText: "usually groomed" }).first();
-  await expect(firstGroomed).toBeVisible({ timeout: 30_000 });
-  const name = (await firstGroomed.getByTestId("run-name").innerText()).trim();
+  // Pick a usually-groomed run from the data: where it ranks depends on the time of day and the weather.
+  const data = (await (await a.request.get("/api/resorts/steamboat")).json()) as { runs: { name: string; type: string; groomed: boolean }[] };
+  const pick = data.runs.find((r) => r.type === "groomer" && r.groomed);
+  expect(pick).toBeTruthy();
+  const name = pick!.name;
+  await expect(await findRun(a, name)).toContainText("usually groomed");
 
   // One report: a hint for others, not an override.
   await report(a, name, false);
